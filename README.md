@@ -1,4 +1,4 @@
-![alt text]((https://ti.pnp.ac.id/wp-content/uploads/2024/02/web-header02.png))
+![alt text](https://ti.pnp.ac.id/wp-content/uploads/2024/02/web-header02.png)
 
 # UTS-Project-3
 
