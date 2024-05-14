@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <form method="post" action="{{ route('resep-obat.store', ['pendaftaranTemu' => $pendaftaranTemu]) }}">
+        <form method="post" action="{{ route('resep-obat.store', ['pendaftaranTemu' => $pendaftaranTemu, 'id' => $id]) }}">
             @csrf
             <div id="show_item">
 

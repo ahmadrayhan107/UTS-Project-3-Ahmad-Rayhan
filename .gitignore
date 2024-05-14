@@ -1,4 +1,5 @@
 /Back-end/Sistem-Rawat-Jalan-RS/vendor/
+/Back-end/Sistem-Rawat-Jalan-RS/public/img/profiles/
 node_modules/
 npm-debug.log
 yarn-error.log

@@ -6,17 +6,23 @@ use App\Models\Obat;
 use App\Models\PendaftaranTemu;
 use App\Models\ResepObat;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class ResepObatController extends Controller
 {
-    public function create(PendaftaranTemu $pendaftaranTemu)
+    public function create(PendaftaranTemu $pendaftaranTemu, $id)
     {
         $obats = Obat::all();
-        return view('petugas_medis.resep-obats.create', ['pendaftaranTemu' => $pendaftaranTemu, 'obats' => $obats]);
+        return view(
+            'petugas_medis.resep-obats.create',
+            [
+                'pendaftaranTemu' => $pendaftaranTemu,
+                'id' => $id,
+                'obats' => $obats
+            ]
+        );
     }
 
-    public function store(Request $request, PendaftaranTemu $pendaftaranTemu)
+    public function store(Request $request, PendaftaranTemu $pendaftaranTemu, $id)
     {
         $dataResepObats = $request->all();
 
@@ -27,7 +33,7 @@ class ResepObatController extends Controller
             $resepObat->dosis = $dataResepObats['dosis'][$item];
             $resepObat->jenis_obat = $dataResepObats['jenis_obat'][$item];
             $resepObat->keterangan = $dataResepObats['keterangan'][$item];
-            $resepObat->pasien_id = $pendaftaranTemu->pasien_id;
+            $resepObat->rekam_medis_id = $id;
             $resepObat->save();
         }
 

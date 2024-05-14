@@ -31,7 +31,8 @@
                                 <td>{{ $pasien->nik }}</td>
                                 <td>{{ $pasien->jenis_kelamin }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('pasien.show', ['id' => $pasien->id_pasien]) }}" class="btn btn-info btn-circle">
+                                    <a href="{{ route('pasien.show', ['id' => $pasien->id_pasien]) }}"
+                                        class="btn btn-info btn-circle">
                                         <i class="fas fa-fw fa-info"></i>
                                     </a>
                                 </td>

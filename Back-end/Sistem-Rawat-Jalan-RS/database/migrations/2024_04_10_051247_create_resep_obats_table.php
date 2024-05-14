@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('keterangan', 30);
             $table->integer('obat_id')->unsigned();
             $table->foreign('obat_id')->references('id_obat')->on('obats');
-            $table->integer('pasien_id')->unsigned();
-            $table->foreign('pasien_id')->references('id_pasien')->on('pasiens');
+            $table->integer('rekam_medis_id')->unsigned();
+            $table->foreign('rekam_medis_id')->references('id_rekam_medis')->on('rekam_medis');
         });
     }
 

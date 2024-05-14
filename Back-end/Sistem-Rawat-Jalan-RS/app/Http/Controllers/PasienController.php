@@ -40,7 +40,6 @@ class PasienController extends Controller
     public function show($id)
     {
         $pasien = Pasien::find($id);
-        $userPasien = Pasien::find($id)->user;
-        return view('admin.pasiens.show', ['pasien' => $pasien, 'userPasien' => $userPasien]);
+        return view('admin.pasiens.show', ['pasien' => $pasien]);
     }
 }

@@ -11,8 +11,12 @@
 
             <div class="card shadow mb-4">
                 <div class="card-profile-image mt-4">
-                    <figure class="rounded-circle avatar avatar font-weight-bold"
-                        style="font-size: 60px; height: 180px; width: 180px;" data-initial=""></figure>
+                    <div class="card-profile-image mt-4">
+                        @php
+                            $img = $dokter->user->img_profile ? $dokter->user->img_profile : 'img/undraw_profile.svg';
+                        @endphp
+                        <img src="{{ asset($img) }}" class="img-fluid rounded-circle">
+                    </div>
                 </div>
                 <div class="card-body">
 

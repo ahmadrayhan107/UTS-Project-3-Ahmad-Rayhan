@@ -61,6 +61,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/pasien/{id}', [PasienController::class, 'store'])->name('pasien.store');
         Route::get('/pasien/{id}/show', [PasienController::class, 'show'])->name('pasien.show');
 
+        // Rekam Medis
+        Route::get('/rekam-medis/{id}/show', [RekamMedisController::class, 'show'])->name('rekam-medis.show');
+
         // Petugas Medis
         Route::get('/petugas-medis', [PetugasMedisController::class, 'index'])->name('petugas-medis.index');
         Route::get('/petugas-medis/{id}/show', [PetugasMedisController::class, 'show'])->name('petugas-medis.show');
@@ -77,6 +80,7 @@ Route::middleware('auth')->group(function () {
 
         // Pembayaran
         Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran.index');
+        Route::get('/pembayaran/{id}/show', [PembayaranController::class, 'show'])->name('pembayaran.show');
     });
 
     Route::middleware('petugas-medis')->group(function () {
@@ -85,8 +89,8 @@ Route::middleware('auth')->group(function () {
         Route::post('/rekam-medis/store/{pendaftaranTemu}', [RekamMedisController::class, 'store'])->name('rekam-medis.store');
 
         // Resep 
-        Route::get('/resep-obat/create/{pendaftaranTemu}', [ResepObatController::class, 'create'])->name('resep-obat.create');
-        Route::post('/resep-obat/store/{pendaftaranTemu}', [ResepObatController::class, 'store'])->name('resep-obat.store');
+        Route::get('/resep-obat/create/{pendaftaranTemu}/{id}', [ResepObatController::class, 'create'])->name('resep-obat.create');
+        Route::post('/resep-obat/store/{pendaftaranTemu}{id}', [ResepObatController::class, 'store'])->name('resep-obat.store');
 
         // Pendaftaran Temu
         Route::get('/pendaftaran-temu', [PendaftaranTemuController::class, 'index'])->name('pendaftaran-temu');

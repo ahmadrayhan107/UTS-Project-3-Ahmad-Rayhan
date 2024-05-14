@@ -11,8 +11,10 @@
 
             <div class="card shadow mb-4">
                 <div class="card-profile-image mt-4">
-                    <figure class="rounded-circle avatar avatar font-weight-bold"
-                        style="font-size: 60px; height: 180px; width: 180px;" data-initial=""></figure>
+                    @php
+                        $img = $pasien->user->img_profile ? $pasien->user->img_profile : 'img/undraw_profile.svg';
+                    @endphp
+                    <img src="{{ asset($img) }}" class="img-fluid rounded-circle">
                 </div>
                 <div class="card-body">
 
@@ -57,7 +59,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group row">
                                     <label class="col-sm-2 form-control-label">Email</label>
-                                    <label class="col-sm-10">{{ $userPasien->email }}</label>
+                                    <label class="col-sm-10">{{ $pasien->user->email }}</label>
                                 </div>
                             </div>
                         </div>
@@ -89,7 +91,8 @@
                             <div class="col-lg-12">
                                 <div class="form-group row">
                                     <label class="col-sm-2 form-control-label">Tanggal Lahir</label>
-                                    <label class="col-sm-10">{{ \Carbon\Carbon::parse($pasien->tanggal_lahir)->translatedFormat('d F Y') }}</label>
+                                    <label
+                                        class="col-sm-10">{{ \Carbon\Carbon::parse($pasien->tanggal_lahir)->translatedFormat('d F Y') }}</label>
                                 </div>
                             </div>
                         </div>
@@ -118,6 +121,32 @@
 
                 </div>
 
+            </div>
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead class="text-center">
+                            <tr>
+                                <th>Kode Rekam Medis</th>
+                                <th>Tanggal Periksa</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        @foreach ($pasien->rekamMedis as $rekamMedis)
+                            <tr>
+                                <td>{{ $rekamMedis->kode_rekam_medis }}</td>
+                                <td>{{ $rekamMedis->tanggal_periksa }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('rekam-medis.show', ['id' => $rekamMedis->id_rekam_medis]) }}"
+                                        class="btn btn-info btn-circle">
+                                        <i class="fas fa-fw fa-info"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
             </div>
 
         </div>

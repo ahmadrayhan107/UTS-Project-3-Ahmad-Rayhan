@@ -40,6 +40,16 @@ class ProfileController extends Controller
             ]);
 
             $user_id = Auth()->user()->id_user;
+
+            if ($request->img_profile) {
+                $request->validate([
+                    'img_profile' => '  image|mimes:png,jpg',
+                ]);
+                $namaFile = 'http://127.0.0.1:8000/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
+                $request->img_profile->move('img/profiles', $namaFile);
+                User::where('id_user', $user_id)->update(['img_profile' => $namaFile]);
+            }
+
             $validateData['user_id'] = $user_id;
 
             PetugasMedis::create($validateData);
@@ -54,6 +64,16 @@ class ProfileController extends Controller
             ]);
 
             $user_id = Auth()->user()->id_user;
+
+            if ($request->img_profile) {
+                $request->validate([
+                    'img_profile' => '  image|mimes:png,jpg',
+                ]);
+                $namaFile = 'http://127.0.0.1:8000/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
+                $request->img_profile->move('img/profiles', $namaFile);
+                User::where('id_user', $user_id)->update(['img_profile' => $namaFile]);
+            }
+
             $validateData['user_id'] = $user_id;
 
             Apoteker::create($validateData);
@@ -72,6 +92,16 @@ class ProfileController extends Controller
                 'alamat' => 'required|max:50'
             ]);
 
+            if ($request->img_profile) {
+                $request->validate([
+                    'img_profile' => '  image|mimes:png,jpg',
+                ]);
+                $namaFile = 'http://127.0.0.1:8000/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
+                $request->img_profile->move('img/profiles', $namaFile);
+                $id_user = Auth()->user()->id_user;
+                User::where('id_user', $id_user)->update(['img_profile' => $namaFile]);
+            }
+
             PetugasMedis::where('id_petugas_medis', $id)->update($validateData);
             return redirect('/profile')->with('pesan', 'Data updated successfully');
         } elseif (Auth()->user()->role === 'Apoteker') {
@@ -83,8 +113,15 @@ class ProfileController extends Controller
                 'alamat' => 'required|max:50'
             ]);
 
-            $user_id = Auth()->user()->id_user;
-            $validateData['user_id'] = $user_id;
+            if ($request->img_profile) {
+                $request->validate([
+                    'img_profile' => '  image|mimes:png,jpg',
+                ]);
+                $namaFile = 'http://127.0.0.1:8000/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
+                $request->img_profile->move('img/profiles', $namaFile);
+                $id_user = Auth()->user()->id_user;
+                User::where('id_user', $id_user)->update(['img_profile' => $namaFile]);
+            }
 
             Apoteker::where('id_apoteker', $id)->update($validateData);
             return redirect('/profile')->with('pesan', 'Data updated successfully');

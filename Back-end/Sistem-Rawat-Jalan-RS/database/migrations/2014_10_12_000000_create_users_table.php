@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('password', 60);
             $table->string('role', 15);
             $table->timestamp('last_login')->nullable();
-            $table->string('img_profile', 60)->nullable();
+            $table->string('img_profile', 100)->nullable();
         });
     }
 

@@ -83,6 +83,24 @@
         new DataTable('#dataTable');
     </script>
 
+<script type="text/javascript">
+    const input = document.getElementById('img_profile');
+
+    const previewPhoto = () => {
+        const file = input.files;
+        if (file) {
+            const fileReader = new FileReader();
+            const preview = document.getElementById('img-preview');
+            fileReader.onload = event => {
+                preview.setAttribute('src', event.target.result);
+            }
+            fileReader.readAsDataURL(file[0]);
+        }
+    }
+
+    input.addEventListener('change', previewPhoto);
+</script>
+
 </body>
 
 </html>

@@ -44,6 +44,16 @@ class RekamMedisController extends Controller
 
         RekamMedis::create($validateData);
 
-        return redirect(route('resep-obat.create', ['pendaftaranTemu' => $pendaftaranTemu]));
+        $rekamMedis = RekamMedis::where('kode_rekam_medis', $validateData['kode_rekam_medis'])->first();
+
+        $id = $rekamMedis->id_rekam_medis;
+
+        return redirect(route('resep-obat.create', ['pendaftaranTemu' => $pendaftaranTemu, 'id' => $id]));
+    }
+
+    public function show($id)
+    {
+        $rekamMedis = RekamMedis::find($id);
+        return view('admin.rekam-medis.show', ['rekamMedis' => $rekamMedis]);
     }
 }

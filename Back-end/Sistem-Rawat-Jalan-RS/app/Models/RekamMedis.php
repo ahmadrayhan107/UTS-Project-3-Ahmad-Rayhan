@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RekamMedis extends Model
 {
@@ -14,8 +14,8 @@ class RekamMedis extends Model
     protected $fillable = ['kode_rekam_medis', 'tanggal_periksa', 'keluhan', 'diagnosa', 'tekanan_darah', 'suhu_tubuh', 'berat_badan', 'pasien_id'];
     public $timestamps = false;
 
-    public function pasien(): BelongsTo
+    public function resepObat(): HasMany
     {
-        return $this->belongsTo(Pasien::class, 'pasien_id', 'id_pasien');
+        return $this->hasMany(ResepObat::class, 'rekam_medis_id', 'id_rekam_medis');
     }
 }

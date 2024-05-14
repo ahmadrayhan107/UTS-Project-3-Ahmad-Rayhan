@@ -10,8 +10,10 @@
 
             <div class="card shadow mb-4">
                 <div class="card-profile-image mt-4">
-                    <figure class="rounded-circle avatar avatar font-weight-bold"
-                        style="font-size: 60px; height: 180px; width: 180px;" data-initial=""></figure>
+                    @php
+                        $img = $profile->img_profile ? $profile->img_profile : 'img/undraw_profile.svg';
+                    @endphp
+                    <img src="{{ asset($img) }}" id="img-preview" class="img-fluid rounded-circle">
                 </div>
                 <div class="card-body">
 
@@ -59,10 +61,25 @@
                         <h6 class="heading-small text-muted mb-4">Petugas Medis information</h6>
 
                         <div class="pl-lg-4">
-                            <form action="{{ route('profile.edit', ['id' => $petugasMedis->id_petugas_medis]) }}"
-                                method="post">
+                            <form action="{{ route('profile.edit', ['id' => $petugasMedis->id_petugas_medis]) }}" method="post"
+                                enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
+
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input name="img_profile" id="img_profile" type="file"
+                                                class="custom-file-input  @error('img_profile') is-invalid @enderror">
+                                            <label class="custom-file-label">Choose Photo File</label>
+                                        </div>
+                                    </div>
+                                    @if (count($errors) > 0)
+                                        <div class="form-text text-danger">
+                                            {{ $errors->first('img_profile') }}
+                                        </div>
+                                    @endif
+                                </div>
 
                                 <div class="row">
                                     <div class="col-lg-12">
@@ -175,9 +192,24 @@
                         <h6 class="heading-small text-muted mb-4">Apoteker information</h6>
 
                         <div class="pl-lg-4">
-                            <form action="{{ route('profile.edit', ['id' => $apoteker->id_apoteker]) }}" method="post">
+                            <form action="{{ route('profile.edit', ['id' => $apoteker->id_apoteker]) }}" method="post" enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
+
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input name="img_profile" id="img_profile" type="file"
+                                                class="custom-file-input  @error('img_profile') is-invalid @enderror">
+                                            <label class="custom-file-label">Choose Photo File</label>
+                                        </div>
+                                    </div>
+                                    @if (count($errors) > 0)
+                                        <div class="form-text text-danger">
+                                            {{ $errors->first('img_profile') }}
+                                        </div>
+                                    @endif
+                                </div>
 
                                 <div class="row">
                                     <div class="col-lg-12">

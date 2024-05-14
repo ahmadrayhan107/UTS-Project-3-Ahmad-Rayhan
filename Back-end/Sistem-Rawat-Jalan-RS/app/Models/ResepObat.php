@@ -11,11 +11,11 @@ class ResepObat extends Model
     use HasFactory;
 
     protected $primaryKey = 'id_resep_obat';
-    protected $fillable = ['tanggal', 'dosis', 'jenis_obat', 'keterangan', 'obat_id', 'pendaftaran_temu_id'];
+    protected $fillable = ['tanggal', 'dosis', 'jenis_obat', 'keterangan', 'obat_id', 'rekam_medis_id'];
     public $timestamps = false;
 
-    public function pendaftaranTemu(): BelongsTo
+    public function obat(): BelongsTo
     {
-        return $this->belongsTo(PendaftaranTemu::class, 'pendaftaran_temu_id', 'id_pendaftaran_temu');
+        return $this->belongsTo(Obat::class, 'obat_id', 'id_obat');
     }
 }

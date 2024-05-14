@@ -15,7 +15,7 @@ return new class extends Migration
             $table->increments('id_rekam_medis');
             $table->string('kode_rekam_medis', 10)->unique();
             $table->date('tanggal_periksa');
-            $table->string('keluhan', 30)->nullable();
+            $table->string('keluhan', 50)->nullable();
             $table->string('diagnosa', 30)->nullable();
             $table->string('tekanan_darah', 5)->nullable();
             $table->string('suhu_tubuh', 3)->nullable();
