@@ -1,4 +1,4 @@
-![alt text](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqzZEA1ZUQUD_8ZiAfaknfYuPOXbKZeJyvVqIH7tdoHC6AQ1wWz3Xg10R-Zi8igu_lr2o&usqp=CAU)
+![alt text](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqzZEA1ZUQUD_8ZiAfaknfYuPOXbKZeJyvVqIH7tdoHC6AQ1wWz3Xg10R-Zi8igu_lr2o&usqp=CAU) ![alt text](https://ti.pnp.ac.id/wp-content/uploads/2022/01/1595472616513_teknologi-informasi-01-01-300x111.png)
 
 # UTS-Project-3
 
