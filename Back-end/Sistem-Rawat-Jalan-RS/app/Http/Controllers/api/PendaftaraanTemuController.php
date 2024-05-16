@@ -13,6 +13,22 @@ use Illuminate\Support\Str;
 
 class PendaftaraanTemuController extends Controller
 {
+    public function show($id)
+    {
+        $daftarTemu = PendaftaranTemu::where('pasien_id', $id)->where('status', 'Terdaftar')->get();
+        if (!$daftarTemu) {
+            return response()->json([
+                'message' => 'Anda belum melakukan pendaftaran temu',
+                'status' => Response::HTTP_NOT_FOUND,
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json([
+            'daftarTemu' => $daftarTemu,
+            'status' => Response::HTTP_OK,
+        ], Response::HTTP_OK);
+    }
+
     public function store(Request $request, $id)
     {
         $validateData = Validator::make($request->all(), [

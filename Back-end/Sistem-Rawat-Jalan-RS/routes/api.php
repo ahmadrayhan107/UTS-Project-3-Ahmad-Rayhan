@@ -7,6 +7,7 @@ use App\Http\Controllers\api\JadwalDokterController;
 use App\Http\Controllers\api\PasienController;
 use App\Http\Controllers\api\PendaftaraanTemuController;
 use App\Http\Controllers\api\RekamMedisController;
+use App\Http\Controllers\api\PembayaranController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,11 +48,19 @@ Route::group(array('prefix' => 'v1'), function () {
 
         // Pendaftaran Temu
         Route::post('/pendaftaran-temu/{id}', [PendaftaraanTemuController::class, 'store']);
+        Route::get('/pendaftaran-temu/{id}', [PendaftaraanTemuController::class, 'show']);
 
         // Rekam Medis
         Route::get('/rekam-medis/{id}', [RekamMedisController::class, 'show']);
 
+        // Pembayaran
+        Route::get('/pembayaran/{id}/list', [PembayaranController::class, 'show']);
+
         // Attachments
         Route::post('/attachments/{id}', [AttachmentsController::class, 'store']);
     });
+
+    // Xendit
+    Route::post('/pembayaran', [PembayaranController::class, 'create']);
+    Route::post('/pembayaran/webhook/xendit', [PembayaranController::class, 'webhook']);
 });

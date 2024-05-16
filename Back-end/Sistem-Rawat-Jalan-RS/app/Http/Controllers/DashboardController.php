@@ -59,7 +59,6 @@ class DashboardController extends Controller
             $dateNow = Carbon::now();
 
             $pendaftaranTemus = PendaftaranTemu::where('status', 'Selesai')
-                ->where('tanggal_pendaftaran', $dateNow->toDateString())
                 ->get();
             return view('dashboard', ['pendaftaranTemus' => $pendaftaranTemus]);
         }

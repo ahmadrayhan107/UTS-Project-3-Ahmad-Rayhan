@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('berat_badan', 3)->nullable();
             $table->integer('pasien_id')->unsigned();
             $table->foreign('pasien_id')->references('id_pasien')->on('pasiens');
+            $table->integer('pendaftaran_temu_id')->unsigned();
+            $table->foreign('pendaftaran_temu_id')->references('id_pendaftaran_temu')->on('pendaftaran_temus');
         });
     }
 

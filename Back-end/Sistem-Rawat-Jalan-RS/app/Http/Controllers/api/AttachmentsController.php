@@ -28,7 +28,7 @@ class AttachmentsController extends Controller
         User::where('id_user', $id)->update(['img_profile' => $namaFile]);
 
         return response()->json([
-            'img_url' => $namaFile,
+            'message' => 'Uploaded success',
             'status' => Response::HTTP_CREATED,
         ], Response::HTTP_CREATED);
     }

@@ -41,6 +41,7 @@ class RekamMedisController extends Controller
         }
 
         $validateData['pasien_id'] = $pendaftaranTemu->pasien_id;
+        $validateData['pendaftaran_temu_id'] = $pendaftaranTemu->id_pendaftaran_temu;
 
         RekamMedis::create($validateData);
 

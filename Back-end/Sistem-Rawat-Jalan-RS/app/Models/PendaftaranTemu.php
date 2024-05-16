@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class PendaftaranTemu extends Model
 {
@@ -25,8 +25,15 @@ class PendaftaranTemu extends Model
         return $this->belongsTo(Dokter::class, 'dokter_id', 'id_dokter');
     }
 
-    public function rekamMedis(): HasOne
+    public function details(): HasManyThrough
     {
-        return $this->hasOne(RekamMedis::class, 'pendaftaran_temu_id', 'id_pendaftaran_temu');
+        return $this->hasManyThrough(
+            ResepObat::class, 
+            RekamMedis::class, 
+            'pendaftaran_temu_id', 
+            'rekam_medis_id',
+            'id_pendaftaran_temu',
+            'id_rekam_medis'    
+        );
     }
 }

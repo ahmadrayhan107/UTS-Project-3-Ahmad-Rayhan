@@ -19,7 +19,8 @@
         "php-open-source-saver/jwt-auth": "^2.2",
         "symfony/http-client": "^6.1",
         "symfony/mailgun-mailer": "^6.1",
-        "symfony/postmark-mailer": "^6.1"
+        "symfony/postmark-mailer": "^6.1",
+        "xendit/xendit-php": "^5.0"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^2.0",

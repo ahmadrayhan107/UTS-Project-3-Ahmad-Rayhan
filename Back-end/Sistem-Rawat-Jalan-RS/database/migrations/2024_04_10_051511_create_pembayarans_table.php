@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('pembayarans', function (Blueprint $table) {
             $table->increments('id_pembayaran');
-            $table->string('nota', 5)->unique();
+            $table->string('nota', 15)->unique();
             $table->integer('total_biaya');
             $table->date('tanggal_pembayaran');
             $table->integer('pasien_id')->unsigned();
             $table->foreign('pasien_id')->references('id_pasien')->on('pasiens');
+            $table->string('checkout_link', 100);
+            $table->string('external_id', 50);
+            $table->string('status', 20);
         });
     }
 

@@ -280,9 +280,19 @@
                                                 <td>{{ $pendaftaranTemu->dokter->nama_dokter }}</td>
                                                 </td>
                                                 <td class="text-center">
-                                                    <a href="" class="btn btn-info btn-circle">
+                                                    <a href="{{ route('obat.info', ['id' => $pendaftaranTemu->id_pendaftaran_temu]) }}"
+                                                        class="btn btn-info btn-circle">
                                                         <i class="fas fa-fw fa-info"></i>
                                                     </a>
+                                                    <form
+                                                        action="{{ route('obat.success', ['id' => $pendaftaranTemu->id_pendaftaran_temu]) }}"
+                                                        method="post" class="d-inline">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-primary btn-circle"
+                                                            onclick="return confirm('Are you sure?')">
+                                                            <i class="fas fa-arrow-right"></i>
+                                                        </button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach

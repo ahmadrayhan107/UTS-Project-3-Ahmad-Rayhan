@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Obat;
+use App\Models\PendaftaranTemu;
+use App\Models\RekamMedis;
 use Illuminate\Http\Request;
 
 class ObatController extends Controller
@@ -54,5 +56,18 @@ class ObatController extends Controller
     {
         Obat::destroy($id);
         return redirect('/obat')->with('pesan', 'Data deleted successfully');
+    }
+
+    public function info($id)
+    {
+        $daftarObats = RekamMedis::where('pendaftaran_temu_id', $id)->get();
+
+        return view('apoteker.obats.info', ['daftarObats' => $daftarObats]);
+    }
+
+    public function success($id)
+    {
+        PendaftaranTemu::where('id_pendaftaran_temu', $id)->update(['status' => 'Success']);
+        return redirect('/dashboard')->with('pesan', 'Obat provide successfully');
     }
 }

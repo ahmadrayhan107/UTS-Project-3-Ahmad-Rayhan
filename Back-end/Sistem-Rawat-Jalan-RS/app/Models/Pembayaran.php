@@ -12,7 +12,7 @@ class Pembayaran extends Model
     use HasFactory;
 
     protected $primaryKey = 'id_pembayaran';
-    protected $fillable = ['nota', 'total_biaya', 'tanggal_pembayaran', 'pasien_id'];
+    protected $fillable = ['nota', 'total_biaya', 'tanggal_pembayaran', 'pasien_id', 'checkout_link', 'external_id', 'status'];
     public $timestamps = false;
 
     public function pasien(): BelongsTo

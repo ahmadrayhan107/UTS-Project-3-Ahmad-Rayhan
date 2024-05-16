@@ -104,6 +104,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/obat/{id}', [ObatController::class, 'edit'])->name('obat.edit');
         Route::put('/obat/{id}', [ObatController::class, 'update'])->name('obat.update');
         Route::delete('/obat/{id}', [ObatController::class, 'destroy'])->name('obat.destroy');
+        Route::get('/obat/{id}/info', [ObatController::class, 'info'])->name('obat.info');
+        Route::post('/obat/{id}/success', [ObatController::class, 'success'])->name('obat.success');
     });
 });
 
