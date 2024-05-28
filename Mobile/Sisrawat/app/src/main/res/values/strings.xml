@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Sisrawat</string>
+    <string name="logo_sisrawat">Logo Sisrawat</string>
+    <string name="sign_in_headline">Sign in to your \nAccount</string>
+    <string name="sign_in_message">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="background">Background</string>
+    <string name="show_password">Show Password</string>
+    <string name="hide_password">Hide Password</string>
+    <string name="login">Log In</string>
+    <string name="login_alt">Login</string>
+    <string name="sign_up_headline">Create account</string>
+    <string name="sign_up_message">Already have an account?</string>
+    <string name="register">Register</string>
+</resources>
