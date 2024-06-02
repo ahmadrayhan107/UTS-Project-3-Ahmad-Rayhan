@@ -15,4 +15,11 @@
     <string name="sign_up_headline">Create account</string>
     <string name="sign_up_message">Already have an account?</string>
     <string name="register">Register</string>
+    <string name="logout">Logout</string>
+    <string name="home">Home</string>
+    <string name="jadwal_temu">Jadwal</string>
+    <string name="rekam_medis">Rekam</string>
+    <string name="profile">Profile</string>
+    <string name="pasien">Pasien</string>
+    <string name="menu">Menu</string>
 </resources>

@@ -14,12 +14,14 @@ import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Azul,
+    secondary = SoftBlue,
     background = EerieBlack,
     onBackground = Color.White
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Azul,
+    secondary = SoftBlue,
     background = Color.White,
     onBackground = EerieBlack
 )
@@ -37,7 +39,7 @@ fun SisrawatTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
+            window.statusBarColor = colorScheme.secondary.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
         }
     }

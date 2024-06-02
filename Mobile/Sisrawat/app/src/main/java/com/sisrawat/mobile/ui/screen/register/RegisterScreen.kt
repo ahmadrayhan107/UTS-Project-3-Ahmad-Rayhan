@@ -60,8 +60,8 @@ import com.sisrawat.mobile.ui.theme.SoftBlue
 
 @Composable
 fun Register(
-    modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    modifier: Modifier = Modifier
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -173,7 +173,7 @@ fun RegisterScreen(
             Card(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(bottom = 48.dp),
+                    .padding(bottom = 32.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White),
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground)
             ) {
@@ -206,7 +206,8 @@ fun RegisterScreen(
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.LightGray
                         )
-                    }
+                    },
+                    singleLine = true
                 )
 
                 TextField(
@@ -256,7 +257,8 @@ fun RegisterScreen(
                                 tint = Color.LightGray
                             )
                         }
-                    }
+                    },
+                    singleLine = true
                 )
 
                 TextField(
@@ -306,7 +308,8 @@ fun RegisterScreen(
                                 tint = Color.LightGray
                             )
                         }
-                    }
+                    },
+                    singleLine = true
                 )
             }
 
@@ -321,7 +324,7 @@ fun RegisterScreen(
                 Text(
                     text = stringResource(R.string.register),
                     color = Color.White,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
         }

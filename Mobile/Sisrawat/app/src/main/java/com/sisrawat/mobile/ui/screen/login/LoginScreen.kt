@@ -22,10 +22,15 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -35,11 +40,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -48,45 +55,82 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sisrawat.mobile.R
 import com.sisrawat.mobile.ui.navigation.Screen
+import com.sisrawat.mobile.ui.screen.util.AuthViewModelFactory
 import com.sisrawat.mobile.ui.theme.AliceBlue
 import com.sisrawat.mobile.ui.theme.Azul
 import com.sisrawat.mobile.ui.theme.RoyalBlue
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 import com.sisrawat.mobile.ui.theme.SoftBlue
-import java.time.format.TextStyle
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Login(
     modifier: Modifier = Modifier,
-    navController: NavController
+    viewModel: LoginViewModel = viewModel(factory = AuthViewModelFactory.getInstance(LocalContext.current)),
+    navController: NavController,
+    snackbarHostState: SnackbarHostState
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordHidden by rememberSaveable { mutableStateOf(true) }
 
-    LoginScreen(
-        modifier = modifier,
-        email = email,
-        onEmail = { input ->
-            email = input
-        },
-        password = password,
-        onPassword = { input ->
-            password = input
-        },
-        passwordHidden = passwordHidden,
-        onPasswordHidden = {
-            passwordHidden = !passwordHidden
-        },
-        navigateToRegister = {
-            navController.popBackStack()
-            navController.navigate(Screen.Register.route)
-        }
-    )
+    val scope = rememberCoroutineScope()
+
+    var loading by remember { mutableStateOf(false) }
+    var enabled by remember { mutableStateOf(true) }
+
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) }
+    ) { innerPadding ->
+        LoginScreen(
+            modifier = modifier.padding(innerPadding),
+            email = email,
+            onEmail = { input ->
+                email = input
+            },
+            password = password,
+            onPassword = { input ->
+                password = input
+            },
+            passwordHidden = passwordHidden,
+            onPasswordHidden = {
+                passwordHidden = !passwordHidden
+            },
+            navigateToRegister = {
+                navController.popBackStack()
+                navController.navigate(Screen.Register.route)
+            },
+            onClickLogin = {
+                scope.launch {
+                    if (email.isEmpty() || password.isEmpty()) {
+                        snackbarHostState.showSnackbar(
+                            message = "Error: Incomplete Field",
+                            duration = SnackbarDuration.Short
+                        )
+                    } else {
+                        viewModel.login(email, password).let {
+                            loading = viewModel.loading.value
+                            enabled = false
+                            snackbarHostState.showSnackbar(
+                                message = viewModel.message.value,
+                                duration = SnackbarDuration.Short
+                            )
+                            loading = false
+                            enabled = true
+                        }
+                    }
+                }
+            },
+            loading = loading,
+            enabled = enabled
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -99,7 +143,10 @@ fun LoginScreen(
     onPassword: (String) -> Unit,
     passwordHidden: Boolean,
     onPasswordHidden: () -> Unit,
-    navigateToRegister: () -> Unit
+    navigateToRegister: () -> Unit,
+    onClickLogin: () -> Unit,
+    loading: Boolean,
+    enabled: Boolean
 ) {
     Box {
         Image(
@@ -160,7 +207,7 @@ fun LoginScreen(
             Card(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(bottom = 48.dp),
+                    .padding(bottom = 32.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White),
                 border = BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground)
             ) {
@@ -175,7 +222,10 @@ fun LoginScreen(
                         disabledIndicatorColor = AliceBlue,
                         unfocusedIndicatorColor = AliceBlue,
                         textColor = Color.Black,
-                        selectionColors = TextSelectionColors(handleColor = Azul, backgroundColor = SoftBlue),
+                        selectionColors = TextSelectionColors(
+                            handleColor = Azul,
+                            backgroundColor = SoftBlue
+                        ),
                     ),
                     leadingIcon = {
                         Icon(
@@ -190,7 +240,8 @@ fun LoginScreen(
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.LightGray
                         )
-                    }
+                    },
+                    singleLine = true
                 )
 
                 TextField(
@@ -204,7 +255,10 @@ fun LoginScreen(
                         disabledIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         textColor = Color.Black,
-                        selectionColors = TextSelectionColors(handleColor = Azul, backgroundColor = SoftBlue),
+                        selectionColors = TextSelectionColors(
+                            handleColor = Azul,
+                            backgroundColor = SoftBlue
+                        ),
                     ),
                     leadingIcon = {
                         Icon(
@@ -237,23 +291,31 @@ fun LoginScreen(
                                 tint = Color.LightGray
                             )
                         }
-                    }
+                    },
+                    singleLine = true
                 )
             }
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = onClickLogin,
                 colors = ButtonDefaults.buttonColors(containerColor = Azul),
                 modifier = modifier
                     .fillMaxWidth()
                     .size(60.dp),
                 shape = RoundedCornerShape(16.dp),
+                enabled = enabled
             ) {
-                Text(
-                    text = stringResource(R.string.login),
-                    color = Color.White,
-                    style = MaterialTheme.typography.bodyMedium
-                )
+                if (loading) {
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                } else {
+                    Text(
+                        text = stringResource(R.string.login),
+                        color = Color.White,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
             }
         }
     }
@@ -277,7 +339,10 @@ fun PreviewLoginScreen() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            Login(navController = rememberNavController())
+            Login(
+                navController = rememberNavController(),
+                snackbarHostState = remember { SnackbarHostState() }
+            )
         }
     }
 }

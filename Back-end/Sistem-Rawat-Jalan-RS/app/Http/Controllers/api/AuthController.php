@@ -21,7 +21,7 @@ class AuthController extends Controller
 
         if ($validateData->fails()) {
             return response()->json([
-                'errors' => $validateData->errors(),
+                'errors' => "Login is failed",
                 'status' => Response::HTTP_BAD_REQUEST,
             ], Response::HTTP_BAD_REQUEST);
         }
@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         if (!$token) {
             return response()->json([
-                'message' => 'Unauthorized',
+                'message' => 'The user doesnt exist',
                 'status' => Response::HTTP_UNAUTHORIZED,
             ], Response::HTTP_UNAUTHORIZED);
         }
@@ -42,12 +42,14 @@ class AuthController extends Controller
         $dataUser = Auth::guard('api')->user();
         if ($dataUser) {
             return response()->json([
+                'message' => "Login is successfully",
                 'dataUser' => $dataUser,
                 'authorization' => [
                     'token' => $token,
                     'type' => 'Bearer'
-                ]
-            ]);
+                ],
+                'status' => Response::HTTP_OK,
+            ], Response::HTTP_OK);
         }
     }
 

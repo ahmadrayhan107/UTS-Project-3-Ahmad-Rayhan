@@ -15,7 +15,6 @@ class RekamMedisController extends Controller
 
         $dataRekamMedis = $rekamMedis->load(['resepObat']);
 
-
         return response()->json([
             'rekamMedis' => $dataRekamMedis,
             'status' => Response::HTTP_OK,

@@ -10,11 +10,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.sisrawat.mobile.data.local.preferences.SessionPreferences
+import com.sisrawat.mobile.data.local.preferences.datastore
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val sessionPreferences = SessionPreferences.getInstance(this.datastore)
         setContent {
             SisrawatTheme {
                 // A surface container using the 'background' color from the theme
@@ -22,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SisrawatApp()
+                    SisrawatApp(sessionPreferences = sessionPreferences)
                 }
             }
         }
