@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.sisrawat.mobile.R
 import com.sisrawat.mobile.ui.navigation.BottomNavigationItem
 import com.sisrawat.mobile.ui.theme.Azul
@@ -28,10 +29,12 @@ import com.sisrawat.mobile.ui.theme.Azul
 @ExperimentalAnimationApi
 @Composable
 fun BottomBar(
+    modifier: Modifier = Modifier,
     bottomNavigationItems: List<BottomNavigationItem>,
-    modifier: Modifier = Modifier
+    navController: NavHostController
 ) {
     var selectedScreen by remember { mutableStateOf(0) }
+
     Box(
         modifier
             .shadow(5.dp)
@@ -63,7 +66,8 @@ fun BottomBar(
                             selectedScreen = bottomNavigationItems.indexOf(bottomNavigationItem)
                         },
                         bottomNavigationItem = bottomNavigationItem,
-                        isSelected = isSelected
+                        isSelected = isSelected,
+                        navController = navController
                     )
                 }
             }

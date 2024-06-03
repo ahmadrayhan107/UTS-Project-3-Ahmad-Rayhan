@@ -27,6 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.sisrawat.mobile.R
 import com.sisrawat.mobile.ui.navigation.BottomNavigationItem
 import com.sisrawat.mobile.ui.theme.Azul
@@ -37,6 +39,7 @@ fun BottomNavItem(
     modifier: Modifier = Modifier,
     bottomNavigationItem: BottomNavigationItem,
     isSelected: Boolean,
+    navController: NavHostController
 ) {
     val animatedHeight by animateDpAsState(
         targetValue = if (isSelected) 36.dp else 26.dp,
@@ -90,6 +93,7 @@ fun BottomNavItem(
                     .size(animatedIconSize),
                 tint = Color.White
             )
+
             if (isSelected) {
                 Text(
                     text = bottomNavigationItem.title,
@@ -97,6 +101,16 @@ fun BottomNavItem(
                     maxLines = 1,
                     color = Color.White
                 )
+
+                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val currentRoute = navBackStackEntry?.destination?.route
+
+                if (currentRoute != null) {
+                    if (currentRoute != bottomNavigationItem.route) {
+                        navController.navigate(bottomNavigationItem.route)
+                    }
+                }
+
             }
         }
     }

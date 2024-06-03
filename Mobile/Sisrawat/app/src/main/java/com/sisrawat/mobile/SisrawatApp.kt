@@ -18,6 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,9 +30,14 @@ import com.sisrawat.mobile.data.local.preferences.SessionPreferences
 import com.sisrawat.mobile.ui.component.bottombar.BottomBar
 import com.sisrawat.mobile.ui.navigation.BottomNavigationItem
 import com.sisrawat.mobile.ui.navigation.Screen
-import com.sisrawat.mobile.ui.screen.home.pasien.Home
+import com.sisrawat.mobile.ui.screen.home.dokter.HomeDokter
+import com.sisrawat.mobile.ui.screen.home.pasien.HomePasien
+import com.sisrawat.mobile.ui.screen.jadwaltemu.JadwalTemu
 import com.sisrawat.mobile.ui.screen.login.Login
+import com.sisrawat.mobile.ui.screen.pasien.Pasien
+import com.sisrawat.mobile.ui.screen.profile.Profile
 import com.sisrawat.mobile.ui.screen.register.Register
+import com.sisrawat.mobile.ui.screen.rekammedis.RekamMedis
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
@@ -67,28 +73,31 @@ fun SisrawatApp(
                                     title = stringResource(R.string.home),
                                     activeIcon = Icons.Filled.Home,
                                     inactiveIcon = Icons.Outlined.Home,
-                                    screen = Screen.Home,
+                                    route = Screen.Home.route,
                                 ),
                                 BottomNavigationItem(
                                     title = stringResource(R.string.jadwal_temu),
                                     activeIcon = Icons.Filled.DateRange,
                                     inactiveIcon = Icons.Outlined.DateRange,
-                                    screen = Screen.JadwalTemu,
+                                    route = Screen.JadwalTemu.route,
                                 ),
                                 BottomNavigationItem(
                                     title = stringResource(R.string.rekam_medis),
                                     activeIcon = Icons.Filled.MedicalInformation,
                                     inactiveIcon = Icons.Outlined.MedicalInformation,
-                                    screen = Screen.RekamMedis,
+                                    route = Screen.RekamMedis.route,
                                 ),
                                 BottomNavigationItem(
                                     title = stringResource(R.string.profile),
                                     activeIcon = Icons.Filled.Person,
                                     inactiveIcon = Icons.Outlined.Person,
-                                    screen = Screen.Profile,
+                                    route = Screen.Profile.route,
                                 )
                             )
-                        BottomBar(bottomNavigationItem)
+                        BottomBar(
+                            bottomNavigationItems = bottomNavigationItem,
+                            navController = navController
+                        )
                     }
 
                     "Dokter" -> {
@@ -98,28 +107,31 @@ fun SisrawatApp(
                                     title = stringResource(R.string.home),
                                     activeIcon = Icons.Filled.Home,
                                     inactiveIcon = Icons.Outlined.Home,
-                                    screen = Screen.Home,
+                                    route = Screen.Home.route,
                                 ),
                                 BottomNavigationItem(
                                     title = stringResource(R.string.jadwal_temu),
                                     activeIcon = Icons.Filled.DateRange,
                                     inactiveIcon = Icons.Outlined.DateRange,
-                                    screen = Screen.JadwalTemu,
+                                    route = Screen.JadwalTemu.route,
                                 ),
                                 BottomNavigationItem(
                                     title = stringResource(R.string.pasien),
                                     activeIcon = Icons.Filled.PersonalInjury,
                                     inactiveIcon = Icons.Outlined.PersonalInjury,
-                                    screen = Screen.RekamMedis,
+                                    route = Screen.Pasien.route,
                                 ),
                                 BottomNavigationItem(
-                                    title = stringResource(R.string.pasien),
+                                    title = stringResource(R.string.profile),
                                     activeIcon = Icons.Filled.Person,
                                     inactiveIcon = Icons.Outlined.Person,
-                                    screen = Screen.Profile,
+                                    route = Screen.Profile.route,
                                 )
                             )
-                        BottomBar(bottomNavigationItem)
+                        BottomBar(
+                            bottomNavigationItems = bottomNavigationItem,
+                            navController = navController
+                        )
                     }
                 }
             },
@@ -137,13 +149,28 @@ fun SisrawatApp(
                     )
                 }
                 composable(Screen.Register.route) {
-                    Register(navController = navController)
+                    Register(
+                        navController = navController,
+                        snackbarHostState = snackbarHostState
+                    )
                 }
                 composable(Screen.Home.route) {
                     when (role) {
-                        "Pasien" -> Home()
-                        "Dokter" -> null // Home Dokter
+                        "Pasien" -> HomePasien()
+                        "Dokter" -> HomeDokter()
                     }
+                }
+                composable(Screen.JadwalTemu.route) {
+                    JadwalTemu()
+                }
+                composable(Screen.RekamMedis.route) {
+                    RekamMedis()
+                }
+                composable(Screen.Profile.route) {
+                    Profile()
+                }
+                composable(Screen.Pasien.route) {
+                    Pasien()
                 }
             }
         }

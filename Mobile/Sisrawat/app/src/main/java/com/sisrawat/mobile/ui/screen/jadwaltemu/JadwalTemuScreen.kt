@@ -1,6 +1,7 @@
-package com.sisrawat.mobile.ui.screen.home.dokter
+package com.sisrawat.mobile.ui.screen.jadwaltemu
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,16 +36,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.sisrawat.mobile.R
 import com.sisrawat.mobile.ui.component.SearchBar
 import com.sisrawat.mobile.ui.component.navdrawer.NavigationDrawer
+import com.sisrawat.mobile.ui.screen.home.pasien.HomeScreen
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeDokter(
+fun JadwalTemu(
     modifier: Modifier = Modifier
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    var search by remember { mutableStateOf("") }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -58,11 +59,10 @@ fun HomeDokter(
                         containerColor = MaterialTheme.colorScheme.primary
                     ),
                     title = {
-                        SearchBar(
-                            search = search,
-                            onSearch = { input ->
-                                search = input
-                            }
+                        Text(
+                            text = stringResource(R.string.jadwal_temu),
+                            style = MaterialTheme.typography.headlineSmall,
+                            color = Color.White
                         )
                     },
                     navigationIcon = {
@@ -93,19 +93,21 @@ fun HomeDokter(
                 )
             }
         ) { innerPadding ->
-            HomeScreen(modifier.padding(innerPadding))
+            JadwalTemuScreen(modifier = modifier.padding(innerPadding))
         }
     }
 }
 
 @Composable
-fun HomeScreen(modifier: Modifier) {
+fun JadwalTemuScreen(
+    modifier: Modifier
+) {
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = "Home Dokter")
+        Text(text = "Jadwal Temu")
     }
 }
 
@@ -121,13 +123,13 @@ fun HomeScreen(modifier: Modifier) {
     uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
-fun PreviewHomeScreen() {
+fun PreviewJadwalTemuScreen() {
     SisrawatTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            HomeDokter()
+            JadwalTemu()
         }
     }
 }

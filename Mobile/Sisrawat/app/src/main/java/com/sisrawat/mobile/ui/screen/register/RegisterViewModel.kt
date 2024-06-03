@@ -1,4 +1,4 @@
-package com.sisrawat.mobile.ui.screen.login
+package com.sisrawat.mobile.ui.screen.register
 
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import retrofit2.HttpException
 
-class LoginViewModel(private val repository: AuthRepository) : ViewModel() {
+class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
     private val _message = MutableStateFlow("")
     val message: StateFlow<String>
         get() = _message
@@ -17,21 +17,22 @@ class LoginViewModel(private val repository: AuthRepository) : ViewModel() {
     val loading: StateFlow<Boolean>
         get() = _loading
 
-    suspend fun login(email: String, password: String) {
+    private val _status = MutableStateFlow(false)
+    val status: StateFlow<Boolean>
+        get() = _status
+
+    suspend fun register(username: String, email: String, password: String) {
         _loading.value = true
         try {
-            val data = repository.login(email, password)
+            val data = repository.register(username, email, password)
             _message.value = "Success: ${data.message}"
-            repository.saveSession(
-                data.dataUser.idUser,
-                data.dataUser.role,
-                data.authorization.token
-            )
+            _status.value = true
         } catch (e: HttpException) {
             val jsonInString = e.response()?.errorBody()?.string()
             val errorBody = Gson().fromJson(jsonInString, LoginErrorResponse::class.java)
             val errorMessage = errorBody.message
             _message.value = "Error: $errorMessage"
+            _status.value = false
         }
     }
 }

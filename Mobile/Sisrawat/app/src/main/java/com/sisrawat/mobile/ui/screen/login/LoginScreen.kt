@@ -72,7 +72,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun Login(
     modifier: Modifier = Modifier,
-    viewModel: LoginViewModel = viewModel(factory = AuthViewModelFactory.getInstance(LocalContext.current)),
+    viewModel: LoginViewModel = viewModel(
+        factory = AuthViewModelFactory.getInstance(
+            LocalContext.current
+        )
+    ),
     navController: NavController,
     snackbarHostState: SnackbarHostState
 ) {
