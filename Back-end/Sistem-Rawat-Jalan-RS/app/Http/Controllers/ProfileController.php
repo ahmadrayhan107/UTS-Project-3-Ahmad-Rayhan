@@ -45,7 +45,7 @@ class ProfileController extends Controller
                 $request->validate([
                     'img_profile' => '  image|mimes:png,jpg',
                 ]);
-                $namaFile = 'http://127.0.0.1:8000/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
+                $namaFile = '/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
                 $request->img_profile->move('img/profiles', $namaFile);
                 User::where('id_user', $user_id)->update(['img_profile' => $namaFile]);
             }
@@ -69,7 +69,7 @@ class ProfileController extends Controller
                 $request->validate([
                     'img_profile' => '  image|mimes:png,jpg',
                 ]);
-                $namaFile = 'http://127.0.0.1:8000/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
+                $namaFile = '/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
                 $request->img_profile->move('img/profiles', $namaFile);
                 User::where('id_user', $user_id)->update(['img_profile' => $namaFile]);
             }
@@ -96,7 +96,7 @@ class ProfileController extends Controller
                 $request->validate([
                     'img_profile' => '  image|mimes:png,jpg',
                 ]);
-                $namaFile = 'http://127.0.0.1:8000/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
+                $namaFile = '/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
                 $request->img_profile->move('img/profiles', $namaFile);
                 $id_user = Auth()->user()->id_user;
                 User::where('id_user', $id_user)->update(['img_profile' => $namaFile]);
@@ -117,7 +117,7 @@ class ProfileController extends Controller
                 $request->validate([
                     'img_profile' => '  image|mimes:png,jpg',
                 ]);
-                $namaFile = 'http://127.0.0.1:8000/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
+                $namaFile = '/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
                 $request->img_profile->move('img/profiles', $namaFile);
                 $id_user = Auth()->user()->id_user;
                 User::where('id_user', $id_user)->update(['img_profile' => $namaFile]);

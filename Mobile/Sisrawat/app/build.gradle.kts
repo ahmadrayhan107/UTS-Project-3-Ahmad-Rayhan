@@ -19,7 +19,7 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "BASE_URL", "\"https://2002-223-255-231-142.ngrok-free.app\"")
+        buildConfigField("String", "BASE_URL", "\"https://blowfish-discrete-garfish.ngrok-free.app\"")
     }
 
     buildTypes {

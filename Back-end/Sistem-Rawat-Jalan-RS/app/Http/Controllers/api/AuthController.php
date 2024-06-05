@@ -21,9 +21,17 @@ class AuthController extends Controller
 
         if ($validateData->fails()) {
             return response()->json([
-                'errors' => "Login is failed",
+                'message' => "Login is failed",
                 'status' => Response::HTTP_BAD_REQUEST,
             ], Response::HTTP_BAD_REQUEST);
+        }
+
+        $user = User::where('email', $request['email'])->first();
+        if (!$user || $user['role'] === 'Admin' || $user['role'] === 'Petugas Medis' || $user['role'] === 'Apoteker') {
+            return response()->json([
+                'message' => 'The user doesnt exist',
+                'status' => Response::HTTP_UNAUTHORIZED,
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
         $credentials = $request->only('email', 'password');
@@ -62,8 +70,15 @@ class AuthController extends Controller
         ]);
 
         if ($validateData->fails()) {
+            if ($validateData->errors()->getMessages()['email'][0]) {
+                return response()->json([
+                    'message' => 'The email has already been taken.',
+                    'status' => Response::HTTP_BAD_REQUEST,
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
             return response()->json([
-                'errors' => $validateData->errors(),
+                'message' => 'Register is failed',
                 'status' => Response::HTTP_BAD_REQUEST,
             ], Response::HTTP_BAD_REQUEST);
         }

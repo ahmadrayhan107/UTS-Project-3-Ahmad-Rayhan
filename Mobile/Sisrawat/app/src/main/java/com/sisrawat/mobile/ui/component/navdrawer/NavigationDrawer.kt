@@ -115,7 +115,7 @@ fun NavigationDrawer(
     ModalNavigationDrawer(
         drawerContent = {
             ModalDrawerSheet(
-                drawerContainerColor = MaterialTheme.colorScheme.secondary
+                drawerContainerColor = MaterialTheme.colorScheme.background
             ) {
                 Card(
                     colors = CardDefaults.cardColors(
@@ -152,7 +152,7 @@ fun NavigationDrawer(
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = if (item.title.contentEquals("Logout")) {
                                     Color.Red
-                                } else Color.White
+                                } else MaterialTheme.colorScheme.onBackground
                             )
                         },
                         selected = index == selectedItemIndex,
@@ -175,13 +175,13 @@ fun NavigationDrawer(
                                 contentDescription = item.title,
                                 tint = if (item.title.contentEquals("Logout")) {
                                     Color.Red
-                                } else Color.White
+                                } else MaterialTheme.colorScheme.onBackground
                             )
                         },
                         modifier = modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                         colors = NavigationDrawerItemDefaults.colors(
                             selectedContainerColor = Azul,
-                            unselectedContainerColor = MaterialTheme.colorScheme.secondary,
+                            unselectedContainerColor = MaterialTheme.colorScheme.background,
                         )
                     )
                 }

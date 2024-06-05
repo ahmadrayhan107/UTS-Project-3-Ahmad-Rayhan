@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'petugas-medis@gmail.com',
             'password' => static::$password ??= Hash::make('password'),
             'role' => 'Petugas Medis',
-            'img_profile' => 'http://127.0.0.1:8000/img/profiles/img_1715707027_petugas-medis-wanita.png'
+            'img_profile' => '/img/profiles/img_1715707027_petugas-medis-wanita.png'
         ]);
 
         \App\Models\User::factory()->create([
@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'apoteker@gmail.com',
             'password' => static::$password ??= Hash::make('password'),
             'role' => 'Apoteker',
-            'img_profile' => 'http://127.0.0.1:8000/img/profiles/img_1715707016_apoteker-wanita.png'
+            'img_profile' => '/img/profiles/img_1715707016_apoteker-wanita.png'
         ]);
 
         \App\Models\User::factory()->create([
@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'dokter-umum@gmail.com',
             'password' => static::$password ??= Hash::make('password'),
             'role' => 'Dokter',
-            'img_profile' => 'http://127.0.0.1:8000/img/profiles/img_1715707062_dokter-pria.png'
+            'img_profile' => '/img/profiles/img_1715707062_dokter-pria.png'
         ]);
 
         \App\Models\User::factory()->create([
@@ -56,7 +56,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'pasien-1@gmail.com',
             'password' => static::$password ??= Hash::make('password'),
             'role' => 'Pasien',
-            'img_profile' => 'http://127.0.0.1:8000/img/profiles/img_1715707086_pasien-pria.png'
+            'img_profile' => '/img/profiles/img_1715707086_pasien-pria.png'
         ]);
 
         DB::table('pasiens')->insert([
