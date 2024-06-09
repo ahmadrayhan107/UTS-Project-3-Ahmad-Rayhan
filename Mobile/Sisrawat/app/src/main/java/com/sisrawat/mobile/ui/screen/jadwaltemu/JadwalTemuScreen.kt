@@ -45,57 +45,7 @@ import kotlinx.coroutines.launch
 fun JadwalTemu(
     modifier: Modifier = Modifier
 ) {
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-
-    NavigationDrawer(
-        drawerState = drawerState
-    ) {
-        Scaffold(
-            topBar = {
-                CenterAlignedTopAppBar(
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    ),
-                    title = {
-                        Text(
-                            text = stringResource(R.string.jadwal_temu),
-                            style = MaterialTheme.typography.headlineSmall,
-                            color = Color.White
-                        )
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            scope.launch {
-                                drawerState.open()
-                            }
-                        }) {
-                            Icon(
-                                imageVector = Icons.Filled.Menu,
-                                contentDescription = stringResource(R.string.menu),
-                                tint = Color.White
-                            )
-                        }
-                    },
-                    actions = {
-                        IconButton(onClick = {
-
-                        }) {
-                            Icon(
-                                imageVector = Icons.Filled.Notifications,
-                                contentDescription = stringResource(R.string.notification),
-                                tint = Color.White
-                            )
-                        }
-                    },
-                    scrollBehavior = scrollBehavior
-                )
-            }
-        ) { innerPadding ->
-            JadwalTemuScreen(modifier = modifier.padding(innerPadding))
-        }
-    }
+    JadwalTemuScreen(modifier)
 }
 
 @Composable

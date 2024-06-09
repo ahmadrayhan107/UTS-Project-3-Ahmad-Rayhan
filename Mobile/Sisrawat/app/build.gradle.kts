@@ -82,9 +82,15 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     // KTX
-    // KTX
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.1")
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.6.0")
+
+    // Pager
+    implementation("com.google.accompanist:accompanist-pager:0.28.0")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.28.0")
 
     // Testing
     testImplementation("junit:junit:4.13.2")

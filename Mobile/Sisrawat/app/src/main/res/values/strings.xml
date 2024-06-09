@@ -18,7 +18,7 @@
     <string name="logout">Logout</string>
     <string name="home">Home</string>
     <string name="jadwal_temu">Jadwal Temu</string>
-    <string name="rekam_medis">Rekam</string>
+    <string name="rekam">Rekam</string>
     <string name="profile">Profile</string>
     <string name="pasien">Pasien</string>
     <string name="menu">Menu</string>
@@ -32,4 +32,14 @@
     <string name="dismiss">Dismiss</string>
     <string name="confirm">Confirm</string>
     <string name="logout_message">Apakah kamu yaking untuk Log Out?</string>
+    <string name="img_profile">Image Profile</string>
+    <string name="welcome">Selamat Datang,\n%s</string>
+    <string name="rekam_medis">Rekam Medis</string>
+    <string name="my_profile">My Profile</string>
+    <string name="flu">Flu</string>
+    <string name="flu_description">Flu adalah infeksi virus yang menyerang hidung, tenggorokan, dan paru-paru. Penderita flu dapat mengalami demam, sakit kepala, pilek, hidung tersumbat, serta batuk.</string>
+    <string name="batuk">Batuk</string>
+    <string name="batuk_description">Batuk adalah respons alami tubuh untuk mengeluarkan benda asing, seperti kuman, virus, debu, atau zat iritatif, dari dalam saluran pernapasan.</string>
+    <string name="covid">Covid-19</string>
+    <string name="covid_description">COVID-19 merupakan virus yang menyebabkan terjadinya infeksi saluran pernapasan atas. Gejala COVID bisa berkisar ringan hingga sedang, seperti penyakit flu.</string>
 </resources>

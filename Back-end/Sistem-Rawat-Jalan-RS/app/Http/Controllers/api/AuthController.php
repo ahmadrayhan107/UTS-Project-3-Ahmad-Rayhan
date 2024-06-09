@@ -20,8 +20,16 @@ class AuthController extends Controller
         ]);
 
         if ($validateData->fails()) {
+            $errors = $validateData->errors();
+
+            if ($errors->first('email')) {
+                $message = $errors->first('email');
+            } else if ($errors->first('password')) {
+                $message = $errors->first('password');
+            }
+
             return response()->json([
-                'message' => "Login is failed",
+                'message' => $message,
                 'status' => Response::HTTP_BAD_REQUEST,
             ], Response::HTTP_BAD_REQUEST);
         }
@@ -70,15 +78,18 @@ class AuthController extends Controller
         ]);
 
         if ($validateData->fails()) {
-            if ($validateData->errors()->getMessages()['email'][0]) {
-                return response()->json([
-                    'message' => 'The email has already been taken.',
-                    'status' => Response::HTTP_BAD_REQUEST,
-                ], Response::HTTP_BAD_REQUEST);
+            $errors = $validateData->errors();
+            
+            if ($errors->first('username')) {
+                $message = $errors->first('username');
+            } elseif ($errors->first('email')) {
+                $message = $errors->first('email');
+            } elseif ($errors->first('password')) {
+                $message = $errors->first('password');
             }
 
             return response()->json([
-                'message' => 'Register is failed',
+                'message' => $message,
                 'status' => Response::HTTP_BAD_REQUEST,
             ], Response::HTTP_BAD_REQUEST);
         }

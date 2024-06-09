@@ -31,7 +31,7 @@ class LoginViewModel(private val repository: AuthRepository) : ViewModel() {
             val jsonInString = e.response()?.errorBody()?.string()
             val errorBody = Gson().fromJson(jsonInString, LoginErrorResponse::class.java)
             val errorMessage = errorBody.message
-            _message.value = "Error: $errorMessage"
+            _message.value = errorMessage
         }
     }
 }

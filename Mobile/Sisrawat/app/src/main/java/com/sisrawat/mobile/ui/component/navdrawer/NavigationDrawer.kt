@@ -1,6 +1,5 @@
 package com.sisrawat.mobile.ui.component.navdrawer
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -30,7 +29,6 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,9 +45,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sisrawat.mobile.R
+import com.sisrawat.mobile.data.local.model.SessionModel
 import com.sisrawat.mobile.ui.component.DialogScreen
 import com.sisrawat.mobile.ui.screen.util.SisrawatViewModel
-import com.sisrawat.mobile.ui.screen.util.SisrawatViewModelFactory
+import com.sisrawat.mobile.ui.screen.util.viewmodelfactory.SisrawatViewModelFactory
 import com.sisrawat.mobile.ui.theme.Azul
 import kotlinx.coroutines.launch
 
@@ -62,10 +61,10 @@ fun NavigationDrawer(
             LocalContext.current
         )
     ),
+    role: String,
     drawerState: DrawerState,
     content: @Composable () -> Unit
 ) {
-    val role = "Dokter"
     val openDialog = remember { mutableStateOf(false) }
 
     val navigationDrawerItems = listOf(
