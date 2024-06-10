@@ -61,7 +61,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.sisrawat.mobile.R
 import com.sisrawat.mobile.ui.navigation.Screen
-import com.sisrawat.mobile.ui.screen.util.viewmodelfactory.AuthViewModelFactory
+import com.sisrawat.mobile.ui.screen.utils.viewmodelfactory.AuthViewModelFactory
 import com.sisrawat.mobile.ui.theme.AliceBlue
 import com.sisrawat.mobile.ui.theme.Azul
 import com.sisrawat.mobile.ui.theme.RoyalBlue

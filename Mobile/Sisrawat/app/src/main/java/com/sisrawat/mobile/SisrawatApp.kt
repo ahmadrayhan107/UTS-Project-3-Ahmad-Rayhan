@@ -73,6 +73,13 @@ fun SisrawatApp(
     var search by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    val screenWithoutTopAppBar = arrayOf(
+        Screen.Login.route,
+        Screen.Register.route
+    )
 
     if (session != null) {
         // Initial UI
@@ -87,81 +94,83 @@ fun SisrawatApp(
 
         NavigationDrawer(
             role = role,
-            drawerState = drawerState
+            drawerState = drawerState,
+            navController = navController
         ) {
             Scaffold(
                 topBar = {
-                    CenterAlignedTopAppBar(
-                        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                            containerColor = MaterialTheme.colorScheme.primary
-                        ),
-                        title = {
-                            val navBackStackEntry by navController.currentBackStackEntryAsState()
-                            val currentRoute = navBackStackEntry?.destination?.route
+                    if (
+                        currentRoute !in screenWithoutTopAppBar
+                    ) {
+                        CenterAlignedTopAppBar(
+                            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                                containerColor = MaterialTheme.colorScheme.primary
+                            ),
+                            title = {
+                                if (currentRoute == Screen.Home.route) {
+                                    SearchBar(
+                                        search = search,
+                                        onSearch = { input ->
+                                            search = input
+                                        }
+                                    )
+                                } else {
+                                    when (currentRoute) {
+                                        Screen.JadwalTemu.route -> {
+                                            Text(
+                                                text = stringResource(R.string.jadwal_temu),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
 
-                            if (currentRoute == Screen.Home.route) {
-                                SearchBar(
-                                    search = search,
-                                    onSearch = { input ->
-                                        search = input
-                                    }
-                                )
-                            } else {
-                                when (currentRoute) {
-                                    Screen.JadwalTemu.route -> {
-                                        Text(
-                                            text = stringResource(R.string.jadwal_temu),
-                                            style = MaterialTheme.typography.headlineSmall,
-                                            color = Color.White
-                                        )
+                                        Screen.RekamMedis.route -> {
+                                            Text(
+                                                text = stringResource(R.string.rekam_medis),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
+
+                                        Screen.Profile.route -> {
+                                            Text(
+                                                text = stringResource(R.string.my_profile),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
                                     }
 
-                                    Screen.RekamMedis.route -> {
-                                        Text(
-                                            text = stringResource(R.string.rekam_medis),
-                                            style = MaterialTheme.typography.headlineSmall,
-                                            color = Color.White
-                                        )
-                                    }
-
-                                    Screen.Profile.route -> {
-                                        Text(
-                                            text = stringResource(R.string.my_profile),
-                                            style = MaterialTheme.typography.headlineSmall,
-                                            color = Color.White
-                                        )
-                                    }
                                 }
 
-                            }
-
-                        },
-                        navigationIcon = {
-                            IconButton(onClick = {
-                                scope.launch {
-                                    drawerState.open()
+                            },
+                            navigationIcon = {
+                                IconButton(onClick = {
+                                    scope.launch {
+                                        drawerState.open()
+                                    }
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Menu,
+                                        contentDescription = stringResource(R.string.menu),
+                                        tint = Color.White
+                                    )
                                 }
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Filled.Menu,
-                                    contentDescription = stringResource(R.string.menu),
-                                    tint = Color.White
-                                )
-                            }
-                        },
-                        actions = {
-                            IconButton(onClick = {
+                            },
+                            actions = {
+                                IconButton(onClick = {
 
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Filled.Notifications,
-                                    contentDescription = stringResource(R.string.notification),
-                                    tint = Color.White
-                                )
-                            }
-                        },
-                        scrollBehavior = scrollBehavior
-                    )
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Filled.Notifications,
+                                        contentDescription = stringResource(R.string.notification),
+                                        tint = Color.White
+                                    )
+                                }
+                            },
+                            scrollBehavior = scrollBehavior
+                        )
+                    }
                 },
                 bottomBar = {
                     // Role condition

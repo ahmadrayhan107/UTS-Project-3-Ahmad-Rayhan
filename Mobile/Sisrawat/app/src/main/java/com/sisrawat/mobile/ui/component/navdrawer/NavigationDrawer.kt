@@ -44,11 +44,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.sisrawat.mobile.R
-import com.sisrawat.mobile.data.local.model.SessionModel
 import com.sisrawat.mobile.ui.component.DialogScreen
-import com.sisrawat.mobile.ui.screen.util.SisrawatViewModel
-import com.sisrawat.mobile.ui.screen.util.viewmodelfactory.SisrawatViewModelFactory
+import com.sisrawat.mobile.ui.navigation.Screen
+import com.sisrawat.mobile.ui.screen.utils.SisrawatViewModel
+import com.sisrawat.mobile.ui.screen.utils.viewmodelfactory.SisrawatViewModelFactory
 import com.sisrawat.mobile.ui.theme.Azul
 import kotlinx.coroutines.launch
 
@@ -63,48 +65,62 @@ fun NavigationDrawer(
     ),
     role: String,
     drawerState: DrawerState,
+    navController: NavHostController,
     content: @Composable () -> Unit
 ) {
     val openDialog = remember { mutableStateOf(false) }
 
-    val navigationDrawerItems = listOf(
-        when (role) {
-            "Pasien" -> {
-                NavigationDrawerItem(
-                    title = stringResource(R.string.transaksi),
-                    selectedIcon = Icons.Filled.Payments,
-                    unselectedIcon = Icons.Outlined.Payments,
-                )
-            }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
 
-            "Dokter" -> {
-                NavigationDrawerItem(
-                    title = stringResource(R.string.jadwal_dokter),
-                    selectedIcon = Icons.Filled.Schedule,
-                    unselectedIcon = Icons.Outlined.Schedule,
-                )
-            }
-
-            else -> {
-                null
-            }
-        },
-        NavigationDrawerItem(
-            title = stringResource(R.string.settings),
-            selectedIcon = Icons.Filled.Settings,
-            unselectedIcon = Icons.Outlined.Settings,
-        ),
-        NavigationDrawerItem(
-            title = stringResource(R.string.about),
-            selectedIcon = Icons.Filled.Info,
-            unselectedIcon = Icons.Outlined.Info,
-        ),
-        NavigationDrawerItem(
-            title = stringResource(R.string.logout),
-            selectedIcon = Icons.AutoMirrored.Filled.Logout,
-            unselectedIcon = Icons.AutoMirrored.Outlined.Logout,
-        )
+    val screenWithoutTopAppBar = arrayOf(
+        Screen.Login.route,
+        Screen.Register.route
     )
+
+    var navigationDrawerItems = listOf<NavigationDrawerItem?>()
+
+    if (currentRoute !in screenWithoutTopAppBar) {
+        navigationDrawerItems = listOf(
+            when (role) {
+                "Pasien" -> {
+                    NavigationDrawerItem(
+                        title = stringResource(R.string.transaksi),
+                        selectedIcon = Icons.Filled.Payments,
+                        unselectedIcon = Icons.Outlined.Payments,
+                    )
+                }
+
+                "Dokter" -> {
+                    NavigationDrawerItem(
+                        title = stringResource(R.string.jadwal_dokter),
+                        selectedIcon = Icons.Filled.Schedule,
+                        unselectedIcon = Icons.Outlined.Schedule,
+                    )
+                }
+
+                else -> {
+                    null
+                }
+            },
+            NavigationDrawerItem(
+                title = stringResource(R.string.settings),
+                selectedIcon = Icons.Filled.Settings,
+                unselectedIcon = Icons.Outlined.Settings,
+            ),
+            NavigationDrawerItem(
+                title = stringResource(R.string.about),
+                selectedIcon = Icons.Filled.Info,
+                unselectedIcon = Icons.Outlined.Info,
+            ),
+            NavigationDrawerItem(
+                title = stringResource(R.string.logout),
+                selectedIcon = Icons.AutoMirrored.Filled.Logout,
+                unselectedIcon = Icons.AutoMirrored.Outlined.Logout,
+            )
+        )
+    }
+
 
     var selectedItemIndex by rememberSaveable {
         mutableStateOf(-1)
@@ -144,45 +160,47 @@ fun NavigationDrawer(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 navigationDrawerItems.forEachIndexed { index, item ->
-                    NavigationDrawerItem(
-                        label = {
-                            Text(
-                                text = item!!.title,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = if (item.title.contentEquals("Logout")) {
-                                    Color.Red
-                                } else MaterialTheme.colorScheme.onBackground
-                            )
-                        },
-                        selected = index == selectedItemIndex,
-                        onClick = {
-                            if (item!!.title.contentEquals("Logout")) {
-                                openDialog.value = true
-                            } else {
-                                selectedItemIndex = index
-                            }
+                    if (item != null) {
+                        NavigationDrawerItem(
+                            label = {
+                                Text(
+                                    text = item.title,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = if (item.title.contentEquals("Logout")) {
+                                        Color.Red
+                                    } else MaterialTheme.colorScheme.onBackground
+                                )
+                            },
+                            selected = index == selectedItemIndex,
+                            onClick = {
+                                if (item.title.contentEquals("Logout")) {
+                                    openDialog.value = true
+                                } else {
+                                    selectedItemIndex = index
+                                }
 
-                            scope.launch {
-                                drawerState.close()
-                            }
-                        },
-                        icon = {
-                            Icon(
-                                imageVector = if (index == selectedItemIndex) {
-                                    item!!.selectedIcon
-                                } else item!!.unselectedIcon,
-                                contentDescription = item.title,
-                                tint = if (item.title.contentEquals("Logout")) {
-                                    Color.Red
-                                } else MaterialTheme.colorScheme.onBackground
+                                scope.launch {
+                                    drawerState.close()
+                                }
+                            },
+                            icon = {
+                                Icon(
+                                    imageVector = if (index == selectedItemIndex) {
+                                        item.selectedIcon
+                                    } else item.unselectedIcon,
+                                    contentDescription = item.title,
+                                    tint = if (item.title.contentEquals("Logout")) {
+                                        Color.Red
+                                    } else MaterialTheme.colorScheme.onBackground
+                                )
+                            },
+                            modifier = modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
+                            colors = NavigationDrawerItemDefaults.colors(
+                                selectedContainerColor = Azul,
+                                unselectedContainerColor = MaterialTheme.colorScheme.background,
                             )
-                        },
-                        modifier = modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
-                        colors = NavigationDrawerItemDefaults.colors(
-                            selectedContainerColor = Azul,
-                            unselectedContainerColor = MaterialTheme.colorScheme.background,
                         )
-                    )
+                    }
                 }
             }
         },
