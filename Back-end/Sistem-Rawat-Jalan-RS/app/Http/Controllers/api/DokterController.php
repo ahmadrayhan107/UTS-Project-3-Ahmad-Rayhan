@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\DokterResource;
 use App\Models\Dokter;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -11,6 +12,17 @@ use Illuminate\Validation\Rule;
 
 class DokterController extends Controller
 {
+    public function index()
+    {
+        $dokters = DokterResource::collection(Dokter::paginate(10));
+        $dataDokters = $dokters;
+
+        return response()->json([
+            'dataDokters' => $dataDokters,
+            'status' => Response::HTTP_OK,
+        ], Response::HTTP_OK);
+    }
+
     public function show($id)
     {
         $dokter = Dokter::where('user_id', $id)->first();

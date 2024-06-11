@@ -2,8 +2,10 @@ package com.sisrawat.mobile.ui.screen.home.pasien
 
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
+import com.sisrawat.mobile.data.remote.response.DoktersResponse
 import com.sisrawat.mobile.data.remote.response.PasienErrorResponse
 import com.sisrawat.mobile.data.repository.UserRepository
+import com.sisrawat.mobile.ui.common.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import retrofit2.HttpException
@@ -35,7 +37,7 @@ class HomePasienViewModel(private val repository: UserRepository) : ViewModel() 
             val jsonInString = e.response()?.errorBody()?.string()
             val errorBody = Gson().fromJson(jsonInString, PasienErrorResponse::class.java)
             val errorMessage = errorBody.errors
-            _message.value = "Error: $errorMessage"
+            _message.value = errorMessage
         }
     }
 }

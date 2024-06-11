@@ -36,12 +36,13 @@ Route::group(array('prefix' => 'v1'), function () {
         Route::put('/pasien/{id}', [PasienController::class, 'update']);
 
         // Dokter
+        Route::get('/dokter', [DokterController::class, 'index']);
         Route::get('/dokter/{id}', [DokterController::class, 'show']);
         Route::post('/dokter', [DokterController::class, 'store']);
         Route::put('/dokter/{id}', [DokterController::class, 'update']);
 
         // Jadwal Dokter
-        Route::get('/jadwal-dokter', [JadwalDokterController::class, 'index']);
+        // Route::get('/jadwal-dokter', [JadwalDokterController::class, 'index']);
         Route::get('/jadwal-dokter/{id}', [JadwalDokterController::class, 'show']);
         Route::post('/jadwal-dokter', [JadwalDokterController::class, 'store']);
         Route::put('/jadwal-dokter/{id}', [JadwalDokterController::class, 'update']);

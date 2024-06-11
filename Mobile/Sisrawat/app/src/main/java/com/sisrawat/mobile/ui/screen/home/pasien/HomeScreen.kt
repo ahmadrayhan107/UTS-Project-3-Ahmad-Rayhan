@@ -3,6 +3,7 @@ package com.sisrawat.mobile.ui.screen.home.pasien
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -149,11 +150,15 @@ fun HomeScreen(
             modifier = modifier.padding(horizontal = 24.dp, vertical = 4.dp)
         ) { item ->
             Card(
-                modifier = modifier.padding(
-                    top = 8.dp,
-                    end = 8.dp,
-                    bottom = 8.dp
-                ),
+                modifier = modifier
+                    .padding(
+                        top = 8.dp,
+                        end = 8.dp,
+                        bottom = 8.dp
+                    )
+                    .clickable {
+
+                    },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White

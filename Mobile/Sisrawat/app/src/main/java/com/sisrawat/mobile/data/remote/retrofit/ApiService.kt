@@ -2,6 +2,7 @@ package com.sisrawat.mobile.data.remote.retrofit
 
 import com.sisrawat.mobile.data.remote.model.Login
 import com.sisrawat.mobile.data.remote.model.Register
+import com.sisrawat.mobile.data.remote.response.DoktersResponse
 import com.sisrawat.mobile.data.remote.response.LoginResponse
 import com.sisrawat.mobile.data.remote.response.PasienResponse
 import com.sisrawat.mobile.data.remote.response.RegisterResponse
