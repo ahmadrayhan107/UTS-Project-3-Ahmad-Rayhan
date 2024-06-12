@@ -2,7 +2,7 @@ package com.sisrawat.mobile.data.remote.retrofit
 
 import com.sisrawat.mobile.data.remote.model.Login
 import com.sisrawat.mobile.data.remote.model.Register
-import com.sisrawat.mobile.data.remote.response.DoktersResponse
+import com.sisrawat.mobile.data.remote.response.DokterResponse
 import com.sisrawat.mobile.data.remote.response.LoginResponse
 import com.sisrawat.mobile.data.remote.response.PasienResponse
 import com.sisrawat.mobile.data.remote.response.RegisterResponse
@@ -10,6 +10,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
     @POST("/api/v1/login")
@@ -20,4 +21,7 @@ interface ApiService {
 
     @GET("/api/v1/pasien/{id}")
     suspend fun showPasien(@Path("id") id: Int): PasienResponse
+
+    @GET("/api/v1/dokter")
+    suspend fun getAllDokter(@Query("page") page: Int): DokterResponse
 }

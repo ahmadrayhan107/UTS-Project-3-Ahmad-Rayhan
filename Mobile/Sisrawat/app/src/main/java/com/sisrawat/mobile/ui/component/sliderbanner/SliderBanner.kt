@@ -64,7 +64,7 @@ fun SliderBanner(
     LaunchedEffect(Unit) {
         while (true) {
             yield()
-            delay(2600)
+            delay(5000)
             pagerState.animateScrollToPage(
                 page = (pagerState.currentPage + 1) % (pagerState.pageCount)
             )

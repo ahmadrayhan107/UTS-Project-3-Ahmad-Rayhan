@@ -14,11 +14,12 @@ class DokterController extends Controller
 {
     public function index()
     {
-        $dokters = DokterResource::collection(Dokter::paginate(10));
+        $dokters = Dokter::paginate(10);
         $dataDokters = $dokters;
 
         return response()->json([
-            'dataDokters' => $dataDokters,
+            'current_page' => $dokters->currentPage(),
+            'dataDokters' => DokterResource::collection($dataDokters),
             'status' => Response::HTTP_OK,
         ], Response::HTTP_OK);
     }

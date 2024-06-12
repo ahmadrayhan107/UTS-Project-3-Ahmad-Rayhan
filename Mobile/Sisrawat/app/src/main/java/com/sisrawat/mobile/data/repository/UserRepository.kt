@@ -1,5 +1,6 @@
 package com.sisrawat.mobile.data.repository
 
+import com.sisrawat.mobile.data.paging.DokterPagingSource
 import com.sisrawat.mobile.data.remote.response.PasienResponse
 import com.sisrawat.mobile.data.remote.retrofit.ApiService
 
@@ -9,6 +10,8 @@ class UserRepository private constructor(
     suspend fun showPasien(id: Int): PasienResponse {
         return apiService.showPasien(id)
     }
+
+    fun getAllDokter() = DokterPagingSource(apiService)
 
     companion object {
         @Volatile

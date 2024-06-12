@@ -22,7 +22,7 @@ class DokterResource extends JsonResource
             "spesialis" => $this->spesialis,
             "no_hp" => $this->no_hp,
             "alamat" => $this->alamat,
-            "user_id" => $this->user_id,
+            "user" => $this->user,
             "jadwalDokter" => $this->jadwalDokter
         ];
     }

@@ -9,16 +9,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.paging.compose.LazyPagingItems
 
 @OptIn(ExperimentalFoundationApi::class)
-fun <T> LazyListScope.gridItems(
-    data: List<T>,
+fun <T : Any> LazyListScope.gridItems(
+    data: LazyPagingItems<T>,
     columnCount: Int,
     modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     itemContent: @Composable BoxScope.(T) -> Unit,
 ) {
-    val size = data.count()
+    val size = data.itemCount
     val rows = if (size == 0) 0 else 1 + (size - 1) / columnCount
     items(rows, key = { it.hashCode() }) { rowIndex ->
         Row(
@@ -31,7 +32,7 @@ fun <T> LazyListScope.gridItems(
                     Box(
                         modifier = Modifier.weight(1F, fill = true), propagateMinConstraints = true
                     ) {
-                        itemContent(data[itemIndex])
+                        data[itemIndex]?.let { itemContent(it) }
                     }
                 } else {
                     Spacer(Modifier.weight(1F, fill = true))

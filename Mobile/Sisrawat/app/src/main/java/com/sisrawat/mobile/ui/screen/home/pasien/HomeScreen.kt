@@ -26,7 +26,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,11 +39,14 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.sisrawat.mobile.BuildConfig
 import com.sisrawat.mobile.R
 import com.sisrawat.mobile.data.local.model.SessionModel
+import com.sisrawat.mobile.data.remote.response.DataDoktersItem
 import com.sisrawat.mobile.ui.component.sliderbanner.SliderBanner
 import com.sisrawat.mobile.ui.screen.utils.gridItems
 import com.sisrawat.mobile.ui.screen.utils.viewmodelfactory.UserViewModelFactory
@@ -78,10 +80,13 @@ fun HomePasien(
         }
     }
 
+    val dokters = viewModel.dokters.collectAsLazyPagingItems()
+
     HomeScreen(
         modifier = modifier,
         namaPasien = namaPasien,
-        imageUrl = imageUrl
+        imageUrl = imageUrl,
+        dokters = dokters
     )
 }
 
@@ -89,10 +94,11 @@ fun HomePasien(
 fun HomeScreen(
     modifier: Modifier,
     namaPasien: String,
-    imageUrl: String
+    imageUrl: String,
+    dokters: LazyPagingItems<DataDoktersItem>
 ) {
-    // Testing
-    val items by rememberSaveable { mutableStateOf(List(8) { it }) }
+//    // Testing
+//    val items by rememberSaveable { mutableStateOf(List(8) { it }) }
 
     LazyColumn(
         modifier = modifier
@@ -144,11 +150,11 @@ fun HomeScreen(
         }
 
         gridItems(
-            data = items,
+            data = dokters,
             columnCount = 2,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = modifier.padding(horizontal = 24.dp, vertical = 4.dp)
-        ) { item ->
+        ) { dokters ->
             Card(
                 modifier = modifier
                     .padding(
@@ -164,17 +170,27 @@ fun HomeScreen(
                     contentColor = Color.White
                 )
             ) {
-                Image(
-                    painter = painterResource(R.drawable.img_profile),
-                    contentDescription = null,
-                    modifier = modifier.fillMaxWidth(),
-                    contentScale = ContentScale.Crop
+                SubcomposeAsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(BuildConfig.BASE_URL.plus(dokters.user.imgProfile))
+                        .crossfade(true)
+                        .build(),
+                    error = {
+                        Image(
+                            painter = painterResource(R.drawable.img_profile),
+                            contentDescription = stringResource(R.string.img_profile),
+                            contentScale = ContentScale.Crop
+                        )
+                    },
+                    contentDescription = stringResource(R.string.img_profile),
+                    contentScale = ContentScale.Crop,
+                    modifier = modifier.fillMaxWidth()
                 )
 
                 Spacer(modifier = modifier.height(8.dp))
 
                 Text(
-                    text = "Nama Dokter",
+                    text = dokters.namaDokter,
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = modifier.padding(start = 16.dp)
                 )
@@ -182,7 +198,7 @@ fun HomeScreen(
                 Spacer(modifier = modifier.height(4.dp))
 
                 Text(
-                    text = "Poli Umum",
+                    text = dokters.spesialis,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = modifier.padding(
                         start = 16.dp,

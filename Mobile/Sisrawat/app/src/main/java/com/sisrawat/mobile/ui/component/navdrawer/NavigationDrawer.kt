@@ -204,7 +204,7 @@ fun NavigationDrawer(
                 }
             }
         },
-        drawerState = drawerState
+        drawerState = drawerState,
     ) {
         content()
 
