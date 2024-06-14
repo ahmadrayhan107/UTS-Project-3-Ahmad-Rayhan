@@ -35,10 +35,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.SubcomposeAsyncImage
@@ -48,6 +51,7 @@ import com.sisrawat.mobile.R
 import com.sisrawat.mobile.data.local.model.SessionModel
 import com.sisrawat.mobile.data.remote.response.DataDoktersItem
 import com.sisrawat.mobile.ui.component.sliderbanner.SliderBanner
+import com.sisrawat.mobile.ui.navigation.Screen
 import com.sisrawat.mobile.ui.screen.utils.gridItems
 import com.sisrawat.mobile.ui.screen.utils.viewmodelfactory.UserViewModelFactory
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
@@ -62,9 +66,9 @@ fun HomePasien(
         )
     ),
     sessionModel: SessionModel,
+    navController: NavController
 ) {
     val scope = rememberCoroutineScope()
-    var loading by remember { mutableStateOf(false) }
     var id by remember { mutableStateOf(0) }
     var imageUrl by remember { mutableStateOf("") }
     var namaPasien by remember { mutableStateOf("Pasien") }
@@ -86,7 +90,8 @@ fun HomePasien(
         modifier = modifier,
         namaPasien = namaPasien,
         imageUrl = imageUrl,
-        dokters = dokters
+        dokters = dokters,
+        navController = navController
     )
 }
 
@@ -95,11 +100,9 @@ fun HomeScreen(
     modifier: Modifier,
     namaPasien: String,
     imageUrl: String,
-    dokters: LazyPagingItems<DataDoktersItem>
+    dokters: LazyPagingItems<DataDoktersItem>,
+    navController: NavController
 ) {
-//    // Testing
-//    val items by rememberSaveable { mutableStateOf(List(8) { it }) }
-
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -140,7 +143,8 @@ fun HomeScreen(
                 Spacer(modifier = modifier.width(8.dp))
 
                 Text(
-                    text = stringResource(R.string.welcome, namaPasien)
+                    text = stringResource(R.string.welcome, namaPasien),
+                    style = MaterialTheme.typography.bodyLarge
                 )
             }
 
@@ -153,7 +157,7 @@ fun HomeScreen(
             data = dokters,
             columnCount = 2,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = modifier.padding(horizontal = 24.dp, vertical = 4.dp)
+            modifier = modifier.padding(vertical = 4.dp)
         ) { dokters ->
             Card(
                 modifier = modifier
@@ -163,7 +167,7 @@ fun HomeScreen(
                         bottom = 8.dp
                     )
                     .clickable {
-
+                        navController.navigate(Screen.DetailDokter.route)
                     },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.primary,
@@ -192,7 +196,9 @@ fun HomeScreen(
                 Text(
                     text = dokters.namaDokter,
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = modifier.padding(start = 16.dp)
+                    modifier = modifier.padding(start = 16.dp),
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
                 )
 
                 Spacer(modifier = modifier.height(4.dp))
@@ -229,7 +235,8 @@ fun PreviewHomeScreen() {
             color = MaterialTheme.colorScheme.background
         ) {
             HomePasien(
-                sessionModel = SessionModel(0, "", "")
+                sessionModel = SessionModel(0, "", ""),
+                navController = rememberNavController()
             )
         }
     }

@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.sisrawat.mobile.R
@@ -107,7 +108,13 @@ fun BottomNavItem(
 
                 if (currentRoute != null) {
                     if (currentRoute != bottomNavigationItem.route) {
-                        navController.navigate(bottomNavigationItem.route)
+                        navController.navigate(bottomNavigationItem.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            restoreState = true
+                            launchSingleTop = true
+                        }
                     }
                 }
 

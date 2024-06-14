@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 
 class JadwalDokterController extends Controller
 {
-    // public function index()
-    // {
-    //     $jadwalDokters = JadwalDokter::all();
-    //     return view('admin.jadwal-dokters.index', ['jadwalDokters' => $jadwalDokters]);
-    // }
+    public function index()
+    {
+        $jadwalDokters = JadwalDokter::all();
+        return view('admin.jadwal-dokters.index', ['jadwalDokters' => $jadwalDokters]);
+    }
 
     public function indexPending()
     {

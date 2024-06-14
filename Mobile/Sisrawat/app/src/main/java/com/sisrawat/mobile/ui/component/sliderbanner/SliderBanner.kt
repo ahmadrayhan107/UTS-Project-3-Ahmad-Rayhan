@@ -118,7 +118,7 @@ fun SliderBanner(
                     Spacer(modifier = modifier.width(8.dp))
 
                     Column(
-                        modifier = modifier.padding(top = 4.dp)
+                        modifier = modifier.padding(top = 4.dp, end = 4.dp)
                     ) {
                         Text(
                             text = sliderBannerItem[page].title,

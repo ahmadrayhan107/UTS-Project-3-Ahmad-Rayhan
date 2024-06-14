@@ -42,4 +42,16 @@
     <string name="batuk_description">Batuk adalah respons alami tubuh untuk mengeluarkan benda asing, seperti kuman, virus, debu, atau zat iritatif, dari dalam saluran pernapasan.</string>
     <string name="covid">Covid-19</string>
     <string name="covid_description">COVID-19 merupakan virus yang menyebabkan terjadinya infeksi saluran pernapasan atas. Gejala COVID bisa berkisar ringan hingga sedang, seperti penyakit flu.</string>
+    <string name="edit">Edit</string>
+    <string name="nama">Nama</string>
+    <string name="nik">NIK</string>
+    <string name="jenis_kelamin">Jenis Kelamin</string>
+    <string name="tanggal_lahir">Tanggal Lahir</string>
+    <string name="tempat_lahir">Tempat Lahir</string>
+    <string name="no_hp">No. HP</string>
+    <string name="alamat">Alamat</string>
+    <string name="nip">NIP</string>
+    <string name="spesialis">Spesialis</string>
+    <string name="back">Back</string>
+    <string name="detail_dokter">Detail Dokter</string>
 </resources>

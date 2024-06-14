@@ -3,6 +3,7 @@ package com.sisrawat.mobile
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MedicalInformation
@@ -49,11 +50,13 @@ import com.sisrawat.mobile.ui.component.navdrawer.NavigationDrawer
 import com.sisrawat.mobile.ui.navigation.BottomNavigationItem
 import com.sisrawat.mobile.ui.navigation.Screen
 import com.sisrawat.mobile.ui.screen.home.dokter.HomeDokter
+import com.sisrawat.mobile.ui.screen.home.pasien.DetailDokter
 import com.sisrawat.mobile.ui.screen.home.pasien.HomePasien
 import com.sisrawat.mobile.ui.screen.jadwaltemu.JadwalTemu
 import com.sisrawat.mobile.ui.screen.login.Login
 import com.sisrawat.mobile.ui.screen.pasien.Pasien
-import com.sisrawat.mobile.ui.screen.profile.Profile
+import com.sisrawat.mobile.ui.screen.profile.dokter.ProfileDokter
+import com.sisrawat.mobile.ui.screen.profile.pasien.ProfilePasien
 import com.sisrawat.mobile.ui.screen.register.Register
 import com.sisrawat.mobile.ui.screen.rekammedis.RekamMedis
 import kotlinx.coroutines.launch
@@ -132,9 +135,25 @@ fun SisrawatApp(
                                             )
                                         }
 
-                                        Screen.Profile.route -> {
+                                        Screen.ProfilePasien.route -> {
                                             Text(
                                                 text = stringResource(R.string.my_profile),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
+
+                                        Screen.ProfileDokter.route -> {
+                                            Text(
+                                                text = stringResource(R.string.my_profile),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
+
+                                        Screen.DetailDokter.route -> {
+                                            Text(
+                                                text = stringResource(R.string.detail_dokter),
                                                 style = MaterialTheme.typography.headlineSmall,
                                                 color = Color.White
                                             )
@@ -145,27 +164,41 @@ fun SisrawatApp(
 
                             },
                             navigationIcon = {
-                                IconButton(onClick = {
-                                    scope.launch {
-                                        drawerState.open()
+                                if (currentRoute == Screen.DetailDokter.route) {
+                                    IconButton(onClick = {
+                                        navController.navigateUp()
+                                    }) {
+                                        Icon(
+                                            imageVector = Icons.Filled.ArrowBackIosNew,
+                                            contentDescription = stringResource(R.string.back),
+                                            tint = Color.White
+                                        )
                                     }
-                                }) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Menu,
-                                        contentDescription = stringResource(R.string.menu),
-                                        tint = Color.White
-                                    )
+                                } else {
+                                    IconButton(onClick = {
+                                        scope.launch {
+                                            drawerState.open()
+                                        }
+                                    }) {
+                                        Icon(
+                                            imageVector = Icons.Filled.Menu,
+                                            contentDescription = stringResource(R.string.menu),
+                                            tint = Color.White
+                                        )
+                                    }
                                 }
                             },
                             actions = {
-                                IconButton(onClick = {
+                                if (currentRoute != Screen.DetailDokter.route) {
+                                    IconButton(onClick = {
 
-                                }) {
-                                    Icon(
-                                        imageVector = Icons.Filled.Notifications,
-                                        contentDescription = stringResource(R.string.notification),
-                                        tint = Color.White
-                                    )
+                                    }) {
+                                        Icon(
+                                            imageVector = Icons.Filled.Notifications,
+                                            contentDescription = stringResource(R.string.notification),
+                                            tint = Color.White
+                                        )
+                                    }
                                 }
                             },
                             scrollBehavior = scrollBehavior
@@ -200,7 +233,7 @@ fun SisrawatApp(
                                         title = stringResource(R.string.profile),
                                         activeIcon = Icons.Filled.Person,
                                         inactiveIcon = Icons.Outlined.Person,
-                                        route = Screen.Profile.route,
+                                        route = Screen.ProfilePasien.route,
                                     )
                                 )
                             BottomBar(
@@ -234,7 +267,7 @@ fun SisrawatApp(
                                         title = stringResource(R.string.profile),
                                         activeIcon = Icons.Filled.Person,
                                         inactiveIcon = Icons.Outlined.Person,
-                                        route = Screen.Profile.route,
+                                        route = Screen.ProfileDokter.route,
                                     )
                                 )
                             BottomBar(
@@ -266,7 +299,10 @@ fun SisrawatApp(
                     composable(Screen.Home.route) {
                         when (role) {
                             "Pasien" -> {
-                                HomePasien(sessionModel = session)
+                                HomePasien(
+                                    sessionModel = session,
+                                    navController = navController
+                                )
                             }
 
                             "Dokter" -> HomeDokter()
@@ -278,11 +314,17 @@ fun SisrawatApp(
                     composable(Screen.RekamMedis.route) {
                         RekamMedis()
                     }
-                    composable(Screen.Profile.route) {
-                        Profile()
+                    composable(Screen.ProfileDokter.route) {
+                        ProfileDokter()
+                    }
+                    composable(Screen.ProfilePasien.route) {
+                        ProfilePasien()
                     }
                     composable(Screen.Pasien.route) {
                         Pasien()
+                    }
+                    composable(Screen.DetailDokter.route) {
+                        DetailDokter()
                     }
                 }
             }

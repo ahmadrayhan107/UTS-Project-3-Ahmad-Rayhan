@@ -48,6 +48,7 @@ Route::group(array('prefix' => 'v1'), function () {
         Route::put('/jadwal-dokter/{id}', [JadwalDokterController::class, 'update']);
 
         // Pendaftaran Temu
+        Route::get('/pasiens-by-dokter/{id}', [PendaftaraanTemuController::class, 'getPasiensbyDokter']);
         Route::post('/pendaftaran-temu/{id}', [PendaftaraanTemuController::class, 'store']);
         Route::get('/pendaftaran-temu/{id}', [PendaftaraanTemuController::class, 'show']);
 

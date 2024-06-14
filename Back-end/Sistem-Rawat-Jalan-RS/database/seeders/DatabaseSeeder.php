@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\PendaftaranTemu;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -98,11 +100,12 @@ class DatabaseSeeder extends Seeder
         //     'user_id' => 3
         // ]);
 
-        // $this->call([
-        //     JadwalDokterSeeder::class,
-        //     ObatSeeder::class
-        // ]);
+        $this->call([
+            // JadwalDokterSeeder::class,
+            // ObatSeeder::class,
+            PendaftaranTemuSeeder::class
+        ]);
 
-        \App\Models\Dokter::factory(10)->create();
+        // \App\Models\Dokter::factory(10)->create();
     }
 }
