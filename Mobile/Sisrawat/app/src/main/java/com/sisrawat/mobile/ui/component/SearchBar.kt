@@ -27,7 +27,6 @@ import com.sisrawat.mobile.ui.theme.Azul
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 import com.sisrawat.mobile.ui.theme.SoftBlue
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
@@ -38,16 +37,17 @@ fun SearchBar(
         value = search,
         onValueChange = onSearch,
         shape = RoundedCornerShape(50.dp),
-        colors = TextFieldDefaults.textFieldColors(
-            containerColor = Color.White,
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = Color.White,
+            unfocusedContainerColor = Color.White,
             focusedIndicatorColor = AliceBlue,
             disabledIndicatorColor = AliceBlue,
             unfocusedIndicatorColor = AliceBlue,
-            textColor = Color.Black,
+            focusedTextColor = Color.Black,
             selectionColors = TextSelectionColors(
                 handleColor = Azul,
                 backgroundColor = SoftBlue
-            ),
+            )
         ),
         singleLine = true,
         leadingIcon = {

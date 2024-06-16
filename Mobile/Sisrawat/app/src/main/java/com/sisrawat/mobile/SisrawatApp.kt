@@ -50,6 +50,7 @@ import com.sisrawat.mobile.ui.component.navdrawer.NavigationDrawer
 import com.sisrawat.mobile.ui.navigation.BottomNavigationItem
 import com.sisrawat.mobile.ui.navigation.Screen
 import com.sisrawat.mobile.ui.screen.home.dokter.HomeDokter
+import com.sisrawat.mobile.ui.screen.home.pasien.CreatePendaftaranTemu
 import com.sisrawat.mobile.ui.screen.home.pasien.DetailDokter
 import com.sisrawat.mobile.ui.screen.home.pasien.HomePasien
 import com.sisrawat.mobile.ui.screen.jadwaltemu.JadwalTemu
@@ -82,6 +83,16 @@ fun SisrawatApp(
     val screenWithoutTopAppBar = arrayOf(
         Screen.Login.route,
         Screen.Register.route
+    )
+
+    val screenWithoutBottomAppBar = arrayOf(
+        Screen.DetailDokter.route,
+        Screen.CreatePendaftaranTemu.route
+    )
+
+    val screenWithoutMenuButton = arrayOf(
+        Screen.DetailDokter.route,
+        Screen.CreatePendaftaranTemu.route
     )
 
     if (session != null) {
@@ -158,13 +169,21 @@ fun SisrawatApp(
                                                 color = Color.White
                                             )
                                         }
+
+                                        Screen.CreatePendaftaranTemu.route -> {
+                                            Text(
+                                                text = stringResource(R.string.create_pendaftaran_temu),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
                                     }
 
                                 }
 
                             },
                             navigationIcon = {
-                                if (currentRoute == Screen.DetailDokter.route) {
+                                if (currentRoute in screenWithoutMenuButton) {
                                     IconButton(onClick = {
                                         navController.navigateUp()
                                     }) {
@@ -189,7 +208,7 @@ fun SisrawatApp(
                                 }
                             },
                             actions = {
-                                if (currentRoute != Screen.DetailDokter.route) {
+                                if (currentRoute !in screenWithoutMenuButton) {
                                     IconButton(onClick = {
 
                                     }) {
@@ -206,74 +225,75 @@ fun SisrawatApp(
                     }
                 },
                 bottomBar = {
-                    // Role condition
-                    when (role) {
-                        "Pasien" -> {
-                            val bottomNavigationItem =
-                                listOf(
-                                    BottomNavigationItem(
-                                        title = stringResource(R.string.home),
-                                        activeIcon = Icons.Filled.Home,
-                                        inactiveIcon = Icons.Outlined.Home,
-                                        route = Screen.Home.route,
-                                    ),
-                                    BottomNavigationItem(
-                                        title = stringResource(R.string.jadwal_temu),
-                                        activeIcon = Icons.Filled.DateRange,
-                                        inactiveIcon = Icons.Outlined.DateRange,
-                                        route = Screen.JadwalTemu.route,
-                                    ),
-                                    BottomNavigationItem(
-                                        title = stringResource(R.string.rekam),
-                                        activeIcon = Icons.Filled.MedicalInformation,
-                                        inactiveIcon = Icons.Outlined.MedicalInformation,
-                                        route = Screen.RekamMedis.route,
-                                    ),
-                                    BottomNavigationItem(
-                                        title = stringResource(R.string.profile),
-                                        activeIcon = Icons.Filled.Person,
-                                        inactiveIcon = Icons.Outlined.Person,
-                                        route = Screen.ProfilePasien.route,
+                    if (currentRoute !in screenWithoutBottomAppBar) {
+                        when (role) {
+                            "Pasien" -> {
+                                val bottomNavigationItem =
+                                    listOf(
+                                        BottomNavigationItem(
+                                            title = stringResource(R.string.home),
+                                            activeIcon = Icons.Filled.Home,
+                                            inactiveIcon = Icons.Outlined.Home,
+                                            route = Screen.Home.route,
+                                        ),
+                                        BottomNavigationItem(
+                                            title = stringResource(R.string.jadwal_temu),
+                                            activeIcon = Icons.Filled.DateRange,
+                                            inactiveIcon = Icons.Outlined.DateRange,
+                                            route = Screen.JadwalTemu.route,
+                                        ),
+                                        BottomNavigationItem(
+                                            title = stringResource(R.string.rekam),
+                                            activeIcon = Icons.Filled.MedicalInformation,
+                                            inactiveIcon = Icons.Outlined.MedicalInformation,
+                                            route = Screen.RekamMedis.route,
+                                        ),
+                                        BottomNavigationItem(
+                                            title = stringResource(R.string.profile),
+                                            activeIcon = Icons.Filled.Person,
+                                            inactiveIcon = Icons.Outlined.Person,
+                                            route = Screen.ProfilePasien.route,
+                                        )
                                     )
+                                BottomBar(
+                                    bottomNavigationItems = bottomNavigationItem,
+                                    navController = navController
                                 )
-                            BottomBar(
-                                bottomNavigationItems = bottomNavigationItem,
-                                navController = navController
-                            )
-                        }
+                            }
 
-                        "Dokter" -> {
-                            val bottomNavigationItem =
-                                listOf(
-                                    BottomNavigationItem(
-                                        title = stringResource(R.string.home),
-                                        activeIcon = Icons.Filled.Home,
-                                        inactiveIcon = Icons.Outlined.Home,
-                                        route = Screen.Home.route,
-                                    ),
-                                    BottomNavigationItem(
-                                        title = stringResource(R.string.jadwal_temu),
-                                        activeIcon = Icons.Filled.DateRange,
-                                        inactiveIcon = Icons.Outlined.DateRange,
-                                        route = Screen.JadwalTemu.route,
-                                    ),
-                                    BottomNavigationItem(
-                                        title = stringResource(R.string.pasien),
-                                        activeIcon = Icons.Filled.PersonalInjury,
-                                        inactiveIcon = Icons.Outlined.PersonalInjury,
-                                        route = Screen.Pasien.route,
-                                    ),
-                                    BottomNavigationItem(
-                                        title = stringResource(R.string.profile),
-                                        activeIcon = Icons.Filled.Person,
-                                        inactiveIcon = Icons.Outlined.Person,
-                                        route = Screen.ProfileDokter.route,
+                            "Dokter" -> {
+                                val bottomNavigationItem =
+                                    listOf(
+                                        BottomNavigationItem(
+                                            title = stringResource(R.string.home),
+                                            activeIcon = Icons.Filled.Home,
+                                            inactiveIcon = Icons.Outlined.Home,
+                                            route = Screen.Home.route,
+                                        ),
+                                        BottomNavigationItem(
+                                            title = stringResource(R.string.jadwal_temu),
+                                            activeIcon = Icons.Filled.DateRange,
+                                            inactiveIcon = Icons.Outlined.DateRange,
+                                            route = Screen.JadwalTemu.route,
+                                        ),
+                                        BottomNavigationItem(
+                                            title = stringResource(R.string.pasien),
+                                            activeIcon = Icons.Filled.PersonalInjury,
+                                            inactiveIcon = Icons.Outlined.PersonalInjury,
+                                            route = Screen.Pasien.route,
+                                        ),
+                                        BottomNavigationItem(
+                                            title = stringResource(R.string.profile),
+                                            activeIcon = Icons.Filled.Person,
+                                            inactiveIcon = Icons.Outlined.Person,
+                                            route = Screen.ProfileDokter.route,
+                                        )
                                     )
+                                BottomBar(
+                                    bottomNavigationItems = bottomNavigationItem,
+                                    navController = navController
                                 )
-                            BottomBar(
-                                bottomNavigationItems = bottomNavigationItem,
-                                navController = navController
-                            )
+                            }
                         }
                     }
                 },
@@ -324,7 +344,12 @@ fun SisrawatApp(
                         Pasien()
                     }
                     composable(Screen.DetailDokter.route) {
-                        DetailDokter()
+                        DetailDokter(
+                            navController = navController
+                        )
+                    }
+                    composable(Screen.CreatePendaftaranTemu.route) {
+                        CreatePendaftaranTemu()
                     }
                 }
             }
