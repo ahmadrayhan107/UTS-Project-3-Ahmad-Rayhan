@@ -39,18 +39,22 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.sisrawat.mobile.R
+import com.sisrawat.mobile.ui.navigation.Screen
 import com.sisrawat.mobile.ui.screen.utils.gridItems
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun HomeDokter(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
     val imageUrl by remember { mutableStateOf("") }
     val namaDokter by remember { mutableStateOf("Dokter") }
@@ -59,6 +63,7 @@ fun HomeDokter(
         modifier = modifier,
         namaDokter = namaDokter,
         imageUrl = imageUrl,
+        navController = navController
     )
 }
 
@@ -66,7 +71,8 @@ fun HomeDokter(
 fun HomeScreen(
     modifier: Modifier,
     imageUrl: String,
-    namaDokter: String
+    namaDokter: String,
+    navController: NavController
 ) {
     // Dummy
     val fakeData = List(10) { it + 1 }
@@ -203,7 +209,7 @@ fun HomeScreen(
                         bottom = 8.dp
                     )
                     .clickable {
-
+                        navController.navigate(Screen.DetailPasien.route)
                     },
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.primary,
@@ -270,7 +276,9 @@ fun PreviewHomeScreen() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            HomeDokter()
+            HomeDokter(
+                navController = rememberNavController()
+            )
         }
     }
 }

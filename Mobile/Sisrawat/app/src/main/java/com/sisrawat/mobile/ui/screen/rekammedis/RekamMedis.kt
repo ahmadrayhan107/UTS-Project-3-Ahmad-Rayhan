@@ -25,64 +25,65 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.sisrawat.mobile.ui.navigation.Screen
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 
 @Composable
 fun RekamMedis(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
-    RekamMedisScreen(modifier = modifier)
+    RekamMedisScreen(
+        modifier = modifier,
+        navController = navController
+    )
 }
 
 @Composable
 fun RekamMedisScreen(
-    modifier: Modifier
+    modifier: Modifier,
+    navController: NavController
 ) {
     LazyColumn(
         modifier = modifier.padding(16.dp)
     ) {
         items(10) { rekamMedises ->
             Card(
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(8.dp),
                 colors = CardDefaults.cardColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = Color.White
                 ),
                 modifier = modifier
                     .fillMaxWidth()
-                    .height(80.dp)
+                    .padding(vertical = 4.dp)
                     .clickable {
-
+                        navController.navigate(Screen.DetailRekamMedis.route)
                     }
             ) {
-                Row(
+                Column(
                     modifier = modifier
                         .fillMaxSize()
-                        .padding(8.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                        .padding(8.dp)
                 ) {
-                    Spacer(modifier = modifier.width(16.dp))
+                    Text(
+                        text = "Kode Rekam Medis ${rekamMedises + 1}",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
 
-                    Column(
-                        verticalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Text(
-                            text = "Kode Rekam Medis ${rekamMedises + 1}",
-                            style = MaterialTheme.typography.bodyMedium
-                        )
+                    Spacer(modifier = modifier.height(4.dp))
 
-                        Spacer(modifier = modifier.height(4.dp))
-
-                        Text(
-                            text = "14 Juni 2024",
-                            style = MaterialTheme.typography.bodySmall,
-                            softWrap = true
-                        )
-                    }
+                    Text(
+                        text = "14 Juni 2024",
+                        style = MaterialTheme.typography.bodySmall,
+                        softWrap = true
+                    )
                 }
             }
 
-            Spacer(modifier = modifier.height(16.dp))
+            Spacer(modifier = modifier.height(8.dp))
         }
     }
 }
@@ -105,7 +106,9 @@ fun PreviewRekamMedisScreen() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            RekamMedis()
+            RekamMedis(
+                navController = rememberNavController()
+            )
         }
     }
 }

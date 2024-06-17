@@ -63,7 +63,7 @@ class PembayaranController extends Controller
         $pembayaran->pasien_id = $request->pasien_id;
         $pembayaran->checkout_link = $createInvoice['invoice_url'];
         $pembayaran->external_id = $create_invoice_request['external_id'];
-        $pembayaran->status = 'pending';
+        $pembayaran->status = 'Pending';
         $pembayaran->save();
 
         $pembayaran_id = Pembayaran::where('nota', $nota)->first()->id_pembayaran;
@@ -105,7 +105,7 @@ class PembayaranController extends Controller
         }
 
         // Update status payment
-        $pembayaran->status = strtolower($getInvoice['status']);
+        $pembayaran->status = 'Finish';
         $pembayaran->save();
 
         return response()->json(['message' => 'Payment successfully']);

@@ -41,3 +41,17 @@ fun <T : Any> LazyListScope.gridItems(
         }
     }
 }
+
+@OptIn(ExperimentalFoundationApi::class)
+fun <T : Any> LazyListScope.listItems(
+    data: List<T>,
+    modifier: Modifier = Modifier,
+    itemContent: @Composable BoxScope.(T) -> Unit,
+) {
+    items(data.size, key = { index -> data[index].hashCode() }) { index ->
+        val item = data[index]
+        Box(modifier = modifier.animateItemPlacement()) {
+            itemContent(item)
+        }
+    }
+}

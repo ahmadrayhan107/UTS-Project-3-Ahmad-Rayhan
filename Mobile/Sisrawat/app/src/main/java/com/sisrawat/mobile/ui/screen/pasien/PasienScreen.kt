@@ -30,21 +30,29 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.sisrawat.mobile.R
+import com.sisrawat.mobile.ui.navigation.Screen
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 
 @Composable
 fun Pasien(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
-    PasienScreen(modifier = modifier)
+    PasienScreen(
+        modifier = modifier,
+        navController = navController
+    )
 }
 
 @Composable
 fun PasienScreen(
-    modifier: Modifier
+    modifier: Modifier,
+    navController: NavController
 ) {
     LazyColumn(
         modifier = modifier.padding(16.dp)
@@ -60,7 +68,7 @@ fun PasienScreen(
                     .fillMaxWidth()
                     .height(80.dp)
                     .clickable {
-
+                        navController.navigate(Screen.DetailPasien.route)
                     }
             ) {
                 Row(
@@ -121,7 +129,9 @@ fun PreviewPasienScreen() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            Pasien()
+            Pasien(
+                navController = rememberNavController()
+            )
         }
     }
 }

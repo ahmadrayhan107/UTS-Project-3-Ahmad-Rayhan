@@ -59,4 +59,14 @@
     <string name="create_pendaftaran_temu">Create Pendaftaran Temu</string>
     <string name="tanggal">Tanggal</string>
     <string name="submit">Submit</string>
+    <string name="detail_rekam_medis">Detail Rekam Medis</string>
+    <string name="keluhan">Keluhan</string>
+    <string name="diagnosa">Diagnosa</string>
+    <string name="tekanan_darah">Tekanan Darah</string>
+    <string name="berat_badan">Berat Badan</string>
+    <string name="suhu_tubuh">Suhu Tubuh</string>
+    <string name="list_obat">List Obat</string>
+    <string name="dosis">Dosis: %s</string>
+    <string name="jenis_obat">Jenis: %s</string>
+    <string name="keterangan_obat">Keterangan Obat: %s</string>
 </resources>

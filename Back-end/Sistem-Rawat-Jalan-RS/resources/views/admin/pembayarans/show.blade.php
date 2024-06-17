@@ -54,6 +54,15 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 form-control-label">Status</label>
+                                    <label class="col-sm-10">{{ $pembayaran->status }}</label>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                 </div>

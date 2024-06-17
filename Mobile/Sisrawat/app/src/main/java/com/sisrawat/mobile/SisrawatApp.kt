@@ -49,6 +49,7 @@ import com.sisrawat.mobile.ui.component.bottombar.BottomBar
 import com.sisrawat.mobile.ui.component.navdrawer.NavigationDrawer
 import com.sisrawat.mobile.ui.navigation.BottomNavigationItem
 import com.sisrawat.mobile.ui.navigation.Screen
+import com.sisrawat.mobile.ui.screen.home.dokter.DetailPasien
 import com.sisrawat.mobile.ui.screen.home.dokter.HomeDokter
 import com.sisrawat.mobile.ui.screen.home.pasien.CreatePendaftaranTemu
 import com.sisrawat.mobile.ui.screen.home.pasien.DetailDokter
@@ -59,6 +60,7 @@ import com.sisrawat.mobile.ui.screen.pasien.Pasien
 import com.sisrawat.mobile.ui.screen.profile.dokter.ProfileDokter
 import com.sisrawat.mobile.ui.screen.profile.pasien.ProfilePasien
 import com.sisrawat.mobile.ui.screen.register.Register
+import com.sisrawat.mobile.ui.screen.rekammedis.DetailRekamMedis
 import com.sisrawat.mobile.ui.screen.rekammedis.RekamMedis
 import kotlinx.coroutines.launch
 
@@ -87,12 +89,16 @@ fun SisrawatApp(
 
     val screenWithoutBottomAppBar = arrayOf(
         Screen.DetailDokter.route,
-        Screen.CreatePendaftaranTemu.route
+        Screen.CreatePendaftaranTemu.route,
+        Screen.DetailRekamMedis.route,
+        Screen.DetailPasien.route
     )
 
     val screenWithoutMenuButton = arrayOf(
         Screen.DetailDokter.route,
-        Screen.CreatePendaftaranTemu.route
+        Screen.CreatePendaftaranTemu.route,
+        Screen.DetailRekamMedis.route,
+        Screen.DetailPasien.route
     )
 
     if (session != null) {
@@ -325,14 +331,18 @@ fun SisrawatApp(
                                 )
                             }
 
-                            "Dokter" -> HomeDokter()
+                            "Dokter" -> HomeDokter(
+                                navController = navController
+                            )
                         }
                     }
                     composable(Screen.JadwalTemu.route) {
                         JadwalTemu()
                     }
                     composable(Screen.RekamMedis.route) {
-                        RekamMedis()
+                        RekamMedis(
+                            navController = navController
+                        )
                     }
                     composable(Screen.ProfileDokter.route) {
                         ProfileDokter()
@@ -341,7 +351,9 @@ fun SisrawatApp(
                         ProfilePasien()
                     }
                     composable(Screen.Pasien.route) {
-                        Pasien()
+                        Pasien(
+                            navController = navController
+                        )
                     }
                     composable(Screen.DetailDokter.route) {
                         DetailDokter(
@@ -350,6 +362,14 @@ fun SisrawatApp(
                     }
                     composable(Screen.CreatePendaftaranTemu.route) {
                         CreatePendaftaranTemu()
+                    }
+                    composable(Screen.DetailRekamMedis.route) {
+                        DetailRekamMedis()
+                    }
+                    composable(Screen.DetailPasien.route) {
+                        DetailPasien(
+                            navController = navController
+                        )
                     }
                 }
             }
