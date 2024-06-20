@@ -69,4 +69,10 @@
     <string name="dosis">Dosis: %s</string>
     <string name="jenis_obat">Jenis: %s</string>
     <string name="keterangan_obat">Keterangan Obat: %s</string>
+    <string name="click_to_change">Click to\nChange</string>
+    <string name="create_profile">Create Profile</string>
+    <string name="dropdown_menu">Dropdown Menu</string>
+    <string name="save">Simpan</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="update">Update</string>
 </resources>

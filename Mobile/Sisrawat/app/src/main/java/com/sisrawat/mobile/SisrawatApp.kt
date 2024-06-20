@@ -57,7 +57,11 @@ import com.sisrawat.mobile.ui.screen.home.pasien.HomePasien
 import com.sisrawat.mobile.ui.screen.jadwaltemu.JadwalTemu
 import com.sisrawat.mobile.ui.screen.login.Login
 import com.sisrawat.mobile.ui.screen.pasien.Pasien
+import com.sisrawat.mobile.ui.screen.profile.dokter.CreateProfileDokter
+import com.sisrawat.mobile.ui.screen.profile.dokter.EditProfileDokter
 import com.sisrawat.mobile.ui.screen.profile.dokter.ProfileDokter
+import com.sisrawat.mobile.ui.screen.profile.pasien.CreateProfilePasien
+import com.sisrawat.mobile.ui.screen.profile.pasien.EditProfilePasien
 import com.sisrawat.mobile.ui.screen.profile.pasien.ProfilePasien
 import com.sisrawat.mobile.ui.screen.register.Register
 import com.sisrawat.mobile.ui.screen.rekammedis.DetailRekamMedis
@@ -91,14 +95,18 @@ fun SisrawatApp(
         Screen.DetailDokter.route,
         Screen.CreatePendaftaranTemu.route,
         Screen.DetailRekamMedis.route,
-        Screen.DetailPasien.route
+        Screen.DetailPasien.route,
+        Screen.CreateProfile.route,
+        Screen.EditProfile.route
     )
 
     val screenWithoutMenuButton = arrayOf(
         Screen.DetailDokter.route,
         Screen.CreatePendaftaranTemu.route,
         Screen.DetailRekamMedis.route,
-        Screen.DetailPasien.route
+        Screen.DetailPasien.route,
+        Screen.CreateProfile.route,
+        Screen.EditProfile.route
     )
 
     if (session != null) {
@@ -183,10 +191,24 @@ fun SisrawatApp(
                                                 color = Color.White
                                             )
                                         }
+
+                                        Screen.CreateProfile.route -> {
+                                            Text(
+                                                text = stringResource(R.string.create_profile),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
+
+                                        Screen.EditProfile.route -> {
+                                            Text(
+                                                text = stringResource(R.string.edit_profile),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
                                     }
-
                                 }
-
                             },
                             navigationIcon = {
                                 if (currentRoute in screenWithoutMenuButton) {
@@ -345,10 +367,14 @@ fun SisrawatApp(
                         )
                     }
                     composable(Screen.ProfileDokter.route) {
-                        ProfileDokter()
+                        ProfileDokter(
+                            navController = navController
+                        )
                     }
                     composable(Screen.ProfilePasien.route) {
-                        ProfilePasien()
+                        ProfilePasien(
+                            navController = navController
+                        )
                     }
                     composable(Screen.Pasien.route) {
                         Pasien(
@@ -370,6 +396,28 @@ fun SisrawatApp(
                         DetailPasien(
                             navController = navController
                         )
+                    }
+                    composable(Screen.CreateProfile.route) {
+                        when (role) {
+                            "Pasien" -> {
+                                CreateProfilePasien()
+                            }
+
+                            "Dokter" -> {
+                                CreateProfileDokter()
+                            }
+                        }
+                    }
+                    composable(Screen.EditProfile.route) {
+                        when (role) {
+                            "Pasien" -> {
+                                EditProfilePasien()
+                            }
+
+                            "Dokter" -> {
+                                EditProfileDokter()
+                            }
+                        }
                     }
                 }
             }

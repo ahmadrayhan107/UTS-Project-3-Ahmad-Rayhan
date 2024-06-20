@@ -24,6 +24,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -40,21 +41,29 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.sisrawat.mobile.R
+import com.sisrawat.mobile.ui.navigation.Screen
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 
 @Composable
 fun ProfileDokter(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController
 ) {
-    ProfileScreen(modifier = modifier)
+    ProfileScreen(
+        modifier = modifier,
+        navController = navController
+    )
 }
 
 @Composable
 fun ProfileScreen(
-    modifier: Modifier
+    modifier: Modifier,
+    navController: NavController
 ) {
     Column(
         modifier = modifier
@@ -107,7 +116,9 @@ fun ProfileScreen(
             horizontalArrangement = Arrangement.End
         ) {
             TextButton(
-                onClick = { /*TODO*/ }
+                onClick = {
+                    navController.navigate(Screen.EditProfile.route)
+                }
             ) {
                 Icon(
                     imageVector = Icons.Filled.Edit,
@@ -160,7 +171,7 @@ fun ProfileScreen(
                 }
             }
 
-            Divider(
+            HorizontalDivider(
                 thickness = 3.dp,
                 color = MaterialTheme.colorScheme.background
             )
@@ -196,7 +207,7 @@ fun ProfileScreen(
                 }
             }
 
-            Divider(
+            HorizontalDivider(
                 thickness = 3.dp,
                 color = MaterialTheme.colorScheme.background
             )
@@ -232,7 +243,7 @@ fun ProfileScreen(
                 }
             }
 
-            Divider(
+            HorizontalDivider(
                 thickness = 3.dp,
                 color = MaterialTheme.colorScheme.background
             )
@@ -268,7 +279,7 @@ fun ProfileScreen(
                 }
             }
 
-            Divider(
+            HorizontalDivider(
                 thickness = 3.dp,
                 color = MaterialTheme.colorScheme.background
             )
@@ -304,7 +315,7 @@ fun ProfileScreen(
                 }
             }
 
-            Divider(
+            HorizontalDivider(
                 thickness = 3.dp,
                 color = MaterialTheme.colorScheme.background
             )
@@ -362,7 +373,9 @@ fun PreviewProfilScreen() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            ProfileDokter()
+            ProfileDokter(
+                navController = rememberNavController()
+            )
         }
     }
 }

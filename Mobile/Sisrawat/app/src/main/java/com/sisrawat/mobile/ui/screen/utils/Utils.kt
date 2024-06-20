@@ -7,8 +7,17 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.paging.compose.LazyPagingItems
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -54,4 +63,35 @@ fun <T : Any> LazyListScope.listItems(
             itemContent(item)
         }
     }
+}
+
+class ExposedDropMenuStateHolder(private val items: List<Any>) {
+    var enabled by mutableStateOf(false)
+    var value by mutableStateOf("")
+    private var selectedIndex by mutableStateOf(-1)
+    var size by mutableStateOf(Size.Zero)
+    val icon: ImageVector
+        @Composable get() = if (enabled) {
+            Icons.Filled.ArrowDropUp
+        } else {
+            Icons.Filled.ArrowDropDown
+        }
+
+    fun onEnabled(newValue: Boolean) {
+        enabled = newValue
+    }
+
+    fun onSelectedIndex(newValue: Int) {
+        selectedIndex = newValue
+        value = items[selectedIndex].toString()
+    }
+
+    fun onSize(newValue: Size) {
+        size = newValue
+    }
+}
+
+@Composable
+fun rememberExposedMenuStateHolder(items: List<Any>) = remember {
+    ExposedDropMenuStateHolder(items)
 }
