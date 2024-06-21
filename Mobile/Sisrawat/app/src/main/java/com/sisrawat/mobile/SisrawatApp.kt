@@ -66,6 +66,7 @@ import com.sisrawat.mobile.ui.screen.profile.pasien.ProfilePasien
 import com.sisrawat.mobile.ui.screen.register.Register
 import com.sisrawat.mobile.ui.screen.rekammedis.DetailRekamMedis
 import com.sisrawat.mobile.ui.screen.rekammedis.RekamMedis
+import com.sisrawat.mobile.ui.screen.transaksi.Transaksi
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
@@ -97,7 +98,11 @@ fun SisrawatApp(
         Screen.DetailRekamMedis.route,
         Screen.DetailPasien.route,
         Screen.CreateProfile.route,
-        Screen.EditProfile.route
+        Screen.EditProfile.route,
+        Screen.Transaksi.route,
+        Screen.JadwalDokter.route,
+        Screen.Settings.route,
+        Screen.About.route
     )
 
     val screenWithoutMenuButton = arrayOf(
@@ -106,7 +111,11 @@ fun SisrawatApp(
         Screen.DetailRekamMedis.route,
         Screen.DetailPasien.route,
         Screen.CreateProfile.route,
-        Screen.EditProfile.route
+        Screen.EditProfile.route,
+        Screen.Transaksi.route,
+        Screen.JadwalDokter.route,
+        Screen.Settings.route,
+        Screen.About.route
     )
 
     if (session != null) {
@@ -203,6 +212,38 @@ fun SisrawatApp(
                                         Screen.EditProfile.route -> {
                                             Text(
                                                 text = stringResource(R.string.edit_profile),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
+
+                                        Screen.Transaksi.route -> {
+                                            Text(
+                                                text = stringResource(R.string.transaksi),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
+
+                                        Screen.JadwalDokter.route -> {
+                                            Text(
+                                                text = stringResource(R.string.jadwal_dokter),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
+
+                                        Screen.Settings.route -> {
+                                            Text(
+                                                text = stringResource(R.string.settings),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
+
+                                        Screen.About.route -> {
+                                            Text(
+                                                text = stringResource(R.string.about),
                                                 style = MaterialTheme.typography.headlineSmall,
                                                 color = Color.White
                                             )
@@ -418,6 +459,18 @@ fun SisrawatApp(
                                 EditProfileDokter()
                             }
                         }
+                    }
+                    composable(Screen.Transaksi.route) {
+                        Transaksi()
+                    }
+                    composable(Screen.Settings.route) {
+                        // Settings
+                    }
+                    composable(Screen.About.route) {
+                        // About
+                    }
+                    composable(Screen.JadwalDokter.route) {
+                        // Jadwal Dokter
                     }
                 }
             }

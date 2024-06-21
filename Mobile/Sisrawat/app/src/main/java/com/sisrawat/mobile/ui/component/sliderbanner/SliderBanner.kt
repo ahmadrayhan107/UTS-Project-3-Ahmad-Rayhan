@@ -32,6 +32,7 @@ import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
 import com.sisrawat.mobile.R
+import com.sisrawat.mobile.ui.theme.Bubbles
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.yield
@@ -82,8 +83,8 @@ fun SliderBanner(
             Card(
                 shape = RoundedCornerShape(12.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = Color.White
+                    containerColor = Bubbles,
+                    contentColor = Color.Black
                 ),
                 modifier = modifier
                     .graphicsLayer {

@@ -20,7 +20,6 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
@@ -54,7 +53,6 @@ import com.sisrawat.mobile.ui.screen.utils.viewmodelfactory.SisrawatViewModelFac
 import com.sisrawat.mobile.ui.theme.Azul
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationDrawer(
     modifier: Modifier = Modifier,
@@ -88,6 +86,7 @@ fun NavigationDrawer(
                         title = stringResource(R.string.transaksi),
                         selectedIcon = Icons.Filled.Payments,
                         unselectedIcon = Icons.Outlined.Payments,
+                        route = Screen.Transaksi.route
                     )
                 }
 
@@ -96,6 +95,7 @@ fun NavigationDrawer(
                         title = stringResource(R.string.jadwal_dokter),
                         selectedIcon = Icons.Filled.Schedule,
                         unselectedIcon = Icons.Outlined.Schedule,
+                        route = Screen.JadwalDokter.route
                     )
                 }
 
@@ -107,16 +107,19 @@ fun NavigationDrawer(
                 title = stringResource(R.string.settings),
                 selectedIcon = Icons.Filled.Settings,
                 unselectedIcon = Icons.Outlined.Settings,
+                route = Screen.Settings.route
             ),
             NavigationDrawerItem(
                 title = stringResource(R.string.about),
                 selectedIcon = Icons.Filled.Info,
                 unselectedIcon = Icons.Outlined.Info,
+                route = Screen.About.route
             ),
             NavigationDrawerItem(
                 title = stringResource(R.string.logout),
                 selectedIcon = Icons.AutoMirrored.Filled.Logout,
                 unselectedIcon = Icons.AutoMirrored.Outlined.Logout,
+                route = null
             )
         )
     }
@@ -177,6 +180,7 @@ fun NavigationDrawer(
                                     openDialog.value = true
                                 } else {
                                     selectedItemIndex = index
+                                    item.route?.let { navController.navigate(it) }
                                 }
 
                                 scope.launch {
@@ -196,7 +200,7 @@ fun NavigationDrawer(
                             },
                             modifier = modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                             colors = NavigationDrawerItemDefaults.colors(
-                                selectedContainerColor = Azul,
+                                selectedContainerColor = MaterialTheme.colorScheme.background,
                                 unselectedContainerColor = MaterialTheme.colorScheme.background,
                             )
                         )

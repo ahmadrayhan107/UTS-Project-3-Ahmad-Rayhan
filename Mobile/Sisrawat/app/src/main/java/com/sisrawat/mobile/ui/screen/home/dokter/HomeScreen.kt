@@ -48,6 +48,7 @@ import coil.request.ImageRequest
 import com.sisrawat.mobile.R
 import com.sisrawat.mobile.ui.navigation.Screen
 import com.sisrawat.mobile.ui.screen.utils.gridItems
+import com.sisrawat.mobile.ui.theme.Bubbles
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -130,8 +131,8 @@ fun HomeScreen(
             Card(
                 shape = RoundedCornerShape(12.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = Color.White
+                    containerColor = Bubbles,
+                    contentColor = Color.Black
                 ),
                 modifier = modifier
                     .fillMaxWidth()
@@ -166,7 +167,7 @@ fun HomeScreen(
                             .clip(CircleShape)
                             .border(
                                 width = 1.dp,
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = Color.Black,
                                 shape = CircleShape
                             )
                     )
@@ -212,8 +213,8 @@ fun HomeScreen(
                         navController.navigate(Screen.DetailPasien.route)
                     },
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = Color.White
+                    containerColor = Bubbles,
+                    contentColor = Color.Black
                 )
             ) {
                 SubcomposeAsyncImage(

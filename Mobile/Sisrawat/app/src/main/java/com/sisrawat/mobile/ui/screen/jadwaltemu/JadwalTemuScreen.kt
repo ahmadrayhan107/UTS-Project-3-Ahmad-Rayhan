@@ -1,6 +1,7 @@
 package com.sisrawat.mobile.ui.screen.jadwaltemu
 
 import android.content.res.Configuration
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.sisrawat.mobile.R
+import com.sisrawat.mobile.ui.theme.Bubbles
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 
 @Composable
@@ -52,12 +54,16 @@ fun JadwalTemuScreen(
             Card(
                 shape = RoundedCornerShape(12.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = Color.White
+                    containerColor = Bubbles,
+                    contentColor = Color.Black
                 ),
                 modifier = modifier
                     .fillMaxWidth()
-                    .height(80.dp)
+                    .height(80.dp),
+                border = BorderStroke(
+                    width = 1.dp,
+                    color = Color.Black
+                )
             ) {
                 Row(
                     modifier = modifier

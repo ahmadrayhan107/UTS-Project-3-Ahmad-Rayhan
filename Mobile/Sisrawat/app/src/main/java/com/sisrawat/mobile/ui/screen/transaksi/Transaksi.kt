@@ -1,6 +1,7 @@
-package com.sisrawat.mobile.ui.screen.rekammedis
+package com.sisrawat.mobile.ui.screen.transaksi
 
-import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -25,32 +25,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.sisrawat.mobile.ui.navigation.Screen
 import com.sisrawat.mobile.ui.theme.Bubbles
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 
 @Composable
-fun RekamMedis(
-    modifier: Modifier = Modifier,
-    navController: NavController
-) {
-    RekamMedisScreen(
-        modifier = modifier,
-        navController = navController
-    )
-}
-
-@Composable
-fun RekamMedisScreen(
-    modifier: Modifier,
-    navController: NavController
-) {
+fun Transaksi(modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = modifier.padding(16.dp)
     ) {
-        items(10) { rekamMedises ->
+        items(15) { transaksis ->
             Card(
                 shape = RoundedCornerShape(8.dp),
                 colors = CardDefaults.cardColors(
@@ -61,26 +44,45 @@ fun RekamMedisScreen(
                     .fillMaxWidth()
                     .padding(vertical = 4.dp)
                     .clickable {
-                        navController.navigate(Screen.DetailRekamMedis.route)
+
                     }
             ) {
-                Column(
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
                         .padding(8.dp)
                 ) {
-                    Text(
-                        text = "Kode Rekam Medis ${rekamMedises + 1}",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
+                    Column {
+                        Text(
+                            text = "Nota Transaksi ${transaksis + 1}",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
 
-                    Spacer(modifier = modifier.height(4.dp))
+                        Spacer(modifier = modifier.height(4.dp))
 
-                    Text(
-                        text = "14 Juni 2024",
-                        style = MaterialTheme.typography.bodySmall,
-                        softWrap = true
-                    )
+                        Text(
+                            text = "14 Juni 2024",
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+
+                    Column {
+                        Text(
+                            text = "Status",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+
+                        Spacer(modifier = modifier.height(4.dp))
+
+                        Text(
+                            text = "Rp70000",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+
+
                 }
             }
 
@@ -90,26 +92,25 @@ fun RekamMedisScreen(
 }
 
 @Preview(
-    showBackground = true,
     showSystemUi = true,
-    device = Devices.PIXEL_4_XL,
+    showBackground = true,
+    uiMode = UI_MODE_NIGHT_NO,
+    device = Devices.PIXEL_4_XL
 )
 @Preview(
-    showBackground = true,
     showSystemUi = true,
-    device = Devices.PIXEL_4_XL,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    uiMode = UI_MODE_NIGHT_YES,
+    device = Devices.PIXEL_4_XL
 )
 @Composable
-fun PreviewRekamMedisScreen() {
+fun PreviewTransaksiScreen() {
     SisrawatTheme {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            RekamMedis(
-                navController = rememberNavController()
-            )
+            Transaksi()
         }
     }
 }

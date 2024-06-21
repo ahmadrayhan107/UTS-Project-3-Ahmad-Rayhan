@@ -54,6 +54,7 @@ import com.sisrawat.mobile.ui.component.sliderbanner.SliderBanner
 import com.sisrawat.mobile.ui.navigation.Screen
 import com.sisrawat.mobile.ui.screen.utils.gridItems
 import com.sisrawat.mobile.ui.screen.utils.viewmodelfactory.UserViewModelFactory
+import com.sisrawat.mobile.ui.theme.Bubbles
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 import kotlinx.coroutines.launch
 
@@ -170,8 +171,8 @@ fun HomeScreen(
                         navController.navigate(Screen.DetailDokter.route)
                     },
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = Color.White
+                    containerColor = Bubbles,
+                    contentColor = Color.Black
                 )
             ) {
                 SubcomposeAsyncImage(

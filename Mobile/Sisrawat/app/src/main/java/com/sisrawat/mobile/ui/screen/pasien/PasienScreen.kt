@@ -1,6 +1,7 @@
 package com.sisrawat.mobile.ui.screen.pasien
 
 import android.content.res.Configuration
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -36,6 +37,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.sisrawat.mobile.R
 import com.sisrawat.mobile.ui.navigation.Screen
+import com.sisrawat.mobile.ui.theme.Bubbles
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 
 @Composable
@@ -61,15 +63,19 @@ fun PasienScreen(
             Card(
                 shape = RoundedCornerShape(12.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = Color.White
+                    containerColor = Bubbles,
+                    contentColor = Color.Black
                 ),
                 modifier = modifier
                     .fillMaxWidth()
                     .height(80.dp)
                     .clickable {
                         navController.navigate(Screen.DetailPasien.route)
-                    }
+                    },
+                border = BorderStroke(
+                    width = 1.dp,
+                    color = Color.Black
+                )
             ) {
                 Row(
                     modifier = modifier
