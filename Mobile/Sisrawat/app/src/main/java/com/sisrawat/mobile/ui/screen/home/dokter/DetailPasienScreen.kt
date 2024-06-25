@@ -41,6 +41,7 @@ import coil.request.ImageRequest
 import com.sisrawat.mobile.R
 import com.sisrawat.mobile.ui.navigation.Screen
 import com.sisrawat.mobile.ui.screen.utils.listItems
+import com.sisrawat.mobile.ui.theme.Bubbles
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 
 @Composable
@@ -145,8 +146,8 @@ fun DetailPasienScreen(
             Card(
                 shape = RoundedCornerShape(8.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = Color.White
+                    containerColor = Bubbles,
+                    contentColor = Color.Black
                 ),
                 modifier = modifier
                     .fillMaxWidth()

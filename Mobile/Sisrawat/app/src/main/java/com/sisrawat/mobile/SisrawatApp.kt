@@ -248,6 +248,22 @@ fun SisrawatApp(
                                                 color = Color.White
                                             )
                                         }
+
+                                        Screen.DetailRekamMedis.route -> {
+                                            Text(
+                                                text = stringResource(R.string.detail_rekam_medis),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
+
+                                        Screen.DetailPasien.route -> {
+                                            Text(
+                                                text = stringResource(R.string.detail_pasien),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
                                     }
                                 }
                             },

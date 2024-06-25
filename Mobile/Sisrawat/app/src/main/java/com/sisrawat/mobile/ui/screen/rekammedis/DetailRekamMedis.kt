@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sisrawat.mobile.R
 import com.sisrawat.mobile.ui.screen.utils.listItems
-import com.sisrawat.mobile.ui.theme.Azul
+import com.sisrawat.mobile.ui.theme.Bubbles
 import com.sisrawat.mobile.ui.theme.EerieBlack
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 
@@ -260,8 +260,8 @@ fun DetailRekamMedisScreen(
                     .padding(vertical = 4.dp),
                 shape = RoundedCornerShape(8.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = Azul,
-                    contentColor = Color.White
+                    containerColor = Bubbles,
+                    contentColor = Color.Black
                 )
             ) {
                 Column(
