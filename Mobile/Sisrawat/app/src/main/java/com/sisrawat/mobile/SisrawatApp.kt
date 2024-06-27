@@ -54,6 +54,8 @@ import com.sisrawat.mobile.ui.screen.home.dokter.HomeDokter
 import com.sisrawat.mobile.ui.screen.home.pasien.CreatePendaftaranTemu
 import com.sisrawat.mobile.ui.screen.home.pasien.DetailDokter
 import com.sisrawat.mobile.ui.screen.home.pasien.HomePasien
+import com.sisrawat.mobile.ui.screen.jadwaldokter.CreateJadwalDokter
+import com.sisrawat.mobile.ui.screen.jadwaldokter.JadwalDokter
 import com.sisrawat.mobile.ui.screen.jadwaltemu.JadwalTemu
 import com.sisrawat.mobile.ui.screen.login.Login
 import com.sisrawat.mobile.ui.screen.pasien.Pasien
@@ -66,6 +68,7 @@ import com.sisrawat.mobile.ui.screen.profile.pasien.ProfilePasien
 import com.sisrawat.mobile.ui.screen.register.Register
 import com.sisrawat.mobile.ui.screen.rekammedis.DetailRekamMedis
 import com.sisrawat.mobile.ui.screen.rekammedis.RekamMedis
+import com.sisrawat.mobile.ui.screen.transaksi.DetailTransaksi
 import com.sisrawat.mobile.ui.screen.transaksi.Transaksi
 import kotlinx.coroutines.launch
 
@@ -102,7 +105,9 @@ fun SisrawatApp(
         Screen.Transaksi.route,
         Screen.JadwalDokter.route,
         Screen.Settings.route,
-        Screen.About.route
+        Screen.About.route,
+        Screen.CreateJadwalDokter.route,
+        Screen.DetailTransaksi.route
     )
 
     val screenWithoutMenuButton = arrayOf(
@@ -115,7 +120,9 @@ fun SisrawatApp(
         Screen.Transaksi.route,
         Screen.JadwalDokter.route,
         Screen.Settings.route,
-        Screen.About.route
+        Screen.About.route,
+        Screen.CreateJadwalDokter.route,
+        Screen.DetailTransaksi.route
     )
 
     if (session != null) {
@@ -260,6 +267,22 @@ fun SisrawatApp(
                                         Screen.DetailPasien.route -> {
                                             Text(
                                                 text = stringResource(R.string.detail_pasien),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
+
+                                        Screen.CreateJadwalDokter.route -> {
+                                            Text(
+                                                text = stringResource(R.string.create_jadwal_dokter),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
+
+                                        Screen.DetailTransaksi.route -> {
+                                            Text(
+                                                text = stringResource(R.string.detail_transaksi),
                                                 style = MaterialTheme.typography.headlineSmall,
                                                 color = Color.White
                                             )
@@ -477,7 +500,9 @@ fun SisrawatApp(
                         }
                     }
                     composable(Screen.Transaksi.route) {
-                        Transaksi()
+                        Transaksi(
+                            navController = navController
+                        )
                     }
                     composable(Screen.Settings.route) {
                         // Settings
@@ -486,7 +511,15 @@ fun SisrawatApp(
                         // About
                     }
                     composable(Screen.JadwalDokter.route) {
-                        // Jadwal Dokter
+                        JadwalDokter(
+                            navController = navController
+                        )
+                    }
+                    composable(Screen.CreateJadwalDokter.route) {
+                        CreateJadwalDokter()
+                    }
+                    composable(Screen.DetailTransaksi.route) {
+                        DetailTransaksi()
                     }
                 }
             }

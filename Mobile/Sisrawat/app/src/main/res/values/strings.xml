@@ -76,4 +76,14 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="update">Update</string>
     <string name="detail_pasien">Detail Pasien</string>
+    <string name="jam_awal">Jam Awal</string>
+    <string name="jam_akhir">Jam Akhir</string>
+    <string name="hari">Hari</string>
+    <string name="create_jadwal_dokter">Create Jadwal Dokter</string>
+    <string name="detail_transaksi">Detail Transaksi</string>
+    <string name="nota">Nota</string>
+    <string name="tanggal_pembayaran">Tanggal Pembayaran</string>
+    <string name="total_biaya">Total Biaya</string>
+    <string name="status">Status</string>
+    <string name="list_tagihan">List Tagihan</string>
 </resources>

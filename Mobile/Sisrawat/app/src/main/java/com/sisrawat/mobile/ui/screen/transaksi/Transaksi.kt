@@ -25,11 +25,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.sisrawat.mobile.ui.navigation.Screen
 import com.sisrawat.mobile.ui.theme.Bubbles
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 
 @Composable
-fun Transaksi(modifier: Modifier = Modifier) {
+fun Transaksi(
+    modifier: Modifier = Modifier,
+    navController: NavController
+) {
     LazyColumn(
         modifier = modifier.padding(16.dp)
     ) {
@@ -44,7 +50,7 @@ fun Transaksi(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .padding(vertical = 4.dp)
                     .clickable {
-
+                        navController.navigate(Screen.DetailTransaksi.route)
                     }
             ) {
                 Row(
@@ -110,7 +116,9 @@ fun PreviewTransaksiScreen() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            Transaksi()
+            Transaksi(
+                navController = rememberNavController()
+            )
         }
     }
 }
