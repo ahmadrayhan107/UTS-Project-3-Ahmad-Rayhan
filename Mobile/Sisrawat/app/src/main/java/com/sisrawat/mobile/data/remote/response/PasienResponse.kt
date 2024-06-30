@@ -46,6 +46,9 @@ data class DataPasien(
 	@field:SerializedName("no_hp")
 	val noHp: String,
 
+	@field:SerializedName("no_bpjs")
+	val noBpjs: String,
+
 	@field:SerializedName("user_id")
 	val userId: Int,
 

@@ -20,6 +20,7 @@
                         <thead class="text-center">
                             <tr>
                                 <th>Nama Pasien</th>
+                                <th>NO BPJS</th>
                                 <th>NIK</th>
                                 <th>Jenis Kelamin</th>
                                 <th>Action</th>
@@ -28,6 +29,7 @@
                         @foreach ($pasiens as $pasien)
                             <tr>
                                 <td>{{ $pasien->nama_pasien }}</td>
+                                <td>{{ $pasien->no_bpjs }}</td>
                                 <td>{{ $pasien->nik }}</td>
                                 <td>{{ $pasien->jenis_kelamin }}</td>
                                 <td class="text-center">

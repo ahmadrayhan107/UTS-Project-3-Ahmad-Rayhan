@@ -58,6 +58,7 @@ import com.sisrawat.mobile.ui.screen.jadwaldokter.CreateJadwalDokter
 import com.sisrawat.mobile.ui.screen.jadwaldokter.JadwalDokter
 import com.sisrawat.mobile.ui.screen.jadwaltemu.JadwalTemu
 import com.sisrawat.mobile.ui.screen.login.Login
+import com.sisrawat.mobile.ui.screen.notification.NotificationScreen
 import com.sisrawat.mobile.ui.screen.pasien.Pasien
 import com.sisrawat.mobile.ui.screen.profile.dokter.CreateProfileDokter
 import com.sisrawat.mobile.ui.screen.profile.dokter.EditProfileDokter
@@ -104,10 +105,9 @@ fun SisrawatApp(
         Screen.EditProfile.route,
         Screen.Transaksi.route,
         Screen.JadwalDokter.route,
-        Screen.Settings.route,
-        Screen.About.route,
         Screen.CreateJadwalDokter.route,
-        Screen.DetailTransaksi.route
+        Screen.DetailTransaksi.route,
+        Screen.Notification.route
     )
 
     val screenWithoutMenuButton = arrayOf(
@@ -119,10 +119,9 @@ fun SisrawatApp(
         Screen.EditProfile.route,
         Screen.Transaksi.route,
         Screen.JadwalDokter.route,
-        Screen.Settings.route,
-        Screen.About.route,
         Screen.CreateJadwalDokter.route,
-        Screen.DetailTransaksi.route
+        Screen.DetailTransaksi.route,
+        Screen.Notification.route
     )
 
     if (session != null) {
@@ -240,22 +239,6 @@ fun SisrawatApp(
                                             )
                                         }
 
-                                        Screen.Settings.route -> {
-                                            Text(
-                                                text = stringResource(R.string.settings),
-                                                style = MaterialTheme.typography.headlineSmall,
-                                                color = Color.White
-                                            )
-                                        }
-
-                                        Screen.About.route -> {
-                                            Text(
-                                                text = stringResource(R.string.about),
-                                                style = MaterialTheme.typography.headlineSmall,
-                                                color = Color.White
-                                            )
-                                        }
-
                                         Screen.DetailRekamMedis.route -> {
                                             Text(
                                                 text = stringResource(R.string.detail_rekam_medis),
@@ -283,6 +266,14 @@ fun SisrawatApp(
                                         Screen.DetailTransaksi.route -> {
                                             Text(
                                                 text = stringResource(R.string.detail_transaksi),
+                                                style = MaterialTheme.typography.headlineSmall,
+                                                color = Color.White
+                                            )
+                                        }
+
+                                        Screen.Notification.route -> {
+                                            Text(
+                                                text = stringResource(R.string.notification),
                                                 style = MaterialTheme.typography.headlineSmall,
                                                 color = Color.White
                                             )
@@ -318,7 +309,7 @@ fun SisrawatApp(
                             actions = {
                                 if (currentRoute !in screenWithoutMenuButton) {
                                     IconButton(onClick = {
-
+                                        navController.navigate(Screen.Notification.route)
                                     }) {
                                         Icon(
                                             imageVector = Icons.Filled.Notifications,
@@ -453,7 +444,8 @@ fun SisrawatApp(
                     }
                     composable(Screen.ProfilePasien.route) {
                         ProfilePasien(
-                            navController = navController
+                            navController = navController,
+                            sessionModel = session
                         )
                     }
                     composable(Screen.Pasien.route) {
@@ -491,7 +483,10 @@ fun SisrawatApp(
                     composable(Screen.EditProfile.route) {
                         when (role) {
                             "Pasien" -> {
-                                EditProfilePasien()
+                                EditProfilePasien(
+                                    sessionModel = session,
+                                    snackbarHostState = snackbarHostState
+                                )
                             }
 
                             "Dokter" -> {
@@ -504,12 +499,6 @@ fun SisrawatApp(
                             navController = navController
                         )
                     }
-                    composable(Screen.Settings.route) {
-                        // Settings
-                    }
-                    composable(Screen.About.route) {
-                        // About
-                    }
                     composable(Screen.JadwalDokter.route) {
                         JadwalDokter(
                             navController = navController
@@ -520,6 +509,9 @@ fun SisrawatApp(
                     }
                     composable(Screen.DetailTransaksi.route) {
                         DetailTransaksi()
+                    }
+                    composable(Screen.Notification.route) {
+                        NotificationScreen()
                     }
                 }
             }

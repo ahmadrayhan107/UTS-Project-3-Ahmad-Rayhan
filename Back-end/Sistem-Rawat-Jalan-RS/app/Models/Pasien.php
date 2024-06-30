@@ -11,7 +11,7 @@ class Pasien extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id_pasien';
-    protected $fillable = ['nama_pasien', 'nik', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir', 'no_hp', 'alamat', 'user_id'];
+    protected $fillable = ['nama_pasien', 'no_bpjs', 'nik', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir', 'no_hp', 'alamat', 'user_id'];
     public $timestamps = false;
 
     public function user(): BelongsTo

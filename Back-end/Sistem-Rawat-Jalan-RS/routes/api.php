@@ -59,7 +59,7 @@ Route::group(array('prefix' => 'v1'), function () {
         Route::get('/pembayaran/{id}/list', [PembayaranController::class, 'show']);
 
         // Attachments
-        Route::post('/attachments/{id}', [AttachmentsController::class, 'store']);
+        Route::post('/attachments/{id}', [AttachmentsController::class, 'uploadImage']);
     });
 
     // Xendit

@@ -22,6 +22,7 @@ class PasienController extends Controller
     {
         $validateData = $request->validate([
             'nama_pasien' => 'required|max:30',
+            'no_bpjs' => 'required|numeric|digits:11|unique:pasiens,no_bpjs',
             'nik' => 'required|numeric|digits:14|unique:pasiens,nik',
             'jenis_kelamin' => 'required|max:10',
             'tempat_lahir' => 'required|max:15',

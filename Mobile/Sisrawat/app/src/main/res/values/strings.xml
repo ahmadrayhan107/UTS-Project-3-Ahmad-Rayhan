@@ -86,4 +86,5 @@
     <string name="total_biaya">Total Biaya</string>
     <string name="status">Status</string>
     <string name="list_tagihan">List Tagihan</string>
+    <string name="no_bpjs">No. BPJS</string>
 </resources>

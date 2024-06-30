@@ -77,7 +77,7 @@ fun SliderBanner(
             count = sliderBannerItem.size,
             state = pagerState,
             modifier = modifier
-                .height(114.dp)
+                .height(130.dp)
                 .fillMaxWidth()
         ) { page ->
             Card(

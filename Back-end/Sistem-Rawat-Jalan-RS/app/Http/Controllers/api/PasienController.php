@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pasien;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -22,6 +23,7 @@ class PasienController extends Controller
         }
 
         $dataPasien = $pasien->load(['user']);
+        $dataPasien['tanggal_lahir'] = Carbon::parse($dataPasien['tanggal_lahir'])->translatedFormat('d F Y');
 
         return response()->json([
             'dataPasien' => $dataPasien,
@@ -70,6 +72,11 @@ class PasienController extends Controller
 
         $validateData = Validator::make($request->all(), [
             'nama_pasien' => 'required|max:30',
+            'no_bpjs' => [
+                'required',
+                'size:11',
+                Rule::unique('pasiens', 'no_bpjs')->ignore($id, 'id_pasien')
+            ],
             'nik' => [
                 'required',
                 'size:14',
@@ -77,7 +84,7 @@ class PasienController extends Controller
             ],
             'jenis_kelamin' => 'required|max:10',
             'tempat_lahir' => 'required|max:15',
-            'tanggal_lahir' => 'required|date',
+            'tanggal_lahir' => 'required',
             'no_hp' => [
                 'required',
                 'max:15',
@@ -88,11 +95,60 @@ class PasienController extends Controller
         ]);
 
         if ($validateData->fails()) {
+            $errors = $validateData->errors();
+
+            if ($errors->first('nama_pasien')) {
+                $message = $errors->first('nama_pasien');
+            } else if ($errors->first('no_bpjs')) {
+                $message = $errors->first('no_bpjs');
+            } else if ($errors->first('nik')) {
+                $message = $errors->first('nik');
+            } else if ($errors->first('jenis_kelamin')) {
+                $message = $errors->first('jenis_kelamin');
+            } else if ($errors->first('tempat_lahir')) {
+                $message = $errors->first('tempat_lahir');
+            } else if ($errors->first('tanggal_lahir')) {
+                $message = $errors->first('tanggal_lahir');
+            } else if ($errors->first('no_hp')) {
+                $message = $errors->first('no_hp');
+            } else if ($errors->first('alamat')) {
+                $message = $errors->first('alamat');
+            }
+
             return response()->json([
-                'errors' => $validateData->errors(),
+                'message' => $message,
                 'status' => Response::HTTP_BAD_REQUEST,
             ], Response::HTTP_BAD_REQUEST);
         }
+
+        // Daftar bulan dalam bahasa Indonesia
+        $bulan = [
+            'Januari' => '01',
+            'Februari' => '02',
+            'Maret' => '03',
+            'April' => '04',
+            'Mei' => '05',
+            'Juni' => '06',
+            'Juli' => '07',
+            'Agustus' => '08',
+            'September' => '09',
+            'Oktober' => '10',
+            'November' => '11',
+            'Desember' => '12'
+        ];
+
+        list($day, $month, $year) = explode(' ', $request['tanggal_lahir']);
+
+        // Mengubah nama bulan menjadi angka
+        if (array_key_exists($month, $bulan)) {
+            $month = $bulan[$month];
+        } else {
+            echo 'Bulan tidak valid: ' . $month;
+            exit;
+        }
+
+        $formattedDate = $year . '-' . $month . '-' . $day;
+        $request['tanggal_lahir'] = Carbon::createFromFormat('Y-m-d', $formattedDate)->toDateString();
 
         $dataPasien = $request->all();
         Pasien::where('id_pasien', $id)->update($dataPasien);

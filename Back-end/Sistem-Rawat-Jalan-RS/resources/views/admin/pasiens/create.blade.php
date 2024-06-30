@@ -21,6 +21,17 @@
             </div>
 
             <div class="form-group mb-5">
+                <label>No. BPJS</label>
+                <input type="text" class="form-control form-control-user @error('no_bpjs') is-invalid @enderror"
+                    placeholder="Masukkan 11 digit No. BPJS Pasien " value="{{ old('no_bpjs') }}" name="no_bpjs">
+                @error('no_bpjs')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group mb-5">
                 <label>NIK</label>
                 <input type="text" class="form-control form-control-user @error('nik') is-invalid @enderror"
                     placeholder="Masukkan 14 digit NIK Pasien " value="{{ old('nik') }}" name="nik">

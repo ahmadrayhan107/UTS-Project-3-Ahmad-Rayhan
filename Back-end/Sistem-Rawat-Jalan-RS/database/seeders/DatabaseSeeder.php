@@ -9,8 +9,6 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-use function PHPSTORM_META\map;
-
 class DatabaseSeeder extends Seeder
 {
     protected static ?string $password;
@@ -22,36 +20,64 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(100)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'username' => 'Admin RS',
-        //     'email' => 'admin@gmail.com',
-        //     'password' => static::$password ??= Hash::make('password'),
-        //     'role' => 'Admin'
-        // ]);
+        \App\Models\User::factory()->create([
+            'username' => 'Admin RS Permata Hati',
+            'email' => 'adminrsph@gmail.com',
+            'password' => static::$password ??= Hash::make('password'),
+            'role' => 'Admin'
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'username' => 'petugas-medis',
-        //     'email' => 'petugas-medis@gmail.com',
-        //     'password' => static::$password ??= Hash::make('password'),
-        //     'role' => 'Petugas Medis',
-        //     'img_profile' => '/img/profiles/img_1715707027_petugas-medis-wanita.png'
-        // ]);
+        \App\Models\User::factory()->create([
+            'username' => 'Elvina',
+            'email' => 'elvina.novitasari@gmail.com',
+            'password' => static::$password ??= Hash::make('password'),
+            'role' => 'Petugas Medis',
+            'img_profile' => '/img/profiles/img_1715707027_petugas-medis-wanita.jpg'
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'username' => 'apoteker',
-        //     'email' => 'apoteker@gmail.com',
-        //     'password' => static::$password ??= Hash::make('password'),
-        //     'role' => 'Apoteker',
-        //     'img_profile' => '/img/profiles/img_1715707016_apoteker-wanita.png'
-        // ]);
+        DB::table('petugas_medis')->insert([
+            'nama_petugas_medis' => 'Elvina Novitasari',
+            'nip' => '76998969973356451',
+            'jenis_kelamin' => 'Perempuan',
+            'no_hp' => '086019972567',
+            'alamat' => 'JL. Khatib Sulaiman No. 52, Padang',
+            'user_id' => 2
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'username' => 'dokter-umum',
-        //     'email' => 'dokter-umum@gmail.com',
-        //     'password' => static::$password ??= Hash::make('password'),
-        //     'role' => 'Dokter',
-        //     'img_profile' => '/img/profiles/img_1715707062_dokter-pria.png'
-        // ]);
+        \App\Models\User::factory()->create([
+            'username' => 'Novi',
+            'email' => 'novi.usamah@gmail.com',
+            'password' => static::$password ??= Hash::make('password'),
+            'role' => 'Apoteker',
+            'img_profile' => '/img/profiles/img_1715707016_apoteker-wanita.jpg'
+        ]);
+
+        DB::table('apotekers')->insert([
+            'nama_apoteker' => 'Novi Usamah',
+            'no_sipa' => '517/7247/2600/8-73',
+            'jenis_kelamin' => 'Perempuan',
+            'no_hp' => '0817654606873',
+            'alamat' => 'Jl Berlian Raya Bl R/2, Padang',
+            'user_id' => 3
+        ]);
+
+        \App\Models\User::factory()->create([
+            'username' => 'Irwan',
+            'email' => 'irwan.prasetyo@gmail.com',
+            'password' => static::$password ??= Hash::make('password'),
+            'role' => 'Dokter',
+            'img_profile' => '/img/profiles/img_1715707062_dokter-pria.jpg'
+        ]);
+
+        DB::table('dokters')->insert([
+            'nama_dokter' => 'Irwan Prasetyo',
+            'nip' => '270415370273692792',
+            'jenis_kelamin' => 'Laki-Laki',
+            'spesialis' => 'Poli Umum',
+            'no_hp' => '0812345678',
+            'alamat' => 'Jl Gajah Mada, Padang',
+            'user_id' => 4
+        ]);
 
         // \App\Models\User::factory()->create([
         //     'username' => 'pasien-1',
@@ -72,38 +98,10 @@ class DatabaseSeeder extends Seeder
         //     'user_id' => 5
         // ]);
 
-        // DB::table('dokters')->insert([
-        //     'nama_dokter' => 'Dokter Umum',
-        //     'nip' => '123456789012345678',
-        //     'jenis_kelamin' => 'Laki-Laki',
-        //     'spesialis' => 'Poli Umum',
-        //     'no_hp' => '0812345678',
-        //     'alamat' => 'Padang',
-        //     'user_id' => 4
-        // ]);
-
-        // DB::table('petugas_medis')->insert([
-        //     'nama_petugas_medis' => 'Petugas Medis',
-        //     'nip' => '123456789012345679',
-        //     'jenis_kelamin' => 'Perempuan',
-        //     'no_hp' => '0812345679',
-        //     'alamat' => 'Padang',
-        //     'user_id' => 2
-        // ]);
-
-        // DB::table('apotekers')->insert([
-        //     'nama_apoteker' => 'Apoteker',
-        //     'no_sipa' => '001/0001/0001/1-01',
-        //     'jenis_kelamin' => 'Perempuan',
-        //     'no_hp' => '0812345680',
-        //     'alamat' => 'Padang',
-        //     'user_id' => 3
-        // ]);
-
         $this->call([
             // JadwalDokterSeeder::class,
             // ObatSeeder::class,
-            PendaftaranTemuSeeder::class
+            // PendaftaranTemuSeeder::class
         ]);
 
         // \App\Models\Dokter::factory(10)->create();

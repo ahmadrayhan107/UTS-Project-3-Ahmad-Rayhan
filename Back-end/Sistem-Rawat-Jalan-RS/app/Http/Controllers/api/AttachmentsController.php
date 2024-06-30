@@ -10,20 +10,26 @@ use Illuminate\Support\Facades\Validator;
 
 class AttachmentsController extends Controller
 {
-    public function store(Request $request, $id)
+    public function uploadImage(Request $request, $id)
     {
         $validateData = Validator::make($request->all(), [
             'img_profile' => 'required|image|mimes:png,jpg'
         ]);
 
         if ($validateData->fails()) {
+            $errors = $validateData->errors();
+
+            if ($errors->first('img_profile')) {
+                $message = $errors->first('img_profile');
+            }
+
             return response()->json([
-                'errors' => $validateData->errors(),
+                'message' => $message,
                 'status' => Response::HTTP_BAD_REQUEST,
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $namaFile = 'http://127.0.0.1:8000/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
+        $namaFile = '/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
         $request->img_profile->move('img/profiles', $namaFile);
         User::where('id_user', $id)->update(['img_profile' => $namaFile]);
 

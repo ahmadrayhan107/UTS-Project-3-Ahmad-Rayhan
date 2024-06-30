@@ -79,9 +79,7 @@ fun HomePasien(
     scope.launch {
         viewModel.showPasien(id).let {
             imageUrl = BuildConfig.BASE_URL.plus(viewModel.imgProfile.value)
-            if (viewModel.namaPasien.value.isNotBlank()) {
-                namaPasien = viewModel.namaPasien.value
-            }
+            namaPasien = viewModel.namaPasien.value
         }
     }
 

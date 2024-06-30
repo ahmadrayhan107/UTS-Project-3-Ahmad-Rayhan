@@ -261,7 +261,7 @@ fun CreateProfilePasien(
                 ),
                 leadingIcon = {
                     Icon(
-                        painter = painterResource(R.drawable.nik),
+                        painter = painterResource(R.drawable.identity),
                         contentDescription = stringResource(R.string.nik),
                         tint = Color.Blue,
                         modifier = modifier.size(24.dp)

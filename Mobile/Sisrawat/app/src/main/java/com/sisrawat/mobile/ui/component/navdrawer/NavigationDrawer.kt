@@ -104,18 +104,6 @@ fun NavigationDrawer(
                 }
             },
             NavigationDrawerItem(
-                title = stringResource(R.string.settings),
-                selectedIcon = Icons.Filled.Settings,
-                unselectedIcon = Icons.Outlined.Settings,
-                route = Screen.Settings.route
-            ),
-            NavigationDrawerItem(
-                title = stringResource(R.string.about),
-                selectedIcon = Icons.Filled.Info,
-                unselectedIcon = Icons.Outlined.Info,
-                route = Screen.About.route
-            ),
-            NavigationDrawerItem(
                 title = stringResource(R.string.logout),
                 selectedIcon = Icons.AutoMirrored.Filled.Logout,
                 unselectedIcon = Icons.AutoMirrored.Outlined.Logout,

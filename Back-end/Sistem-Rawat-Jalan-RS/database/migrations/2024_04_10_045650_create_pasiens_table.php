@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pasiens', function (Blueprint $table) {
             $table->increments('id_pasien');
             $table->string('nama_pasien', 30);
+            $table->string('no_bpjs', 11);
             $table->string('nik', 14)->unique();
             $table->string('jenis_kelamin', 10);
             $table->string('tempat_lahir', 15);

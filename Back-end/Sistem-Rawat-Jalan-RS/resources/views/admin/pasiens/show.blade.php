@@ -65,6 +65,11 @@
                         </div>
 
                         <div class="form-group row">
+                            <label class="col-sm-2 form-control-label">No. BPJS</label>
+                            <label class="col-sm-10">{{ $pasien->no_bpjs }}</label>
+                        </div>
+
+                        <div class="form-group row">
                             <label class="col-sm-2 form-control-label">NIK</label>
                             <label class="col-sm-10">{{ $pasien->nik }}</label>
                         </div>

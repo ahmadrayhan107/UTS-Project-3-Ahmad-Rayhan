@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.sisrawat.mobile.data.repository.UserRepository
 import com.sisrawat.mobile.di.Injection
 import com.sisrawat.mobile.ui.screen.home.pasien.HomePasienViewModel
+import com.sisrawat.mobile.ui.screen.profile.pasien.ProfileViewModel
 
 class UserViewModelFactory(private val repository: UserRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -13,6 +14,8 @@ class UserViewModelFactory(private val repository: UserRepository) :
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomePasienViewModel::class.java)) {
             return HomePasienViewModel(repository) as T
+        } else if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
+            return ProfileViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

@@ -1,5 +1,7 @@
 package com.sisrawat.mobile.ui.screen.utils
 
+import android.content.Context
+import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.paging.compose.LazyPagingItems
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @OptIn(ExperimentalFoundationApi::class)
 fun <T : Any> LazyListScope.gridItems(
@@ -94,4 +102,24 @@ class ExposedDropMenuStateHolder(private val items: List<Any>) {
 @Composable
 fun rememberExposedMenuStateHolder(items: List<Any>) = remember {
     ExposedDropMenuStateHolder(items)
+}
+
+private const val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
+private val timeStamp: String = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(Date())
+
+fun createCustomTempFile(context: Context): File {
+    val filesDir = context.externalCacheDir
+    return File.createTempFile(timeStamp, ".jpg", filesDir)
+}
+
+fun uriToFile(selectedImageUri: Uri, context: Context): File {
+    val myFile = createCustomTempFile(context)
+    val inputStream = context.contentResolver.openInputStream(selectedImageUri) as InputStream
+    val outputStream = FileOutputStream(myFile)
+    val buffer = ByteArray(1024)
+    var length: Int
+    while (inputStream.read(buffer).also { length = it } > 0) outputStream.write(buffer, 0, length)
+    outputStream.close()
+    inputStream.close()
+    return myFile
 }
