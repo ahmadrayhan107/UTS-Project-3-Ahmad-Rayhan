@@ -14,7 +14,7 @@ data class DokterResponse(
 	val status: Int
 )
 
-data class JadwalDokterItem(
+data class DoktersJadwalDokterItem(
 
 	@field:SerializedName("hari")
 	val hari: String,

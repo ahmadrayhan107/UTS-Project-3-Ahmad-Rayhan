@@ -166,7 +166,7 @@ fun HomeScreen(
                         bottom = 8.dp
                     )
                     .clickable {
-                        navController.navigate(Screen.DetailDokter.route)
+                        navController.navigate(Screen.DetailDokter.createRoute(dokters.user.idUser))
                     },
                 colors = CardDefaults.cardColors(
                     containerColor = Bubbles,

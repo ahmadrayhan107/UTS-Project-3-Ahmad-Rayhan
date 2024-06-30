@@ -3,6 +3,9 @@ package com.sisrawat.mobile.data.repository
 import com.sisrawat.mobile.data.paging.DokterPagingSource
 import com.sisrawat.mobile.data.remote.model.Pasien
 import com.sisrawat.mobile.data.remote.response.AttachmentsResponse
+import com.sisrawat.mobile.data.remote.response.DetailDokterResponse
+import com.sisrawat.mobile.data.remote.response.JadwalDokterItem
+import com.sisrawat.mobile.data.remote.response.JadwalDokterResponse
 import com.sisrawat.mobile.data.remote.response.PasienResponse
 import com.sisrawat.mobile.data.remote.response.UpdatePasienResponse
 import com.sisrawat.mobile.data.remote.retrofit.ApiService
@@ -46,6 +49,14 @@ class UserRepository private constructor(
         )
 
         return apiService.uploadImage(id ,image)
+    }
+
+    suspend fun showDokter(id: Int): DetailDokterResponse {
+        return apiService.showDokter(id)
+    }
+
+    suspend fun getJadwalDokter(idDokter: Int): JadwalDokterResponse {
+        return apiService.getJadwalDokter(idDokter)
     }
 
     companion object {

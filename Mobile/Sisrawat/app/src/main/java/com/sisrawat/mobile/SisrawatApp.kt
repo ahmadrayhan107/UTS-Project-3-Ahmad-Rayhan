@@ -39,10 +39,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.sisrawat.mobile.data.local.preferences.SessionPreferences
 import com.sisrawat.mobile.ui.component.SearchBar
 import com.sisrawat.mobile.ui.component.bottombar.BottomBar
@@ -453,9 +455,15 @@ fun SisrawatApp(
                             navController = navController
                         )
                     }
-                    composable(Screen.DetailDokter.route) {
+                    composable(
+                        Screen.DetailDokter.route,
+                        arguments = listOf(navArgument("idUser") { type = NavType.IntType })
+                    ) {
+                        val idDokter = it.arguments?.getInt("idUser") ?: 0
+
                         DetailDokter(
-                            navController = navController
+                            navController = navController,
+                            idDokter = idDokter
                         )
                     }
                     composable(Screen.CreatePendaftaranTemu.route) {

@@ -4,7 +4,10 @@ import com.sisrawat.mobile.data.remote.model.Login
 import com.sisrawat.mobile.data.remote.model.Pasien
 import com.sisrawat.mobile.data.remote.model.Register
 import com.sisrawat.mobile.data.remote.response.AttachmentsResponse
+import com.sisrawat.mobile.data.remote.response.DetailDokterResponse
 import com.sisrawat.mobile.data.remote.response.DokterResponse
+import com.sisrawat.mobile.data.remote.response.JadwalDokterItem
+import com.sisrawat.mobile.data.remote.response.JadwalDokterResponse
 import com.sisrawat.mobile.data.remote.response.LoginResponse
 import com.sisrawat.mobile.data.remote.response.PasienResponse
 import com.sisrawat.mobile.data.remote.response.RegisterResponse
@@ -44,4 +47,10 @@ interface ApiService {
         @Path("id") id: Int,
         @Part file: MultipartBody.Part
     ): AttachmentsResponse
+
+    @GET("/api/v1/dokter/{id}")
+    suspend fun showDokter(@Path("id") id: Int): DetailDokterResponse
+
+    @GET("/api/v1/jadwal-dokter/{id}")
+    suspend fun getJadwalDokter(@Path("id") id: Int): JadwalDokterResponse
 }

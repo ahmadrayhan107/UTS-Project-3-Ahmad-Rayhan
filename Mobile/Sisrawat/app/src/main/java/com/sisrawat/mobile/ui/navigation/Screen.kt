@@ -9,7 +9,9 @@ sealed class Screen(val route: String) {
     object ProfileDokter : Screen("profile_dokter")
     object ProfilePasien : Screen("profile_pasien")
     object Pasien : Screen("pasien")
-    object DetailDokter : Screen("detail-dokter")
+    object DetailDokter : Screen("detail-dokter/{idUser}") {
+        fun createRoute(idUser: Int) = "detail-dokter/$idUser"
+    }
     object CreatePendaftaranTemu : Screen("create-pendaftaran-temu")
     object DetailRekamMedis : Screen("detail-rekam-medis")
     object DetailPasien : Screen("detail-pasien")
