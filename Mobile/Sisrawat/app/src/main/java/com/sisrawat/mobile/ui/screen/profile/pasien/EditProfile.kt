@@ -90,6 +90,7 @@ import com.sisrawat.mobile.ui.theme.SoftBlue
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -119,6 +120,7 @@ fun EditProfilePasien(
     var noHp by remember { mutableStateOf("") }
     var alamat by remember { mutableStateOf("") }
     var idPasien by remember { mutableStateOf(0) }
+    var date by remember { mutableStateOf<Date?>(null) }
 
     var loading by remember { mutableStateOf(false) }
     var enabled by remember { mutableStateOf(true) }
@@ -126,7 +128,7 @@ fun EditProfilePasien(
     // Date Picker
     val datePickerState =
         rememberDatePickerState(yearRange = 1900..2024)
-    val dateFormat = remember { SimpleDateFormat("dd MMMM yyyy", Locale("in", "ID")) }
+    val dateFormat = remember { SimpleDateFormat("yyyy-MM-dd", Locale("in", "ID")) }
     var showDatePicker by remember { mutableStateOf(false) }
 
     // Image Gallery
@@ -150,6 +152,8 @@ fun EditProfilePasien(
             nik = viewModel.nik.value
             jenisKelamin = viewModel.jenisKelamin.value
             tanggalLahir = viewModel.tanggalLahir.value
+            date = dateFormat.parse(tanggalLahir)
+            tanggalLahir = date?.let { dateFormat.format(it) }.toString()
             tempatLahir = viewModel.tempatLahir.value
             noHp = viewModel.noHp.value
             alamat = viewModel.alamat.value
@@ -849,7 +853,7 @@ fun PreviewEditProfileScreen() {
             color = MaterialTheme.colorScheme.background
         ) {
             EditProfilePasien(
-                sessionModel = SessionModel(0, "", ""),
+                sessionModel = SessionModel(0, 0,"", ""),
                 snackbarHostState = remember { SnackbarHostState() }
             )
         }

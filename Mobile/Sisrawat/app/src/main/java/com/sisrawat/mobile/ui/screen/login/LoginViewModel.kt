@@ -24,6 +24,7 @@ class LoginViewModel(private val repository: AuthRepository) : ViewModel() {
             _message.value = "Success: ${data.message}"
             repository.saveSession(
                 data.dataUser.idUser,
+                data.dataUser.userId,
                 data.dataUser.role,
                 data.authorization.token
             )

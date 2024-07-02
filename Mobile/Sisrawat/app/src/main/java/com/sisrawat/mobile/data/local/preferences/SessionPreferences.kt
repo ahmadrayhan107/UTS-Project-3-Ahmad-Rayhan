@@ -15,6 +15,7 @@ val Context.datastore: DataStore<Preferences> by preferencesDataStore(name = "se
 
 class SessionPreferences private constructor(private val datastore: DataStore<Preferences>) {
     private val idUserKey = intPreferencesKey("id_user")
+    private val userIdKey = intPreferencesKey("user_id")
     private val roleKey = stringPreferencesKey("role")
     private val tokenKey = stringPreferencesKey("token")
 
@@ -22,6 +23,7 @@ class SessionPreferences private constructor(private val datastore: DataStore<Pr
         return datastore.data.map { data ->
             SessionModel(
                 data[idUserKey] ?: 0,
+                data[userIdKey] ?: 0,
                 data[roleKey] ?: "",
                 data[tokenKey] ?: "",
             )
@@ -31,6 +33,7 @@ class SessionPreferences private constructor(private val datastore: DataStore<Pr
     suspend fun saveSession(sessionModel: SessionModel) {
         datastore.edit { data ->
             data[idUserKey] = sessionModel.idUser
+            data[userIdKey] = sessionModel.userId
             data[roleKey] = sessionModel.role
             data[tokenKey] = sessionModel.token
         }

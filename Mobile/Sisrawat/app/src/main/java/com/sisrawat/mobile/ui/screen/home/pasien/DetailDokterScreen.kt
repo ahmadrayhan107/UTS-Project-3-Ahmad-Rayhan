@@ -88,6 +88,7 @@ fun DetailDokter(
         imageDokter = imageDokter,
         namaDokter = namaDokter,
         poliDokter = poliDokter,
+        id = id,
         jadwalDokters = jadwalDokters
     )
 }
@@ -99,7 +100,8 @@ fun DetailDokterScreen(
     imageDokter: String,
     namaDokter: String,
     poliDokter: String,
-    jadwalDokters: List<JadwalDokterItem>
+    id: Int,
+    jadwalDokters: List<JadwalDokterItem>,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         SubcomposeAsyncImage(
@@ -180,7 +182,7 @@ fun DetailDokterScreen(
                             .fillMaxWidth()
                             .padding(vertical = 4.dp)
                             .clickable {
-                                navController.navigate(Screen.CreatePendaftaranTemu.route)
+                                navController.navigate(Screen.CreatePendaftaranTemu.createRoute(id, jadwalDokter.idJadwalDokter))
                             },
                         shape = RoundedCornerShape(8.dp),
                         colors = CardDefaults.cardColors(

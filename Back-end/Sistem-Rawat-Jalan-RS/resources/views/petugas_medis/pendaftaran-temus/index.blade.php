@@ -30,8 +30,8 @@
                             <tr>
                                 <td>{{ $pendaftaranTemu->pasien->nama_pasien }}</td>
                                 <td>{{ $pendaftaranTemu->dokter->nama_dokter }}</td>
-                                <td>{{ $pendaftaranTemu->tanggal_pendaftaran }}</td>
-                                <td>{{ $pendaftaranTemu->jam }}</td>
+                                <td>{{ \Carbon\Carbon::parse($pendaftaranTemu->tanggal_pendaftaran)->translatedFormat('d F Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($pendaftaranTemu->jam)->translatedFormat('H:i') }}</td>
                                 @if ($pendaftaranTemu->status === 'Pending')
                                     <td class="align-center text-warning">{{ $pendaftaranTemu->status }}</td>
                                 @elseif ($pendaftaranTemu->status === 'Selesai')

@@ -58,6 +58,9 @@ import com.sisrawat.mobile.ui.screen.utils.viewmodelfactory.UserViewModelFactory
 import com.sisrawat.mobile.ui.theme.Bubbles
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun ProfilePasien(
@@ -84,6 +87,10 @@ fun ProfilePasien(
     var noHp by remember { mutableStateOf("") }
     var alamat by remember { mutableStateOf("") }
 
+    // Date Format
+    val dateFormat = remember { SimpleDateFormat("yyyy-MM-dd", Locale("in", "ID")) }
+    val dateFormatUI = remember { SimpleDateFormat("dd MMMM yyyy", Locale("in", "ID")) }
+
     // View Model Declaration
     id = sessionModel.idUser
     scope.launch {
@@ -95,6 +102,8 @@ fun ProfilePasien(
             nik = viewModel.nik.value
             jenisKelamin = viewModel.jenisKelamin.value
             tanggalLahir = viewModel.tanggalLahir.value
+            val date: Date? = dateFormat.parse(tanggalLahir)
+            tanggalLahir = date?.let { dateFormatUI.format(it) }.toString()
             tempatLahir = viewModel.tempatLahir.value
             noHp = viewModel.noHp.value
             alamat = viewModel.alamat.value
@@ -511,7 +520,7 @@ fun PreviewProfilScreen() {
         ) {
             ProfilePasien(
                 navController = rememberNavController(),
-                sessionModel = SessionModel(0, "", ""),
+                sessionModel = SessionModel(0, 0,"", ""),
             )
         }
     }

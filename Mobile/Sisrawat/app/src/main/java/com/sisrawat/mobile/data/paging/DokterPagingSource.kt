@@ -4,10 +4,13 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.sisrawat.mobile.data.remote.response.DataDoktersItem
 import com.sisrawat.mobile.data.remote.retrofit.ApiService
+import kotlinx.coroutines.delay
 import retrofit2.HttpException
 import java.io.IOException
+import java.net.SocketTimeoutException
 
-class DokterPagingSource(private val apiService: ApiService): PagingSource<Int, DataDoktersItem>() {
+class DokterPagingSource(private val apiService: ApiService) :
+    PagingSource<Int, DataDoktersItem>() {
     override fun getRefreshKey(state: PagingState<Int, DataDoktersItem>): Int? {
         return state.anchorPosition
     }
@@ -23,9 +26,9 @@ class DokterPagingSource(private val apiService: ApiService): PagingSource<Int, 
                 nextKey = if (dokters.dataDokters.isEmpty()) null else dokters.currentPage + 1
             )
         } catch (exception: IOException) {
-            return LoadResult.Error(exception)
+            LoadResult.Error(exception)
         } catch (exception: HttpException) {
-            return LoadResult.Error(exception)
+            LoadResult.Error(exception)
         }
     }
 

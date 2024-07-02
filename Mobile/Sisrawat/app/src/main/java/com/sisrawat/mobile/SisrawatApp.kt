@@ -432,11 +432,14 @@ fun SisrawatApp(
                         }
                     }
                     composable(Screen.JadwalTemu.route) {
-                        JadwalTemu()
+                        JadwalTemu(
+                            sessionModel = session
+                        )
                     }
                     composable(Screen.RekamMedis.route) {
                         RekamMedis(
-                            navController = navController
+                            navController = navController,
+                            sessionModel = session
                         )
                     }
                     composable(Screen.ProfileDokter.route) {
@@ -466,11 +469,31 @@ fun SisrawatApp(
                             idDokter = idDokter
                         )
                     }
-                    composable(Screen.CreatePendaftaranTemu.route) {
-                        CreatePendaftaranTemu()
+                    composable(
+                        Screen.CreatePendaftaranTemu.route,
+                        arguments = listOf(
+                            navArgument("idDokter") { type = NavType.IntType },
+                            navArgument("idJadwalDokter") { type = NavType.IntType }
+                        )
+                    ) {
+                        val idDokter = it.arguments?.getInt("idDokter") ?: 0
+                        val idJadwalDokter = it.arguments?.getInt("idJadwalDokter") ?: 0
+
+                        CreatePendaftaranTemu(
+                            idDokter = idDokter,
+                            idJadwalDokter = idJadwalDokter,
+                            sessionModel = session,
+                            snackbarHostState = snackbarHostState
+                        )
                     }
-                    composable(Screen.DetailRekamMedis.route) {
-                        DetailRekamMedis()
+                    composable(Screen.DetailRekamMedis.route,
+                        arguments = listOf(navArgument("idRekamMedis") { type = NavType.IntType })
+                    ) {
+                        val idRekamMedis = it.arguments?.getInt("idRekamMedis") ?: 0
+
+                        DetailRekamMedis(
+                            idRekamMedis = idRekamMedis
+                        )
                     }
                     composable(Screen.DetailPasien.route) {
                         DetailPasien(

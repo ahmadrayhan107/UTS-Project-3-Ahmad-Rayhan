@@ -2,15 +2,20 @@ package com.sisrawat.mobile.data.remote.retrofit
 
 import com.sisrawat.mobile.data.remote.model.Login
 import com.sisrawat.mobile.data.remote.model.Pasien
+import com.sisrawat.mobile.data.remote.model.PendaftaranTemu
 import com.sisrawat.mobile.data.remote.model.Register
 import com.sisrawat.mobile.data.remote.response.AttachmentsResponse
+import com.sisrawat.mobile.data.remote.response.CreatePendaftaranTemuResponse
 import com.sisrawat.mobile.data.remote.response.DetailDokterResponse
+import com.sisrawat.mobile.data.remote.response.DetailRekamMedisResponse
 import com.sisrawat.mobile.data.remote.response.DokterResponse
 import com.sisrawat.mobile.data.remote.response.JadwalDokterItem
 import com.sisrawat.mobile.data.remote.response.JadwalDokterResponse
 import com.sisrawat.mobile.data.remote.response.LoginResponse
 import com.sisrawat.mobile.data.remote.response.PasienResponse
+import com.sisrawat.mobile.data.remote.response.PendaftaranTemuResponse
 import com.sisrawat.mobile.data.remote.response.RegisterResponse
+import com.sisrawat.mobile.data.remote.response.RekamMedisResponse
 import com.sisrawat.mobile.data.remote.response.UpdatePasienResponse
 import okhttp3.MultipartBody
 import retrofit2.http.Body
@@ -53,4 +58,25 @@ interface ApiService {
 
     @GET("/api/v1/jadwal-dokter/{id}")
     suspend fun getJadwalDokter(@Path("id") id: Int): JadwalDokterResponse
+
+    @POST("/api/v1/pendaftaran-temu/{id}")
+    suspend fun createPendaftaranTemu(
+        @Path("id") idJadwalDokter: Int,
+        @Body pendaftaranTemu: PendaftaranTemu
+    ): CreatePendaftaranTemuResponse
+
+    @GET("/api/v1/pendaftaran-temu/{id}")
+    suspend fun getPendaftaranTemuPasien(
+        @Path("id") idPasien: Int
+    ): PendaftaranTemuResponse
+
+    @GET("/api/v1/rekam-medis/{id}")
+    suspend fun getRekamMedis(
+        @Path("id") idPasien: Int
+    ): RekamMedisResponse
+
+    @GET("/api/v1/rekam-medis/detail/{id}")
+    suspend fun getDetailRekamMedis(
+        @Path("id") idRekamMedis: Int
+    ): DetailRekamMedisResponse
 }

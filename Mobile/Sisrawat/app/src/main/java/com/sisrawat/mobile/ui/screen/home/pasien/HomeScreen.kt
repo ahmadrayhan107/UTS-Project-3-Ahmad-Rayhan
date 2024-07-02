@@ -1,6 +1,5 @@
 package com.sisrawat.mobile.ui.screen.home.pasien
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -178,6 +177,11 @@ fun HomeScreen(
                         .data(BuildConfig.BASE_URL.plus(dokters.user.imgProfile))
                         .crossfade(true)
                         .build(),
+                    loading = {
+                        CircularProgressIndicator(
+                            modifier = modifier.padding(16.dp)
+                        )
+                    },
                     error = {
                         Image(
                             painter = painterResource(R.drawable.img_profile),
@@ -187,7 +191,9 @@ fun HomeScreen(
                     },
                     contentDescription = stringResource(R.string.img_profile),
                     contentScale = ContentScale.Crop,
-                    modifier = modifier.fillMaxWidth()
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
                 )
 
                 Spacer(modifier = modifier.height(8.dp))
@@ -220,12 +226,6 @@ fun HomeScreen(
     showSystemUi = true,
     device = Devices.PIXEL_4_XL,
 )
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-    device = Devices.PIXEL_4_XL,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-)
 @Composable
 fun PreviewHomeScreen() {
     SisrawatTheme {
@@ -234,7 +234,7 @@ fun PreviewHomeScreen() {
             color = MaterialTheme.colorScheme.background
         ) {
             HomePasien(
-                sessionModel = SessionModel(0, "", ""),
+                sessionModel = SessionModel(0, 0, "", ""),
                 navController = rememberNavController()
             )
         }

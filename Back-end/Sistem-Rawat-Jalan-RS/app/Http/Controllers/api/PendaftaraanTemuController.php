@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PendaftaranTemuResource;
 use App\Models\JadwalDokter;
 use App\Models\PendaftaranTemu;
 use Carbon\Carbon;
@@ -16,12 +17,15 @@ class PendaftaraanTemuController extends Controller
     public function show($id)
     {
         $daftarTemu = PendaftaranTemu::where('pasien_id', $id)->where('status', 'Terdaftar')->get();
-        if (!$daftarTemu) {
+
+        if (count($daftarTemu) === 0) {
             return response()->json([
                 'message' => 'Anda belum melakukan pendaftaran temu',
                 'status' => Response::HTTP_NOT_FOUND,
             ], Response::HTTP_NOT_FOUND);
         }
+
+        $daftarTemu = PendaftaranTemuResource::collection($daftarTemu);
 
         return response()->json([
             'daftarTemu' => $daftarTemu,
@@ -39,8 +43,20 @@ class PendaftaraanTemuController extends Controller
         ]);
 
         if ($validateData->fails()) {
+            $errors = $validateData->errors();
+
+            if ($errors->first('tanggal_pendaftaran')) {
+                $message = $errors->first('tanggal_pendaftaran');
+            } else if ($errors->first('jam')) {
+                $message = $errors->first('jam');
+            } else if ($errors->first('pasien_id')) {
+                $message = $errors->first('pasien_id');
+            } else if ($errors->first('dokter_id')) {
+                $message = $errors->first('dokter_id');
+            }
+
             return response()->json([
-                'errors' => $validateData->errors(),
+                'message' => $message,
                 'status' => Response::HTTP_BAD_REQUEST,
             ], Response::HTTP_BAD_REQUEST);
         }
@@ -93,5 +109,22 @@ class PendaftaraanTemuController extends Controller
             'message' => 'Pendaftaran temu telah dibuat',
             'status' => Response::HTTP_CREATED,
         ], Response::HTTP_CREATED);
+    }
+
+    public function getPasiensByDokter($id)
+    {
+        $daftarTemu = PendaftaranTemu::where('dokter_id', $id)->where('status', 'Terdaftar')->get();
+
+        if (count($daftarTemu) === 0) {
+            return response()->json([
+                'message' => 'Belum ada pasien yang mendaftar',
+                'status' => Response::HTTP_NOT_FOUND,
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json([
+            'daftarTemu' => $daftarTemu,
+            'status' => Response::HTTP_OK,
+        ], Response::HTTP_OK);
     }
 }

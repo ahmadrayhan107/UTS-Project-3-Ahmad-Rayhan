@@ -29,7 +29,7 @@ class AttachmentsController extends Controller
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $namaFile = '/img/profiles/img_' . time() . '_' . $request->img_profile->getClientOriginalName();
+        $namaFile = '/img/profiles/img_' . time();
         $request->img_profile->move('img/profiles', $namaFile);
         User::where('id_user', $id)->update(['img_profile' => $namaFile]);
 

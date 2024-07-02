@@ -4,7 +4,6 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pasien;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -23,7 +22,6 @@ class PasienController extends Controller
         }
 
         $dataPasien = $pasien->load(['user']);
-        $dataPasien['tanggal_lahir'] = Carbon::parse($dataPasien['tanggal_lahir'])->translatedFormat('d F Y');
 
         return response()->json([
             'dataPasien' => $dataPasien,
@@ -84,14 +82,13 @@ class PasienController extends Controller
             ],
             'jenis_kelamin' => 'required|max:10',
             'tempat_lahir' => 'required|max:15',
-            'tanggal_lahir' => 'required',
+            'tanggal_lahir' => 'required|date',
             'no_hp' => [
                 'required',
                 'max:15',
                 Rule::unique('pasiens', 'no_hp')->ignore($id, 'id_pasien')
             ],
             'alamat' => 'required|max:50'
-
         ]);
 
         if ($validateData->fails()) {
@@ -120,35 +117,6 @@ class PasienController extends Controller
                 'status' => Response::HTTP_BAD_REQUEST,
             ], Response::HTTP_BAD_REQUEST);
         }
-
-        // Daftar bulan dalam bahasa Indonesia
-        $bulan = [
-            'Januari' => '01',
-            'Februari' => '02',
-            'Maret' => '03',
-            'April' => '04',
-            'Mei' => '05',
-            'Juni' => '06',
-            'Juli' => '07',
-            'Agustus' => '08',
-            'September' => '09',
-            'Oktober' => '10',
-            'November' => '11',
-            'Desember' => '12'
-        ];
-
-        list($day, $month, $year) = explode(' ', $request['tanggal_lahir']);
-
-        // Mengubah nama bulan menjadi angka
-        if (array_key_exists($month, $bulan)) {
-            $month = $bulan[$month];
-        } else {
-            echo 'Bulan tidak valid: ' . $month;
-            exit;
-        }
-
-        $formattedDate = $year . '-' . $month . '-' . $day;
-        $request['tanggal_lahir'] = Carbon::createFromFormat('Y-m-d', $formattedDate)->toDateString();
 
         $dataPasien = $request->all();
         Pasien::where('id_pasien', $id)->update($dataPasien);

@@ -26,6 +26,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -37,35 +41,68 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sisrawat.mobile.R
+import com.sisrawat.mobile.data.local.model.SessionModel
 import com.sisrawat.mobile.ui.component.TimePickerDialog
+import com.sisrawat.mobile.ui.screen.utils.viewmodelfactory.UserViewModelFactory
 import com.sisrawat.mobile.ui.theme.Azul
 import com.sisrawat.mobile.ui.theme.EerieBlack
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 @Composable
 fun CreatePendaftaranTemu(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    idDokter: Int,
+    idJadwalDokter: Int,
+    sessionModel: SessionModel,
+    snackbarHostState: SnackbarHostState
 ) {
-    CreatePendaftaranTemuScreen(modifier = modifier)
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) }
+    ) { innerPadding ->
+        CreatePendaftaranTemuScreen(
+            modifier = modifier.padding(innerPadding),
+            idDokter = idDokter,
+            idJadwalDokter = idJadwalDokter,
+            sessionModel = sessionModel,
+            snackbarHostState = snackbarHostState
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CreatePendaftaranTemuScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: HomePasienViewModel = viewModel(
+        factory = UserViewModelFactory.getInstance(
+            LocalContext.current
+        )
+    ),
+    idDokter: Int,
+    idJadwalDokter: Int,
+    sessionModel: SessionModel,
+    snackbarHostState: SnackbarHostState
 ) {
+    val scope = rememberCoroutineScope()
+
     // Time Picker
     var showTimePicker by remember { mutableStateOf(false) }
     val timeState = rememberTimePickerState(is24Hour = true)
@@ -76,8 +113,9 @@ fun CreatePendaftaranTemuScreen(
     var showDatePicker by remember { mutableStateOf(false) }
     val datePickerState =
         rememberDatePickerState(yearRange = 2000..2024)
-    val dateFormat = remember { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) }
-    var tanggal by remember { mutableStateOf("--/--/----") }
+    val dateFormat = remember { SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()) }
+    var tanggal by remember { mutableStateOf("----/--/--") }
+    var date by remember { mutableStateOf<Date?>(null) }
 
     // Button
     var enabled by remember { mutableStateOf(true) }
@@ -173,11 +211,34 @@ fun CreatePendaftaranTemuScreen(
         Spacer(modifier = modifier.height(16.dp))
 
         Button(
-            onClick = { },
+            onClick = {
+                scope.launch {
+                    viewModel.createPendaftaranTemu(
+                        idJadwalDokter,
+                        tanggal,
+                        jam,
+                        idDokter,
+                        sessionModel.userId
+                    ).let {
+                        loading = viewModel.loading.value
+                        enabled = false
+
+                        delay(2000)
+
+                        snackbarHostState.showSnackbar(
+                            message = viewModel.message.value,
+                            duration = SnackbarDuration.Short
+                        )
+
+                        loading = false
+                        enabled = true
+                    }
+                }
+            },
             colors = ButtonDefaults.buttonColors(containerColor = Azul),
             modifier = modifier
                 .width(150.dp)
-                .height(48.dp),
+                .height(50.dp),
             shape = RoundedCornerShape(16.dp),
             enabled = enabled
         ) {
@@ -248,12 +309,6 @@ fun CreatePendaftaranTemuScreen(
     showSystemUi = true,
     device = Devices.PIXEL_4_XL
 )
-@Preview(
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true,
-    showSystemUi = true,
-    device = Devices.PIXEL_4_XL
-)
 @Composable
 fun PreviewCreatePendaftaranTemuScreen() {
     SisrawatTheme {
@@ -261,7 +316,12 @@ fun PreviewCreatePendaftaranTemuScreen() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            CreatePendaftaranTemu()
+            CreatePendaftaranTemu(
+                idDokter = 0,
+                idJadwalDokter = 0,
+                sessionModel = SessionModel(0, 0, "", ""),
+                snackbarHostState = remember { SnackbarHostState() }
+            )
         }
     }
 }

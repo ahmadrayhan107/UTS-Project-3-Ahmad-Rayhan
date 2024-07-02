@@ -22,20 +22,11 @@ data class DataUser(
 	@field:SerializedName("role")
 	val role: String,
 
-	@field:SerializedName("img_profile")
-	val imgProfile: String,
-
-	@field:SerializedName("last_login")
-	val lastLogin: String,
+	@field:SerializedName("user_id")
+	val userId: Int,
 
 	@field:SerializedName("id_user")
-	val idUser: Int,
-
-	@field:SerializedName("email")
-	val email: String,
-
-	@field:SerializedName("username")
-	val username: String
+	val idUser: Int
 )
 
 data class Authorization(

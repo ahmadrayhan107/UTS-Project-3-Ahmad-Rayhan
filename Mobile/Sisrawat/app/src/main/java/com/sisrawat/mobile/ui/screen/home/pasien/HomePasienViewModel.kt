@@ -1,8 +1,5 @@
 package com.sisrawat.mobile.ui.screen.home.pasien
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -10,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.google.gson.Gson
+import com.sisrawat.mobile.data.remote.response.CreatePendaftaranTemuResponse
 import com.sisrawat.mobile.data.remote.response.DataDoktersItem
 import com.sisrawat.mobile.data.remote.response.DetailDokterErrorResponse
 import com.sisrawat.mobile.data.remote.response.JadwalDokterItem
@@ -18,8 +16,8 @@ import com.sisrawat.mobile.data.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import retrofit2.HttpException
+import java.net.SocketTimeoutException
 
 class HomePasienViewModel(private val repository: UserRepository) : ViewModel() {
     private val _message = MutableStateFlow("")
@@ -40,7 +38,9 @@ class HomePasienViewModel(private val repository: UserRepository) : ViewModel() 
 
     val dokters: Flow<PagingData<DataDoktersItem>> = Pager(
         config = PagingConfig(pageSize = 10),
-        pagingSourceFactory = { repository.getAllDokter() }
+        pagingSourceFactory = {
+            repository.getAllDokter()
+        }
     ).flow.cachedIn(viewModelScope)
 
     private val _imgDokter = MutableStateFlow("")
@@ -89,6 +89,8 @@ class HomePasienViewModel(private val repository: UserRepository) : ViewModel() 
             val errorBody = Gson().fromJson(jsonInString, DetailDokterErrorResponse::class.java)
             val errorMessage = errorBody.errors
             _message.value = errorMessage
+        } catch (e: SocketTimeoutException) {
+            _message.value = "Error: Timeout! ${e.message}"
         }
     }
 
@@ -99,6 +101,31 @@ class HomePasienViewModel(private val repository: UserRepository) : ViewModel() 
             _jadwalDokters.value = data.jadwalDokter
         } catch (e: HttpException) {
             _message.value = e.message()
+        }
+    }
+
+    suspend fun createPendaftaranTemu(
+        idJadwalDokter: Int,
+        jadwalPendaftaran: String,
+        jam: String,
+        dokterId: Int,
+        pasienId: Int
+    ) {
+        _loading.value = true
+        try {
+            val response = repository.createPendaftaranTemu(
+                idJadwalDokter,
+                jadwalPendaftaran,
+                jam,
+                dokterId,
+                pasienId
+            )
+            _message.value = response.message
+        } catch (e: HttpException) {
+            val jsonInString = e.response()?.errorBody()?.string()
+            val errorBody = Gson().fromJson(jsonInString, CreatePendaftaranTemuResponse::class.java)
+            val errorMessage = errorBody.message
+            _message.value = errorMessage
         }
     }
 }

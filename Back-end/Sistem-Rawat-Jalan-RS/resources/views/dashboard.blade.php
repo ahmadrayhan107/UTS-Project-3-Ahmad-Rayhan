@@ -226,7 +226,7 @@
                                         @foreach ($pendaftaranTemus as $pendaftaranTemu)
                                             <tr>
                                                 <td>{{ $pendaftaranTemu->no_pendaftaran }}</td>
-                                                <td>{{ $pendaftaranTemu->jam }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($pendaftaranTemu->jam)->translatedFormat('H:i') }}</td>
                                                 <td>{{ $pendaftaranTemu->pasien->nama_pasien }}</td>
                                                 <td>{{ $pendaftaranTemu->dokter->nama_dokter }}</td>
                                                 </td>

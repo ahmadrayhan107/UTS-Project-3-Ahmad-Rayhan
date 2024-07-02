@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AuthResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -55,7 +56,9 @@ class AuthController extends Controller
         $last_login = now();
         User::where('email', $credentials['email'])->update(['last_login' => $last_login]);
 
-        $dataUser = Auth::guard('api')->user();
+        $user = Auth::guard('api')->user();
+        $dataUser = new AuthResource($user);
+
         if ($dataUser) {
             return response()->json([
                 'message' => "Login is successfully",

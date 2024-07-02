@@ -20,8 +20,8 @@ class AuthRepository private constructor(
         return apiService.register(Register(username, email, password))
     }
 
-    suspend fun saveSession(idUser: Int, role: String, token: String) {
-        userPreference.saveSession(SessionModel(idUser, role, token))
+    suspend fun saveSession(idUser: Int, userId: Int, role: String, token: String) {
+        userPreference.saveSession(SessionModel(idUser, userId, role, token))
     }
 
     suspend fun logout() {

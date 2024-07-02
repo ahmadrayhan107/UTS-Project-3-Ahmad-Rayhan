@@ -1,7 +1,6 @@
 package com.sisrawat.mobile.ui.screen.rekammedis
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,38 +20,80 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sisrawat.mobile.R
+import com.sisrawat.mobile.data.remote.response.ObatsItem
 import com.sisrawat.mobile.ui.screen.utils.listItems
+import com.sisrawat.mobile.ui.screen.utils.viewmodelfactory.UserViewModelFactory
 import com.sisrawat.mobile.ui.theme.Bubbles
 import com.sisrawat.mobile.ui.theme.EerieBlack
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun DetailRekamMedis(
     modifier: Modifier = Modifier,
+    viewModel: RekamMedisViewModel = viewModel(
+        factory = UserViewModelFactory.getInstance(LocalContext.current)
+    ),
+    idRekamMedis: Int
 ) {
+    val scope = rememberCoroutineScope()
+
+    var keluhan by remember { mutableStateOf("") }
+    var diagnosa by remember { mutableStateOf("") }
+    var tekananDarah by remember { mutableStateOf("") }
+    var beratBadan by remember { mutableStateOf("") }
+    var suhuTubuh by remember { mutableStateOf("") }
+
+    scope.launch {
+        viewModel.getDetailRekamMedis(idRekamMedis).let {
+            keluhan = viewModel.keluhan.value
+            diagnosa = viewModel.diagnosa.value
+            tekananDarah = viewModel.tekananDarah.value
+            beratBadan = viewModel.beratBadan.value
+            suhuTubuh = viewModel.suhuTubuh.value
+        }
+    }
+
+    val obats by viewModel.obats.collectAsState()
+
     DetailRekamMedisScreen(
-        modifier = modifier
+        modifier = modifier,
+        keluhan = keluhan,
+        diagnosa = diagnosa,
+        tekananDarah = tekananDarah,
+        beratBadan = beratBadan,
+        suhuTubuh = suhuTubuh,
+        obats = obats
     )
 }
 
 @Composable
 fun DetailRekamMedisScreen(
-    modifier: Modifier
+    modifier: Modifier,
+    keluhan: String,
+    diagnosa: String,
+    tekananDarah: String,
+    beratBadan: String,
+    suhuTubuh: String,
+    obats: List<ObatsItem>
 ) {
-    // Testing
-    val items by rememberSaveable { mutableStateOf(List(5) { it }) }
-
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -97,7 +138,7 @@ fun DetailRekamMedisScreen(
                                 )
 
                                 Text(
-                                    text = "Keluhan Pasien",
+                                    text = keluhan,
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -128,7 +169,7 @@ fun DetailRekamMedisScreen(
                                 )
 
                                 Text(
-                                    text = "Diagnosa Pasien",
+                                    text = diagnosa,
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -159,7 +200,7 @@ fun DetailRekamMedisScreen(
                                 )
 
                                 Text(
-                                    text = "100 mmHg",
+                                    text = tekananDarah,
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -190,7 +231,7 @@ fun DetailRekamMedisScreen(
                                 )
 
                                 Text(
-                                    text = "65 Kg",
+                                    text = beratBadan,
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -221,7 +262,7 @@ fun DetailRekamMedisScreen(
                                 )
 
                                 Text(
-                                    text = "45°C",
+                                    text = suhuTubuh,
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -251,7 +292,7 @@ fun DetailRekamMedisScreen(
         }
 
         listItems(
-            data = items,
+            data = obats,
             modifier = modifier.padding(horizontal = 16.dp)
         ) { obats ->
             Card(
@@ -270,22 +311,22 @@ fun DetailRekamMedisScreen(
                         .padding(8.dp)
                 ) {
                     Text(
-                        text = "Nama Obat $obats",
+                        text = obats.namaObat,
                         style = MaterialTheme.typography.bodyLarge
                     )
 
                     Text(
-                        text = stringResource(R.string.dosis, "3x1/hari"),
+                        text = stringResource(R.string.dosis, obats.dosis),
                         style = MaterialTheme.typography.bodyMedium
                     )
 
                     Text(
-                        text = stringResource(R.string.jenis_obat, "Sirup"),
+                        text = stringResource(R.string.jenis_obat, obats.jenisObat),
                         style = MaterialTheme.typography.bodyMedium
                     )
 
                     Text(
-                        text = stringResource(R.string.keterangan_obat, "Sesudah makan"),
+                        text = stringResource(R.string.keterangan_obat, obats.keterangan),
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
@@ -302,12 +343,6 @@ fun DetailRekamMedisScreen(
     showSystemUi = true,
     device = Devices.PIXEL_4_XL
 )
-@Preview(
-    uiMode = UI_MODE_NIGHT_YES,
-    showBackground = true,
-    showSystemUi = true,
-    device = Devices.PIXEL_4_XL
-)
 @Composable
 fun PreviewDetailRekamMedisScreen() {
     SisrawatTheme {
@@ -315,7 +350,9 @@ fun PreviewDetailRekamMedisScreen() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            DetailRekamMedis()
+            DetailRekamMedis(
+                idRekamMedis = 0
+            )
         }
     }
 }

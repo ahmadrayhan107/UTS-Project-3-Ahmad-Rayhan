@@ -54,6 +54,7 @@ Route::group(array('prefix' => 'v1'), function () {
 
         // Rekam Medis
         Route::get('/rekam-medis/{id}', [RekamMedisController::class, 'show']);
+        Route::get('/rekam-medis/detail/{id}', [RekamMedisController::class, 'showDetail']);
 
         // Pembayaran
         Route::get('/pembayaran/{id}/list', [PembayaranController::class, 'show']);

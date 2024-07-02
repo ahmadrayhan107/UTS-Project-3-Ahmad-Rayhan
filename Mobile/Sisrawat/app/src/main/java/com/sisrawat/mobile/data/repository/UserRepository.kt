@@ -2,17 +2,23 @@ package com.sisrawat.mobile.data.repository
 
 import com.sisrawat.mobile.data.paging.DokterPagingSource
 import com.sisrawat.mobile.data.remote.model.Pasien
+import com.sisrawat.mobile.data.remote.model.PendaftaranTemu
 import com.sisrawat.mobile.data.remote.response.AttachmentsResponse
+import com.sisrawat.mobile.data.remote.response.CreatePendaftaranTemuResponse
 import com.sisrawat.mobile.data.remote.response.DetailDokterResponse
+import com.sisrawat.mobile.data.remote.response.DetailRekamMedisResponse
 import com.sisrawat.mobile.data.remote.response.JadwalDokterItem
 import com.sisrawat.mobile.data.remote.response.JadwalDokterResponse
 import com.sisrawat.mobile.data.remote.response.PasienResponse
+import com.sisrawat.mobile.data.remote.response.PendaftaranTemuResponse
+import com.sisrawat.mobile.data.remote.response.RekamMedisResponse
 import com.sisrawat.mobile.data.remote.response.UpdatePasienResponse
 import com.sisrawat.mobile.data.remote.retrofit.ApiService
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.util.Date
 
 class UserRepository private constructor(
     private val apiService: ApiService
@@ -48,7 +54,7 @@ class UserRepository private constructor(
             requestImageFile
         )
 
-        return apiService.uploadImage(id ,image)
+        return apiService.uploadImage(id, image)
     }
 
     suspend fun showDokter(id: Int): DetailDokterResponse {
@@ -57,6 +63,31 @@ class UserRepository private constructor(
 
     suspend fun getJadwalDokter(idDokter: Int): JadwalDokterResponse {
         return apiService.getJadwalDokter(idDokter)
+    }
+
+    suspend fun createPendaftaranTemu(
+        idJadwalDokter: Int,
+        tanggalPendaftaran: String,
+        jam: String,
+        dokterId: Int,
+        pasienId: Int
+    ): CreatePendaftaranTemuResponse {
+        return apiService.createPendaftaranTemu(
+            idJadwalDokter,
+            PendaftaranTemu(tanggalPendaftaran, jam, dokterId, pasienId)
+        )
+    }
+
+    suspend fun getPendaftaranTemuPasien(id: Int): PendaftaranTemuResponse {
+        return apiService.getPendaftaranTemuPasien(id)
+    }
+
+    suspend fun getRekamMedis(id: Int): RekamMedisResponse {
+        return apiService.getRekamMedis(id)
+    }
+
+    suspend fun getDetailRekamMedis(id: Int): DetailRekamMedisResponse {
+        return apiService.getDetailRekamMedis(id)
     }
 
     companion object {
