@@ -1,6 +1,5 @@
 package com.sisrawat.mobile.ui.screen.login
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -330,12 +329,6 @@ fun LoginScreen(
     showBackground = true,
     showSystemUi = true,
     device = Devices.PIXEL_4_XL,
-)
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-    device = Devices.PIXEL_4_XL,
-    uiMode = UI_MODE_NIGHT_YES,
 )
 @Composable
 fun PreviewLoginScreen() {

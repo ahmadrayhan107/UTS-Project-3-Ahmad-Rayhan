@@ -1,6 +1,5 @@
 package com.sisrawat.mobile.ui.screen.profile.dokter
 
-import android.content.res.Configuration
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -46,6 +46,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.sisrawat.mobile.R
 import com.sisrawat.mobile.ui.navigation.Screen
+import com.sisrawat.mobile.ui.theme.Bubbles
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
 
 @Composable
@@ -136,7 +137,8 @@ fun ProfileScreen(
             modifier = modifier
                 .fillMaxWidth(),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = Bubbles,
+                contentColor = Color.Black
             )
         ) {
             Row(
@@ -358,12 +360,6 @@ fun ProfileScreen(
     showBackground = true,
     showSystemUi = true,
     device = Devices.PIXEL_4_XL,
-)
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-    device = Devices.PIXEL_4_XL,
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
 )
 @Composable
 fun PreviewProfilScreen() {
