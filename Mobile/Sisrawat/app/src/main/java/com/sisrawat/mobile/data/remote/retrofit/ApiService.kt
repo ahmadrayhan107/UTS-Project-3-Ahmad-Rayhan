@@ -8,14 +8,15 @@ import com.sisrawat.mobile.data.remote.response.AttachmentsResponse
 import com.sisrawat.mobile.data.remote.response.CreatePendaftaranTemuResponse
 import com.sisrawat.mobile.data.remote.response.DetailDokterResponse
 import com.sisrawat.mobile.data.remote.response.DetailRekamMedisResponse
+import com.sisrawat.mobile.data.remote.response.DetailTransaksiResponse
 import com.sisrawat.mobile.data.remote.response.DokterResponse
-import com.sisrawat.mobile.data.remote.response.JadwalDokterItem
 import com.sisrawat.mobile.data.remote.response.JadwalDokterResponse
 import com.sisrawat.mobile.data.remote.response.LoginResponse
 import com.sisrawat.mobile.data.remote.response.PasienResponse
 import com.sisrawat.mobile.data.remote.response.PendaftaranTemuResponse
 import com.sisrawat.mobile.data.remote.response.RegisterResponse
 import com.sisrawat.mobile.data.remote.response.RekamMedisResponse
+import com.sisrawat.mobile.data.remote.response.TransaksiResponse
 import com.sisrawat.mobile.data.remote.response.UpdatePasienResponse
 import okhttp3.MultipartBody
 import retrofit2.http.Body
@@ -79,4 +80,14 @@ interface ApiService {
     suspend fun getDetailRekamMedis(
         @Path("id") idRekamMedis: Int
     ): DetailRekamMedisResponse
+
+    @GET("/api/v1/pembayaran/{id}/list")
+    suspend fun getAllTransaksi(
+        @Path("id") idPasien: Int
+    ): TransaksiResponse
+
+    @GET("/api/v1/pembayaran/{id}/detail")
+    suspend fun getDetailTransaksi(
+        @Path("id") idPembayaran: Int
+    ): DetailTransaksiResponse
 }

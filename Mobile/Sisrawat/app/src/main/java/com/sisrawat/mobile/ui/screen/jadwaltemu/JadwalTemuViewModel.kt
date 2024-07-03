@@ -3,10 +3,7 @@ package com.sisrawat.mobile.ui.screen.jadwaltemu
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.sisrawat.mobile.data.remote.response.DaftarTemuItem
-import com.sisrawat.mobile.data.remote.response.JadwalDokterItem
-import com.sisrawat.mobile.data.remote.response.PasienErrorResponse
 import com.sisrawat.mobile.data.remote.response.PendaftaranTemuErrorResponse
-import com.sisrawat.mobile.data.remote.response.PendaftaranTemuResponse
 import com.sisrawat.mobile.data.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

@@ -63,7 +63,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 @Composable
@@ -115,7 +114,6 @@ fun CreatePendaftaranTemuScreen(
         rememberDatePickerState(yearRange = 2000..2024)
     val dateFormat = remember { SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()) }
     var tanggal by remember { mutableStateOf("----/--/--") }
-    var date by remember { mutableStateOf<Date?>(null) }
 
     // Button
     var enabled by remember { mutableStateOf(true) }
@@ -220,7 +218,7 @@ fun CreatePendaftaranTemuScreen(
                         idDokter,
                         sessionModel.userId
                     ).let {
-                        loading = viewModel.loading.value
+                        loading = true
                         enabled = false
 
                         delay(2000)

@@ -2,9 +2,7 @@ package com.sisrawat.mobile.ui.screen.rekammedis
 
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
-import com.sisrawat.mobile.data.remote.response.DaftarTemuItem
 import com.sisrawat.mobile.data.remote.response.ObatsItem
-import com.sisrawat.mobile.data.remote.response.PendaftaranTemuErrorResponse
 import com.sisrawat.mobile.data.remote.response.RekamMedisErrorResponse
 import com.sisrawat.mobile.data.remote.response.RekamMedisItem
 import com.sisrawat.mobile.data.repository.UserRepository

@@ -68,7 +68,11 @@ fun DetailDokter(
     var namaDokter by remember { mutableStateOf("") }
     var poliDokter by remember { mutableStateOf("") }
     var id by remember { mutableStateOf(0) }
+    var dokterId by remember { mutableStateOf(0) }
 
+    var loading by remember { mutableStateOf(true) }
+
+    dokterId = idDokter
     scope.launch {
         viewModel.showDokter(idDokter).let {
             imageDokter = BuildConfig.BASE_URL.plus(viewModel.imgDokter.value)
@@ -77,7 +81,9 @@ fun DetailDokter(
             id = viewModel.idDokter.value
         }
 
-        viewModel.getJadwalDokter(id)
+        viewModel.getJadwalDokter(id).let {
+            loading = false
+        }
     }
 
     val jadwalDokters by viewModel.jadwalDokters.collectAsState()
@@ -89,7 +95,8 @@ fun DetailDokter(
         namaDokter = namaDokter,
         poliDokter = poliDokter,
         id = id,
-        jadwalDokters = jadwalDokters
+        jadwalDokters = jadwalDokters,
+        loading = loading
     )
 }
 
@@ -102,6 +109,7 @@ fun DetailDokterScreen(
     poliDokter: String,
     id: Int,
     jadwalDokters: List<JadwalDokterItem>,
+    loading: Boolean
 ) {
     Column(modifier = modifier.fillMaxSize()) {
         SubcomposeAsyncImage(
@@ -175,41 +183,55 @@ fun DetailDokterScreen(
 
             Spacer(modifier = modifier.height(16.dp))
 
-            LazyColumn {
-                items(jadwalDokters) { jadwalDokter ->
-                    Card(
-                        modifier = modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp)
-                            .clickable {
-                                navController.navigate(Screen.CreatePendaftaranTemu.createRoute(id, jadwalDokter.idJadwalDokter))
-                            },
-                        shape = RoundedCornerShape(8.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = Bubbles,
-                            contentColor = Color.Black
-                        )
-                    ) {
-                        Column(
+            if (loading) {
+                Box(modifier = modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            } else {
+                LazyColumn {
+                    items(jadwalDokters) { jadwalDokter ->
+                        Card(
                             modifier = modifier
-                                .fillMaxSize()
-                                .padding(8.dp)
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp)
+                                .clickable {
+                                    navController.navigate(
+                                        Screen.CreatePendaftaranTemu.createRoute(
+                                            id,
+                                            jadwalDokter.idJadwalDokter
+                                        )
+                                    )
+                                },
+                            shape = RoundedCornerShape(8.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Bubbles,
+                                contentColor = Color.Black
+                            )
                         ) {
-                            Text(
-                                text = jadwalDokter.hari,
-                                style = MaterialTheme.typography.bodyLarge
-                            )
+                            Column(
+                                modifier = modifier
+                                    .fillMaxSize()
+                                    .padding(8.dp)
+                            ) {
+                                Text(
+                                    text = jadwalDokter.hari,
+                                    style = MaterialTheme.typography.bodyLarge
+                                )
 
-                            Text(
-                                text = stringResource(R.string.jam_format, jadwalDokter.jamAwal,
-                                    jadwalDokter.jamAkhir
-                                ),
-                                style = MaterialTheme.typography.bodyMedium
-                            )
+                                Text(
+                                    text = stringResource(
+                                        R.string.jam_format, jadwalDokter.jamAwal,
+                                        jadwalDokter.jamAkhir
+                                    ),
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                            }
                         }
                     }
                 }
             }
+
 
         }
 

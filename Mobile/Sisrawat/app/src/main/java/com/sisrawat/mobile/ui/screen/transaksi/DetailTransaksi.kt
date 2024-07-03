@@ -20,38 +20,78 @@ import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sisrawat.mobile.R
+import com.sisrawat.mobile.data.remote.response.TagihanItem
 import com.sisrawat.mobile.ui.screen.utils.listItems
+import com.sisrawat.mobile.ui.screen.utils.viewmodelfactory.UserViewModelFactory
 import com.sisrawat.mobile.ui.theme.Bubbles
 import com.sisrawat.mobile.ui.theme.EerieBlack
 import com.sisrawat.mobile.ui.theme.SisrawatTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun DetailTransaksi(
     modifier: Modifier = Modifier,
+    viewModel: TransaksiViewModel = viewModel(
+        factory = UserViewModelFactory.getInstance(LocalContext.current)
+    ),
+    idTransaksi: Int
 ) {
+    val scope = rememberCoroutineScope()
+
+    var idPembayaran by remember { mutableStateOf(0) }
+    var nota by remember { mutableStateOf("") }
+    var tanggalPembayaran by remember { mutableStateOf("") }
+    var totalBiaya by remember { mutableStateOf("") }
+    var status by remember { mutableStateOf("") }
+
+    idPembayaran = idTransaksi
+    scope.launch {
+        viewModel.getDetailTransaksi(idPembayaran).let {
+            nota = viewModel.nota.value
+            tanggalPembayaran = viewModel.tanggalPembayaran.value
+            totalBiaya = viewModel.totalBiaya.value
+            status = viewModel.statusTransaksi.value
+        }
+    }
+
+    val tagihans by viewModel.tagihans.collectAsState()
+
     DetailTransaksiScreen(
-        modifier = modifier
+        modifier = modifier,
+        nota = nota,
+        tanggalPembayaran = tanggalPembayaran,
+        totalBiaya = totalBiaya,
+        status = status,
+        tagihans = tagihans
     )
 }
 
 @Composable
 fun DetailTransaksiScreen(
-    modifier: Modifier
+    modifier: Modifier,
+    nota: String,
+    tanggalPembayaran: String,
+    totalBiaya: String,
+    status: String,
+    tagihans: List<TagihanItem>
 ) {
-    // Testing
-    val items by rememberSaveable { mutableStateOf(List(5) { it }) }
-
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -96,7 +136,7 @@ fun DetailTransaksiScreen(
                                 )
 
                                 Text(
-                                    text = "T20240617224948",
+                                    text = nota,
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -127,7 +167,7 @@ fun DetailTransaksiScreen(
                                 )
 
                                 Text(
-                                    text = "17 Juni 2024",
+                                    text = tanggalPembayaran,
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -158,7 +198,7 @@ fun DetailTransaksiScreen(
                                 )
 
                                 Text(
-                                    text = "Rp70000",
+                                    text = totalBiaya,
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -189,7 +229,7 @@ fun DetailTransaksiScreen(
                                 )
 
                                 Text(
-                                    text = "Finish",
+                                    text = status,
                                     style = MaterialTheme.typography.bodyMedium
                                 )
                             }
@@ -219,7 +259,7 @@ fun DetailTransaksiScreen(
         }
 
         listItems(
-            data = items,
+            data = tagihans,
             modifier = modifier.padding(horizontal = 16.dp)
         ) { tagihans ->
             Card(
@@ -238,12 +278,12 @@ fun DetailTransaksiScreen(
                         .padding(8.dp)
                 ) {
                     Text(
-                        text = "Nama Tagihan $tagihans",
+                        text = tagihans.namaTagihan,
                         style = MaterialTheme.typography.bodyLarge
                     )
 
                     Text(
-                        text = "Rp10000",
+                        text = tagihans.biaya,
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
@@ -260,12 +300,6 @@ fun DetailTransaksiScreen(
     showSystemUi = true,
     device = Devices.PIXEL_4_XL
 )
-@Preview(
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    showBackground = true,
-    showSystemUi = true,
-    device = Devices.PIXEL_4_XL
-)
 @Composable
 fun PreviewDetailTransaksiScreen() {
     SisrawatTheme {
@@ -273,7 +307,9 @@ fun PreviewDetailTransaksiScreen() {
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            DetailTransaksi()
+            DetailTransaksi(
+                idTransaksi = 0
+            )
         }
     }
 }

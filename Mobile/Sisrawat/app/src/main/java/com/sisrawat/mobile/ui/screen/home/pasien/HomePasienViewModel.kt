@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import retrofit2.HttpException
-import java.net.SocketTimeoutException
 
 class HomePasienViewModel(private val repository: UserRepository) : ViewModel() {
     private val _message = MutableStateFlow("")
@@ -89,8 +88,6 @@ class HomePasienViewModel(private val repository: UserRepository) : ViewModel() 
             val errorBody = Gson().fromJson(jsonInString, DetailDokterErrorResponse::class.java)
             val errorMessage = errorBody.errors
             _message.value = errorMessage
-        } catch (e: SocketTimeoutException) {
-            _message.value = "Error: Timeout! ${e.message}"
         }
     }
 
@@ -111,7 +108,6 @@ class HomePasienViewModel(private val repository: UserRepository) : ViewModel() 
         dokterId: Int,
         pasienId: Int
     ) {
-        _loading.value = true
         try {
             val response = repository.createPendaftaranTemu(
                 idJadwalDokter,

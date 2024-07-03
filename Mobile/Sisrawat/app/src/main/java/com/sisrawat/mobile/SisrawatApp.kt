@@ -486,7 +486,8 @@ fun SisrawatApp(
                             snackbarHostState = snackbarHostState
                         )
                     }
-                    composable(Screen.DetailRekamMedis.route,
+                    composable(
+                        Screen.DetailRekamMedis.route,
                         arguments = listOf(navArgument("idRekamMedis") { type = NavType.IntType })
                     ) {
                         val idRekamMedis = it.arguments?.getInt("idRekamMedis") ?: 0
@@ -527,7 +528,8 @@ fun SisrawatApp(
                     }
                     composable(Screen.Transaksi.route) {
                         Transaksi(
-                            navController = navController
+                            navController = navController,
+                            sessionModel = session
                         )
                     }
                     composable(Screen.JadwalDokter.route) {
@@ -538,8 +540,15 @@ fun SisrawatApp(
                     composable(Screen.CreateJadwalDokter.route) {
                         CreateJadwalDokter()
                     }
-                    composable(Screen.DetailTransaksi.route) {
-                        DetailTransaksi()
+                    composable(
+                        Screen.DetailTransaksi.route,
+                        arguments = listOf(navArgument("idTransaksi") { type = NavType.IntType })
+                    ) {
+                        val idTransaksi = it.arguments?.getInt("idTransaksi") ?: 0
+
+                        DetailTransaksi(
+                            idTransaksi = idTransaksi
+                        )
                     }
                     composable(Screen.Notification.route) {
                         NotificationScreen()

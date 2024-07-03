@@ -1,7 +1,6 @@
 package com.sisrawat.mobile.data.remote.model
 
 import com.google.gson.annotations.SerializedName
-import java.util.Date
 
 data class Pasien(
     @field:SerializedName("nama_pasien")

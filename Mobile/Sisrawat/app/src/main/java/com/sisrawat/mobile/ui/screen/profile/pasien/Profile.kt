@@ -86,10 +86,10 @@ fun ProfilePasien(
     var tempatLahir by remember { mutableStateOf("") }
     var noHp by remember { mutableStateOf("") }
     var alamat by remember { mutableStateOf("") }
+    var date by remember { mutableStateOf<Date?>(null) }
 
     // Date Format
     val dateFormat = remember { SimpleDateFormat("yyyy-MM-dd", Locale("in", "ID")) }
-    val dateFormatUI = remember { SimpleDateFormat("dd MMMM yyyy", Locale("in", "ID")) }
 
     // View Model Declaration
     id = sessionModel.idUser
@@ -102,8 +102,7 @@ fun ProfilePasien(
             nik = viewModel.nik.value
             jenisKelamin = viewModel.jenisKelamin.value
             tanggalLahir = viewModel.tanggalLahir.value
-            val date: Date? = dateFormat.parse(tanggalLahir)
-            tanggalLahir = date?.let { dateFormatUI.format(it) }.toString()
+            date = dateFormat.parse(tanggalLahir)
             tempatLahir = viewModel.tempatLahir.value
             noHp = viewModel.noHp.value
             alamat = viewModel.alamat.value
@@ -119,10 +118,10 @@ fun ProfilePasien(
         noBpjs = noBpjs,
         nik = nik,
         jenisKelamin = jenisKelamin,
-        tanggalLahir = tanggalLahir,
         tempatLahir = tempatLahir,
         noHp = noHp,
-        alamat = alamat
+        alamat = alamat,
+        date = date
     )
 }
 
@@ -136,11 +135,15 @@ fun ProfileScreen(
     noBpjs: String,
     nik: String,
     jenisKelamin: String,
-    tanggalLahir: String,
     tempatLahir: String,
     noHp: String,
-    alamat: String
+    alamat: String,
+    date: Date?
 ) {
+    val dateFormatUI = remember { SimpleDateFormat("dd MMMM yyyy", Locale("in", "ID")) }
+    var tanggalLahir by remember { mutableStateOf("") }
+    tanggalLahir = date?.let { dateFormatUI.format(it) }.toString()
+
     Column(
         modifier = modifier
             .fillMaxSize()

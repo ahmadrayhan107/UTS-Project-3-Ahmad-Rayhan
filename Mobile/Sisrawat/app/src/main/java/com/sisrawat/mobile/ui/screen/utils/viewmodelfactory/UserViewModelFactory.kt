@@ -9,6 +9,7 @@ import com.sisrawat.mobile.ui.screen.home.pasien.HomePasienViewModel
 import com.sisrawat.mobile.ui.screen.jadwaltemu.JadwalTemuViewModel
 import com.sisrawat.mobile.ui.screen.profile.pasien.ProfileViewModel
 import com.sisrawat.mobile.ui.screen.rekammedis.RekamMedisViewModel
+import com.sisrawat.mobile.ui.screen.transaksi.TransaksiViewModel
 
 class UserViewModelFactory(private val repository: UserRepository) :
     ViewModelProvider.NewInstanceFactory() {
@@ -22,6 +23,8 @@ class UserViewModelFactory(private val repository: UserRepository) :
             return JadwalTemuViewModel(repository) as T
         } else if (modelClass.isAssignableFrom(RekamMedisViewModel::class.java)) {
             return RekamMedisViewModel(repository) as T
+        } else if (modelClass.isAssignableFrom(TransaksiViewModel::class.java)) {
+            return TransaksiViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

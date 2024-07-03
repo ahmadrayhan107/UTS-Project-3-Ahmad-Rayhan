@@ -22,10 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,7 +40,6 @@ import coil.request.ImageRequest
 import com.sisrawat.mobile.R
 import com.sisrawat.mobile.data.local.model.SessionModel
 import com.sisrawat.mobile.data.remote.response.DaftarTemuItem
-import com.sisrawat.mobile.data.remote.response.JadwalDokterItem
 import com.sisrawat.mobile.ui.screen.utils.viewmodelfactory.UserViewModelFactory
 import com.sisrawat.mobile.ui.theme.Bubbles
 import com.sisrawat.mobile.ui.theme.SisrawatTheme

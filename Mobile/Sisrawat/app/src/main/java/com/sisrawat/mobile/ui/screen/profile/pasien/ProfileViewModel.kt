@@ -1,6 +1,5 @@
 package com.sisrawat.mobile.ui.screen.profile.pasien
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.sisrawat.mobile.data.remote.response.AttachmentsResponse
@@ -11,7 +10,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import retrofit2.HttpException
 import java.io.File
-import java.util.Date
 
 class ProfileViewModel(private val repository: UserRepository) : ViewModel() {
     private val _message = MutableStateFlow("")

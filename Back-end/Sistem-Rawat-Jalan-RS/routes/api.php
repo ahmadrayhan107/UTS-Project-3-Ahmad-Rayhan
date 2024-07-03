@@ -57,7 +57,9 @@ Route::group(array('prefix' => 'v1'), function () {
         Route::get('/rekam-medis/detail/{id}', [RekamMedisController::class, 'showDetail']);
 
         // Pembayaran
-        Route::get('/pembayaran/{id}/list', [PembayaranController::class, 'show']);
+        Route::get('/pembayaran/{id}/pending', [PembayaranController::class, 'transaksiPending']);
+        Route::get('/pembayaran/{id}/list', [PembayaranController::class, 'transaksiList']);
+        Route::get('/pembayaran/{id}/detail', [PembayaranController::class, 'detailTransaksi']);
 
         // Attachments
         Route::post('/attachments/{id}', [AttachmentsController::class, 'uploadImage']);

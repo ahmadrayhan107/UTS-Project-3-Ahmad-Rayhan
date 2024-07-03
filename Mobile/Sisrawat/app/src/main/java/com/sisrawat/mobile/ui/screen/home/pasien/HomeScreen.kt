@@ -73,7 +73,6 @@ fun HomePasien(
     var imageUrl by remember { mutableStateOf("") }
     var namaPasien by remember { mutableStateOf("Pasien") }
 
-    // View Model Declaration
     id = sessionModel.idUser
     scope.launch {
         viewModel.showPasien(id).let {

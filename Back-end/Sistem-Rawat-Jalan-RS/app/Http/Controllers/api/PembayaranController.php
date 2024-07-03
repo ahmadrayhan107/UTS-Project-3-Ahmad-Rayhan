@@ -4,7 +4,9 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DetailResource;
+use App\Http\Resources\DetailTransaksiResource;
 use App\Http\Resources\PembayaranResource;
+use App\Http\Resources\TransaksiResource;
 use App\Models\DetailPembayaran;
 use App\Models\Pembayaran;
 use App\Models\PendaftaranTemu;
@@ -24,10 +26,10 @@ class PembayaranController extends Controller
         Configuration::setXenditKey(env('XENDIT_API_KEY'));
     }
 
-    public function show($id)
+    public function transaksiPending($id)
     {
-        $daftarPembayaran = PendaftaranTemu::where('pasien_id', $id)->where('status', 'Pending')->get();
-        if (!$daftarPembayaran) {
+        $daftarPembayaran = PendaftaranTemu::where(['pasien_id' => $id, 'status' => 'Pending'])->get();
+        if (count($daftarPembayaran) === 0) {
             return response()->json([
                 'message' => 'Anda tidak memiliki tagihan',
                 'status' => Response::HTTP_NOT_FOUND,
@@ -38,6 +40,36 @@ class PembayaranController extends Controller
 
         return response()->json([
             'daftarPembayaran' => $dataDaftarPembayaran,
+            'status' => Response::HTTP_OK,
+        ], Response::HTTP_OK);
+    }
+
+    public function transaksiList($id)
+    {
+        $daftarPembayaran = Pembayaran::where('pasien_id', $id)->get();
+        if (count($daftarPembayaran) === 0) {
+            return response()->json([
+                'message' => 'Anda tidak memiliki transaksi',
+                'status' => Response::HTTP_NOT_FOUND,
+            ], Response::HTTP_NOT_FOUND);
+        }
+
+        $daftarPembayaran = TransaksiResource::collection($daftarPembayaran);
+
+        return response()->json([
+            'daftarPembayaran' => $daftarPembayaran,
+            'status' => Response::HTTP_OK,
+        ], Response::HTTP_OK);
+    }
+
+    public function detailTransaksi($id)
+    {
+        $transaksi = Pembayaran::where('id_pembayaran', $id)->first();
+
+        $transaksi = new DetailTransaksiResource($transaksi);
+
+        return response()->json([
+            'transaksi' => $transaksi,
             'status' => Response::HTTP_OK,
         ], Response::HTTP_OK);
     }

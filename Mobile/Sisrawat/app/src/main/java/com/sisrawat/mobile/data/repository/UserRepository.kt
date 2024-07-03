@@ -7,18 +7,18 @@ import com.sisrawat.mobile.data.remote.response.AttachmentsResponse
 import com.sisrawat.mobile.data.remote.response.CreatePendaftaranTemuResponse
 import com.sisrawat.mobile.data.remote.response.DetailDokterResponse
 import com.sisrawat.mobile.data.remote.response.DetailRekamMedisResponse
-import com.sisrawat.mobile.data.remote.response.JadwalDokterItem
+import com.sisrawat.mobile.data.remote.response.DetailTransaksiResponse
 import com.sisrawat.mobile.data.remote.response.JadwalDokterResponse
 import com.sisrawat.mobile.data.remote.response.PasienResponse
 import com.sisrawat.mobile.data.remote.response.PendaftaranTemuResponse
 import com.sisrawat.mobile.data.remote.response.RekamMedisResponse
+import com.sisrawat.mobile.data.remote.response.TransaksiResponse
 import com.sisrawat.mobile.data.remote.response.UpdatePasienResponse
 import com.sisrawat.mobile.data.remote.retrofit.ApiService
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
-import java.util.Date
 
 class UserRepository private constructor(
     private val apiService: ApiService
@@ -88,6 +88,14 @@ class UserRepository private constructor(
 
     suspend fun getDetailRekamMedis(id: Int): DetailRekamMedisResponse {
         return apiService.getDetailRekamMedis(id)
+    }
+
+    suspend fun getAllTransaksi(idPasien: Int): TransaksiResponse {
+        return apiService.getAllTransaksi(idPasien)
+    }
+
+    suspend fun getDetailTransaksi(idPembayaran: Int): DetailTransaksiResponse {
+        return apiService.getDetailTransaksi(idPembayaran)
     }
 
     companion object {

@@ -27,7 +27,7 @@ class PembayaranResource extends JsonResource
         }
 
         return [
-            'details' => [DetailResource::collection($this->details)],
+            'details' => DetailResource::collection($this->details),
             'pendaftaran_temu_id' => $this->id_pendaftaran_temu,
             'pasien_id' => $this->pasien_id,
             'total_biaya' => $total_biaya
